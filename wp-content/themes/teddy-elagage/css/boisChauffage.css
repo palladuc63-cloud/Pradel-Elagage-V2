@@ -1,0 +1,279 @@
+/* .containerImagePresentation {
+
+  transform: translateY(-20vh);
+
+  width: 100%;
+
+}
+
+
+
+.centrageContainerArticle {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+.titleSinglePage {
+
+  width: 100%;
+
+  padding: 2vw 1vw 2vw 1vw;
+
+  height: auto;
+
+  display: flex;
+
+  justify-content: center;
+
+  color: white;
+
+  font-size: 10em;
+
+  transform: translateY(-35vh);
+
+}
+
+
+
+.imgPrezSingle {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+.imgPrezSingle img {
+
+  width: 100%;
+
+  max-height: 60vh;
+
+  object-fit: cover;
+
+  z-index: -5;
+
+}
+
+
+
+.containerSinglePage {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-around;
+
+  flex-direction: row;
+
+  transform: translateY(-50vh);
+
+}
+
+
+
+.containerSinglePage p {
+
+  width: 60vw;
+
+  margin: 5vh;
+
+}
+
+
+
+.containerSinglePage .sliderSize {
+
+  margin: 5vh;
+
+}
+
+
+.containerInfoBois {
+
+  width: 100%;
+
+  height: auto;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-around;
+
+  margin-top: -40vh;
+
+  position: relative;
+
+  z-index: 800;
+
+}
+
+
+
+.containerCARDSInfoBois {
+
+  width: 20%;
+
+  height: auto;
+
+  background-color: rgba(255, 255, 255, 0.85);
+
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+  border-radius: 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: hidden;
+
+}
+
+
+
+.containerCARDSInfoBois:hover {
+
+  background-color: rgba(255, 255, 255, 1);
+
+}
+
+
+
+.containerCARDSInfoBois p {
+
+  padding: 30px 20px 60px 20px;
+
+  text-align: center;
+
+  font-size: 1.2em;
+
+  opacity: 0.8;
+
+}
+
+
+
+.containerCARDSInfoBois:hover p {
+
+  opacity: 1;
+
+}
+
+
+
+.containerCARDSInfoBois h1 {
+
+  text-align: center;
+
+  margin-top: 5vh;
+
+  opacity: 0.8;
+
+}
+
+
+
+.containerCARDSInfoBois:hover h1 {
+
+  opacity: 1;
+
+  color: var(--colorVar1);
+
+}
+
+
+
+.containerCARDSInfoBois img {
+
+  padding-bottom: 0;
+
+  border-top-right-radius: 20px;
+
+  border-top-left-radius: 20px;
+
+  transition: transform 0.3s ease;
+
+}
+
+
+
+.containerCARDSInfoBois:hover img {
+
+  transform: scale(1.1);
+
+}
+
+
+
+.BoisSeparator {
+
+  font-family: "Open Sans", sans-serif;
+
+  color: black;
+
+  font-size: 5vh;
+
+  transform: translateY(-49vh);
+
+
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+
+
+  &::before,
+
+  &::after {
+
+    content: "";
+
+    display: block;
+
+    height: 0.09em;
+
+    min-width: 30vw;
+
+  }
+
+
+
+  &::before {
+
+    background: linear-gradient(to right, rgba(240,240,240,0), black);
+
+    margin-right: 4vh;
+
+  }
+
+
+
+  &::after {
+
+    background: linear-gradient(to left, rgba(240,240,240,0), black);
+
+    margin-left: 4vh;
+
+  }
+
+}
+ */

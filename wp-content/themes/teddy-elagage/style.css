@@ -1,0 +1,30 @@
+/*
+
+Theme Name: Teddy Elagage
+
+Theme URI: https://pradel-elagage.fr
+
+Author: François RIVIERE
+
+Author URI: https://webcrafted.fr
+
+Description: Pradel Elagage Abattage et Bois de Chauffage
+
+Requires at least: WordPress 5.0
+
+Version: 1.0
+
+*/
+
+@font-face {
+  font-family: "Adventure";
+  src: url("fonts/Adventure.otf") format("opentype"),
+    url("fonts/Adventure.woff") format("woff"),
+    url("fonts/Adventure.woff2") format("woff2");
+  font-display: swap;
+}
+
+body {
+  font-family: "Adventure", sans-serif;
+}
+

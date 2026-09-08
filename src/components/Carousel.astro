@@ -1,0 +1,127 @@
+---
+export interface Props {
+  images: { src: string; alt: string }[];
+}
+
+const { images } = Astro.props as Props;
+---
+
+<section class="swiper mySwiper animated-element" aria-label="Galerie d’images" aria-roledescription="carrousel">
+  <div class="swiper-wrapper">
+    {images.map((img, index) => (
+      <div class="swiper-slide" role="group" aria-label={`Image ${index + 1} sur ${images.length}`}>
+        <img src={img.src} alt={img.alt} loading="lazy" />
+      </div>
+    ))}
+  </div>
+  <div class="swiper-pagination"></div>
+  <button class="carousel-toggle" type="button" aria-label="Mettre le défilement automatique en pause">Pause</button>
+  <p class="carousel-status" aria-live="polite"></p>
+</section>
+
+<style>
+  .swiper {
+    width: 35vw;
+    height: 25vw;
+    border-radius: 20px;
+    box-shadow:
+      inset 0 0 0.5px 1px hsla(0, 0%, 100%, 0.075),
+      0 0 0 1px hsla(0, 0%, 0%, 0.05),
+      0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
+      0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
+      0 3.5px 6px hsla(0, 0%, 0%, 0.09);
+    background: linear-gradient(to right, #ffffff, #ece9e6);
+  }
+
+  .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+  }
+
+  :global(.swiper-pagination-bullet) {
+    width: 10px;
+    height: 10px;
+    background-color: #ccc;
+    opacity: 0.5;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  :global(.swiper-pagination-bullet-active) {
+    opacity: 1;
+    background-color: #fdfdfd;
+  }
+
+  .carousel-toggle {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 2;
+    padding: .5rem .75rem;
+    border: 2px solid white;
+    border-radius: 6px;
+    color: white;
+    background: rgba(0, 0, 0, .7);
+    cursor: pointer;
+  }
+
+  .carousel-toggle:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  .carousel-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.swiper-wrapper), :global(.swiper-pagination-bullet) { transition-duration: 0.01ms !important; }
+  }
+
+  @media (max-width: 768px) {
+    .swiper {
+      width: 90vw;
+      height: 55vw;
+    }
+  }
+</style>
+
+<script>
+  import Swiper from 'swiper';
+  import { Autoplay, Pagination } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+
+  function initialiseCarousels() {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll<HTMLElement>('.mySwiper:not([data-initialised])').forEach((element) => {
+      element.dataset.initialised = 'true';
+      const pagination = element.querySelector<HTMLElement>('.swiper-pagination');
+      const toggle = element.querySelector<HTMLButtonElement>('.carousel-toggle');
+      const status = element.querySelector<HTMLElement>('.carousel-status');
+      const swiper = new Swiper(element, {
+        modules: [Autoplay, Pagination],
+        loop: true,
+        spaceBetween: 0,
+        centeredSlides: true,
+        autoplay: reduceMotion ? false : { delay: 3000, disableOnInteraction: false },
+        pagination: { el: pagination, clickable: true },
+      });
+
+      if (reduceMotion && toggle) {
+        toggle.hidden = true;
+      } else {
+        toggle?.addEventListener('click', () => {
+          if (swiper.autoplay.running) {
+            swiper.autoplay.stop();
+            toggle.textContent = 'Lecture';
+            toggle.setAttribute('aria-label', 'Relancer le défilement automatique');
+            if (status) status.textContent = 'Défilement automatique en pause.';
+          } else {
+            swiper.autoplay.start();
+            toggle.textContent = 'Pause';
+            toggle.setAttribute('aria-label', 'Mettre le défilement automatique en pause');
+            if (status) status.textContent = 'Défilement automatique relancé.';
+          }
+        });
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initialiseCarousels);
+</script>

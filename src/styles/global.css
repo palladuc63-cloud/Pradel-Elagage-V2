@@ -1,0 +1,245 @@
+/*
+  Design system Pradel Elagage — repris du thème WordPress teddy-elagage
+  (élagage, abattage, bois de chauffage, travaux TP à Thiers).
+  Police titres : Adventure (custom), police texte : Open Sans (Google Fonts).
+  Approche : CSS custom properties, pas de framework externe.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@font-face {
+  font-family: "Adventure";
+  src: url("/fonts/Adventure.woff2") format("woff2"),
+    url("/fonts/Adventure.woff") format("woff"),
+    url("/fonts/Adventure.otf") format("opentype");
+  font-display: swap;
+}
+
+:root {
+  /* Couleurs de marque (identiques au thème WP teddy-elagage) */
+  --txtColor: #000000;
+  --btnColor: #1D343A;
+  --btnColorHover: #e6e6e6;
+
+  --colorVar1: hsl(103, 22%, 75%);   /* vert sauge clair */
+  --colorVar2: hsl(170, 41%, 38%);   /* vert teal — boutons, footer */
+  --colorVar3: hsl(192, 33%, 17%);   /* bleu foncé — titres */
+
+  --color1: #ffffff;
+  --color2: #ece9e6;                 /* gradient cards */
+
+  --theme-color: #39887B;
+
+  /* Typographie */
+  --font-heading: "Adventure", sans-serif;
+  --font-body: "Open Sans", sans-serif;
+
+  /* Transitions */
+  --transition-fast: 200ms ease;
+  --transition-base: 300ms ease;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--txtColor);
+  background: var(--color1);
+  line-height: 1.6;
+  overflow-x: clip;
+  width: 100%;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--colorVar3);
+  line-height: 1.2;
+}
+
+h1 {
+  font-weight: bolder;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+/* Lien d'évitement (accessibilité) */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--colorVar2);
+  color: var(--color1);
+  padding: 0.75rem 1rem;
+  z-index: 1000;
+  border-radius: 0 0 0.5rem 0;
+}
+
+.skip-link:focus-visible {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--colorVar2);
+  outline-offset: 2px;
+}
+
+/* Respect des préférences utilisateur (motion réduite) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Bouton stylé (repris du thème WP .button-17) */
+.btn-pradel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--colorVar2);
+  color: var(--color1);
+  border: transparent;
+  border-radius: 10px;
+  padding: 1vh 2vw;
+  font-size: 1vw;
+  font-weight: 800;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+    background-color var(--transition-base), color var(--transition-base);
+}
+
+.btn-pradel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--colorVar3);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--transition-base);
+  z-index: -1;
+}
+
+.btn-pradel:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background-color: var(--colorVar3);
+  color: var(--color1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.btn-pradel:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media (max-width: 768px) {
+  .btn-pradel {
+    font-size: 4vw;
+    padding: 1vh 4vw;
+  }
+}
+
+/* Cards avec gradient (repris du thème WP) */
+.card-gradient {
+  background: linear-gradient(to right, #ffffff, #ece9e6);
+  border-radius: 20px;
+  box-shadow:
+    inset 0 0 0.5px 1px hsla(0, 0%, 100%, 0.075),
+    0 0 0 1px hsla(0, 0%, 0%, 0.05),
+    0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
+    0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
+    0 3.5px 6px hsla(0, 0%, 0%, 0.09);
+}
+
+/* Animations fade-in au scroll */
+.animated-element {
+  transition: transform 0.5s ease-in-out;
+  transform: translateY(30vh);
+  opacity: 0;
+}
+
+.animated-element-2 {
+  transition: transform 0.5s ease-in-out;
+  transform: translateY(30vh);
+  opacity: 0;
+}
+
+.animate {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.animate-2 {
+  transform: translateY(-38vh);
+  opacity: 1;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .animate-2 {
+    transform: translateY(-5vh);
+  }
+}
+
+/* Fade-in au chargement */
+.fade-in {
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50vh);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-25vh);
+  }
+}
+
+/* Séparateur SVG chaîne des Puys */
+.containerSperatorPuy {
+  position: relative;
+  z-index: 50;
+}
+
+.containerSperatorPuy svg {
+  width: 100%;
+  height: auto;
+}
+
+.containerSperatorPuyFooter svg {
+  width: 100%;
+  height: auto;
+}

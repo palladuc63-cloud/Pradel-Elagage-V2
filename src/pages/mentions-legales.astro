@@ -1,0 +1,143 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site.js';
+
+const title = 'Mentions légales — Pradel Elagage à Thiers (63300)';
+const description = 'Mentions légales du site Pradel Elagage. Éditeur, hébergeur, propriété intellectuelle et responsabilité.';
+---
+
+<MainLayout title={title} description={description} footerVariant="page" noindex={true}>
+  <PageHero
+    image="/img/foret.png"
+    imageAlt="Mentions légales Pradel Elagage"
+    title="MENTIONS LÉGALES"
+  />
+
+  <article class="post">
+    <div class="containerSinglePage">
+      <div class="paragrapheSingle animated-element">
+        <h2>Éditeur du site</h2>
+        <p>
+          <strong>Pradel Elagage</strong><br />
+          Entreprise individuelle dirigée par Teddy Pradel<br />
+          {site.address.street}<br />
+          {site.address.locality}<br />
+          {site.address.postalCode} {site.address.city}<br />
+          Téléphone : <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br />
+          Email : <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+
+        <h2>Hébergement</h2>
+        <p>
+          Le site est hébergé par <strong>O2switch</strong><br />
+          SAS au capital de 100 000 €<br />
+          222 Boulevard Gustave Flaubert<br />
+          63000 Clermont-Ferrand<br />
+          Téléphone : 04 44 44 60 40
+        </p>
+
+        <h2>Propriété intellectuelle</h2>
+        <p>
+          L'ensemble des contenus présents sur ce site (textes, images, logos,
+          graphismes) est la propriété de Pradel Elagage, sauf mention contraire.
+          Toute reproduction, représentation, modification, publication, adaptation,
+          totale ou partielle, des éléments du site, quel que soit le moyen ou le
+          procédé utilisé, est interdite sans l'autorisation écrite préalable de
+          Pradel Elagage.
+        </p>
+
+        <h2>Responsabilité</h2>
+        <p>
+          Pradel Elagage ne pourra être tenu responsable des dommages directs ou
+          indirects résultant de l'utilisation du site, notamment d'une perte de
+          données, d'un virus, d'une interruption de service ou d'une erreur
+          technique.
+        </p>
+
+        <h2>Données personnelles</h2>
+        <p>
+          Les informations recueillies via le formulaire de contact sont utilisées
+          uniquement pour répondre à vos demandes. Elles ne sont jamais cédées à
+          des tiers. Conformément à la loi "Informatique et Libertés" du 6 janvier
+          1978 modifiée et au RGPD, vous disposez d'un droit d'accès, de
+          rectification et de suppression des données vous concernant.
+        </p>
+
+        <h2>Cookies</h2>
+        <p>
+          Ce site utilise des cookies pour améliorer votre expérience de
+          navigation. Vous pouvez à tout moment accepter ou refuser ces cookies
+          via la bannière de consentement.
+        </p>
+      </div>
+    </div>
+  </article>
+</MainLayout>
+
+<style>
+  .containerSinglePage {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    transform: translateY(-44vh);
+  }
+
+  .paragrapheSingle {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: auto;
+    align-items: center;
+    margin-right: 4vw;
+  }
+
+  .paragrapheSingle :global(h2) {
+    font-family: var(--font-heading);
+    font-size: 3vw;
+    margin-bottom: 3vh;
+    margin-top: 5vh;
+    text-align: center;
+  }
+
+  .paragrapheSingle :global(p) {
+    margin-bottom: 3vh;
+    font-size: 1.2vw;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .containerSinglePage {
+      flex-direction: column;
+      transform: translateY(0);
+    }
+
+    .paragrapheSingle {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .paragrapheSingle :global(h2) {
+      font-size: 7vw;
+    }
+
+    .paragrapheSingle :global(p) {
+      width: 100%;
+      height: auto;
+      font-size: 5vw;
+      padding: 2vh;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('.animated-element');
+    animatedElements.forEach((el) => el.classList.add('animate'));
+  });
+</script>

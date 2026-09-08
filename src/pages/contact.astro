@@ -1,0 +1,275 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site.js';
+
+const title = 'Contact — Pradel Elagage à Thiers (63300) | Élagage, Bois, TP';
+const description = 'Contactez Pradel Elagage à Thiers pour vos besoins en élagage, abattage, bois de chauffage et travaux TP. Téléphone, email ou formulaire de contact. Devis gratuit.';
+const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID?.trim() ?? '';
+---
+
+<MainLayout title={title} description={description} footerVariant="page">
+  <PageHero
+    image="/img/foret.png"
+    imageAlt="Contact Pradel Elagage Thiers"
+    title="CONTACT"
+  />
+
+  <div class="containerContact">
+    <article class="post">
+      <div class="containerSinglePage">
+        <div class="paragrapheSingle">
+          <h1 class="titreContactPage">Laissez-moi un message</h1>
+          <p class="contenuContact">
+            Pour toute demande d'élagage, d'abattage, de bois de chauffage ou de
+            travaux TP, n'hésitez pas à me contacter. Je vous répondrai dans les
+            meilleurs délais.
+          </p>
+          <p class="contenuContact">
+            📞 <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br />
+            ✉️ <a href={`mailto:${site.email}`}>{site.email}</a><br />
+            📍 {site.address.street}, {site.address.locality}, {site.address.postalCode} {site.address.city}
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <div class="containerForm fade-in-contact">
+      {formspreeId ? (
+        <form action={`https://formspree.io/f/${formspreeId}`} method="post">
+          <input type="hidden" name="_subject" value="Nouveau message depuis pradel-elagage.fr" />
+
+          <label class="txtForm" for="favoriteOnly">Quel est l'objet de votre email :</label>
+          <select name="objet" id="favoriteOnly" required>
+            <option value="Elagage">Elagage</option>
+            <option value="Abattage">Abattage</option>
+            <option value="Bois de chauffage">Bois de chauffage</option>
+            <option value="Travaux TP">Travaux TP</option>
+            <option value="Autre">Autre</option>
+          </select>
+
+          <label class="txtForm" for="name">Nom :</label>
+          <input type="text" name="name" id="name" autocomplete="name" required />
+
+          <label class="txtForm" for="email">Email :</label>
+          <input type="email" name="email" id="email" autocomplete="email" required />
+
+          <label class="txtForm" for="phone">Téléphone (optionnel) :</label>
+          <input type="tel" name="phone" id="phone" autocomplete="tel" />
+
+          <label class="txtForm" for="message">Message :</label>
+          <textarea name="message" id="message" required></textarea>
+
+          <p class="privacy-notice">Les informations saisies sont transmises à Formspree afin de répondre à votre demande. Consultez nos <a href="/mentions-legales/">mentions légales et informations de confidentialité</a>.</p>
+          <button type="submit" class="btnForm">Envoyer ✉️</button>
+        </form>
+      ) : (
+        <div class="formFallback" role="status">
+          <h2>Formulaire temporairement indisponible</h2>
+          <p>Vous pouvez nous contacter directement par téléphone au <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a> ou par email à <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+        </div>
+      )}
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  .containerContact {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transform: translateY(-55vh);
+    z-index: 5000;
+  }
+
+  .containerContact article {
+    width: 40%;
+    height: auto;
+  }
+
+  .containerSinglePage {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+  }
+
+  .paragrapheSingle {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .paragrapheSingle :global(p) {
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 2vh;
+  }
+
+  .titreContactPage {
+    text-align: center;
+    margin-bottom: 2vh;
+  }
+
+  .containerForm {
+    width: 30%;
+    height: auto;
+    padding: 2vw;
+    margin-left: 5vw;
+    border-radius: 20px;
+    box-shadow:
+      inset 0 0 0.5px 1px hsla(0, 0%, 100%, 0.075),
+      0 0 0 1px hsla(0, 0%, 0%, 0.05),
+      0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
+      0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
+      0 3.5px 6px hsla(0, 0%, 0%, 0.09);
+    background: linear-gradient(to right, #ffffff, #ece9e6);
+  }
+
+  .containerForm form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .containerForm form select,
+  .containerForm form input,
+  .containerForm form textarea {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 14px;
+    width: 100%;
+    max-width: 25vw;
+    margin: 5px 0;
+  }
+
+  .containerForm form textarea {
+    padding-top: 2vh;
+    padding-bottom: 10vh;
+    padding-left: 2vh;
+    padding-right: 2vh;
+  }
+
+  .containerForm form select {
+    margin-top: 10px;
+  }
+
+  .containerForm form .txtForm {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 1vh;
+  }
+
+  .containerForm form .btnForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--btnColor);
+    width: 45%;
+    border-radius: 10px;
+    color: var(--color1);
+    border: transparent;
+    padding: 2vh;
+    margin: 2vh;
+    font-size: 1.2vw;
+    font-family: var(--font-body);
+    font-weight: 800;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease,
+      background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .containerForm form .btnForm::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+
+  .containerForm form .btnForm:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background-color: var(--btnColorHover);
+    color: var(--txtColor);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .containerForm form .btnForm:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .fade-in-contact {
+    animation: fadeInContact 1s ease-in-out forwards;
+  }
+
+  @keyframes fadeInContact {
+    from {
+      opacity: 0;
+      transform: translateY(-50vh);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .containerContact {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      transform: translateY(-8vh);
+    }
+
+    .containerContact article {
+      height: auto;
+      width: 100%;
+    }
+
+    .containerForm {
+      width: 90%;
+      height: auto;
+      margin-left: 0;
+    }
+
+    .containerForm form select,
+    .containerForm form input,
+    .containerForm form textarea {
+      max-width: 80%;
+    }
+
+    .paragrapheSingle :global(p) {
+      font-size: 5vw;
+      text-align: center;
+      padding: 5vw;
+      transform: translateY(-23vh);
+    }
+
+    .titreContactPage {
+      width: 100%;
+      font-size: 7vw;
+      transform: translateY(-20vh);
+      margin-bottom: 0;
+    }
+
+    .containerForm form .btnForm {
+      font-size: 5vw;
+    }
+  }
+</style>

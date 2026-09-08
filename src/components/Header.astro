@@ -1,0 +1,332 @@
+---
+import { navLinks } from '../data/site.js';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="header">
+  {/* Menu responsive (burger) */}
+  <div class="containerMenuHeaderResponsive">
+    <button id="burger-menu" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span>
+    </button>
+    <a href="/">
+      <img src="/img/LogoTeddyV2.webp" alt="Logo Elagage Thiers" />
+    </a>
+    <nav id="menu" aria-label="Navigation mobile">
+      <ul>
+        {navLinks.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+
+  {/* Menu classique desktop */}
+  <nav class="containerMenuHeader" aria-label="Navigation principale">
+    {navLinks.slice(0, 2).map((link) => (
+      <a
+        class={`lienMenu ${link.class}`}
+        href={link.href}
+        aria-current={currentPath === link.href ? 'page' : undefined}
+      >
+        {link.label.toUpperCase()}
+      </a>
+    ))}
+
+    <div class="containerLogo">
+      <a href="/">
+        <img class="logoHeader" src="/img/LogoTeddy.png" alt="Logo Elagage Thiers" />
+      </a>
+    </div>
+
+    {navLinks.slice(2).map((link) => (
+      <a
+        class={`lienMenu ${link.class}`}
+        href={link.href}
+        aria-current={currentPath === link.href ? 'page' : undefined}
+      >
+        {link.label.toUpperCase()}
+      </a>
+    ))}
+  </nav>
+</header>
+
+<style>
+  .header {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%);
+  }
+
+  .containerMenuHeader {
+    width: 80vw;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .containerMenuHeader a {
+    width: 20vw;
+  }
+
+  .lienMenu {
+    min-width: 236px;
+    min-height: 95px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -12vh;
+    font-family: var(--font-heading);
+    font-size: xx-large;
+    font-weight: bolder;
+    text-decoration: none;
+    color: var(--colorVar3);
+    transition: background 0.2s ease, text-shadow 0.3s ease, color 0.3s ease;
+  }
+
+  .lienMenu:hover {
+    color: var(--colorVar2);
+  }
+
+  .lienMenu[aria-current="page"] {
+    color: var(--colorVar2);
+  }
+
+  .backgroundImage {
+    position: absolute;
+    top: -10%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -300;
+  }
+
+  .containerMenuHeaderResponsive {
+    display: none;
+  }
+
+  .containerLogo img {
+    max-width: 200px;
+    height: auto;
+  }
+
+  /* Burger menu responsive */
+  @media screen and (max-width: 768px) {
+    .containerMenuHeader {
+      display: none;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 500000;
+      width: 100%;
+      height: auto;
+      flex-direction: row;
+      background: var(--colorVar3);
+      background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%);
+    }
+
+    .containerMenuHeaderResponsive {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+      height: auto;
+    }
+
+    .containerMenuHeaderResponsive a {
+      display: flex;
+      align-items: center;
+    }
+
+    .containerMenuHeaderResponsive img {
+      width: 50%;
+      height: auto;
+    }
+
+    #burger-menu {
+      cursor: pointer;
+      height: 27px;
+      width: 27px;
+      margin: 50px;
+      overflow: visible;
+      position: relative;
+      z-index: 2;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    #burger-menu span,
+    #burger-menu span::before,
+    #burger-menu span::after {
+      background: var(--btnColor);
+      display: block;
+      height: 4px;
+      opacity: 1;
+      position: absolute;
+      transition: 0.3s ease-in-out;
+    }
+
+    #burger-menu span::before,
+    #burger-menu span::after {
+      content: "";
+    }
+
+    #burger-menu span {
+      right: 0px;
+      top: 13px;
+      width: 27px;
+    }
+
+    #burger-menu span::before {
+      left: 0px;
+      top: -10px;
+      width: 16px;
+    }
+
+    #burger-menu span::after {
+      left: 0px;
+      top: 10px;
+      width: 20px;
+    }
+
+    #burger-menu.close span {
+      transform: rotate(-45deg);
+      top: 13px;
+      width: 27px;
+    }
+
+    #burger-menu.close span::before {
+      top: 0px;
+      transform: rotate(90deg);
+      width: 27px;
+    }
+
+    #burger-menu.close span::after {
+      top: 0px;
+      left: 0;
+      transform: rotate(90deg);
+      opacity: 0;
+      width: 0;
+    }
+
+    #menu {
+      z-index: 1;
+      min-width: 100%;
+      min-height: 100%;
+      position: fixed;
+      top: 0;
+      height: 0;
+      visibility: hidden;
+      opacity: 0;
+      text-align: center;
+      padding-top: 20px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    #menu.overlay {
+      visibility: visible;
+      opacity: 1;
+      padding-top: 100px;
+      background: rgba(29, 58, 63, 0.85);
+    }
+
+    #menu ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #menu a {
+      color: #fff;
+      display: block;
+      font-size: 32px;
+      margin-bottom: 30px;
+      text-decoration: none;
+      font-family: var(--font-heading);
+    }
+  }
+</style>
+
+<script>
+  // Burger menu toggle
+  const burgerMenu = document.getElementById('burger-menu');
+  const overlay = document.getElementById('menu');
+
+  burgerMenu?.addEventListener('click', () => {
+    const expanded = burgerMenu.getAttribute('aria-expanded') === 'true';
+    burgerMenu.classList.toggle('close');
+    overlay?.classList.toggle('overlay');
+    burgerMenu.setAttribute('aria-expanded', String(!expanded));
+    burgerMenu.setAttribute('aria-label', expanded ? 'Ouvrir le menu' : 'Fermer le menu');
+  });
+
+  // Fermer le menu après clic sur un lien
+  overlay?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      burgerMenu?.classList.remove('close');
+      overlay?.classList.remove('overlay');
+      burgerMenu?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Image de fond au survol des liens du menu desktop
+  const lienMenus = document.querySelectorAll('.lienMenu');
+  const imageBaseUrl = '/img/';
+  const currentPageUrl = window.location.href;
+
+  const iconMap: Record<string, string> = {
+    'page-accueil': 'IconeAccueil.png',
+    'page-contact': 'IconeContact.png',
+    'page-elagage': 'IconeElagage.png',
+    'page-bois': 'IconeBois.png',
+    'page-tp': 'un-camion.webp',
+  };
+
+  lienMenus.forEach((lienMenu) => {
+    const backgroundImage = document.createElement('div');
+    backgroundImage.classList.add('backgroundImage');
+
+    const menuLinkUrl = lienMenu.getAttribute('href');
+    const fullUrl = menuLinkUrl ? new URL(menuLinkUrl, window.location.origin).href : '';
+
+    if (currentPageUrl === fullUrl) {
+      backgroundImage.style.opacity = '0.2';
+    }
+
+    for (const [className, icon] of Object.entries(iconMap)) {
+      if (lienMenu.classList.contains(className)) {
+        backgroundImage.style.backgroundImage = `url(${imageBaseUrl}${icon})`;
+        break;
+      }
+    }
+
+    lienMenu.appendChild(backgroundImage);
+
+    lienMenu.addEventListener('mouseenter', () => {
+      backgroundImage.style.opacity = '0.2';
+    });
+
+    lienMenu.addEventListener('mouseleave', () => {
+      if (currentPageUrl !== fullUrl) {
+        backgroundImage.style.opacity = '0';
+      }
+    });
+  });
+</script>

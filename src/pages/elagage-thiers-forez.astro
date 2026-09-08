@@ -1,0 +1,142 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Carousel from '../components/Carousel.astro';
+import InfoCards from '../components/InfoCards.astro';
+
+const title = 'Élagage à Thiers (63300) — Pradel Elagage | Élagage et abattage sécurisé';
+const description = 'Service d\'élagage et d\'abattage à Thiers par Pradel Elagage. Intervention en zones délicates, proches de lignes électriques et téléphoniques. Maintien de la sécurité des bâtiments et santé de vos arbres. Devis gratuit.';
+
+// TODO: remplacer par les images réelles depuis la BDD WordPress (champs ACF imgcarrousel1, imgcarrousela, etc.)
+const carouselImages = [
+  { src: '/img/foret.png', alt: 'Élagage Thiers — intervention sur arbre' },
+  { src: '/img/arbre.png', alt: 'Abattage Thiers — zone délicate' },
+  { src: '/img/chainsaw.webp', alt: 'Tronçonneuse élagage Thiers' },
+  { src: '/img/tree.webp', alt: 'Arbre élagué Thiers Forez' },
+];
+
+// TODO: remplacer par les contenus réels depuis la BDD (champs ACF imgCard, titreCard1, txtcard1, etc.)
+const infoCards = [
+  {
+    image: '/img/chainsaw.webp',
+    imageAlt: 'Élagage Thiers',
+    title: 'ÉLAGAGE',
+    text: 'Taille et entretien de vos arbres pour préserver leur santé et garantir la sécurité de votre propriété.',
+  },
+  {
+    image: '/img/arbreRelou.webp',
+    imageAlt: 'Abattage Thiers',
+    title: 'ABATTAGE',
+    text: 'Abattage sécurisé dans les zones délicates, proches de lignes électriques et téléphoniques.',
+  },
+  {
+    image: '/img/foret.png',
+    imageAlt: 'Débroussaillage Thiers',
+    title: 'DÉBROUSSAILLAGE',
+    text: 'Débroussaillage et nettoyage de votre terrain pour un espace propre et sécurisé.',
+  },
+  {
+    image: '/img/tree.webp',
+    imageAlt: 'Entretien arbres Thiers',
+    title: 'ENTRETIEN',
+    text: 'Entretien régulier de vos espaces verts pour un environnement sain et agréable.',
+  },
+];
+---
+
+<MainLayout title={title} description={description} footerVariant="page">
+  <PageHero
+    image="/img/foret.png"
+    imageAlt="Élagage Thiers 63300 — Pradel Elagage"
+    title="ÉLAGAGE"
+  />
+
+  <article class="post">
+    <div class="containerSinglePage">
+      <Carousel images={carouselImages} />
+
+      <div class="paragrapheSingle animated-element">
+        <p>
+          Mes compétences en <strong>élagage</strong> 🌳 me permettent de travailler
+          dans les meilleures conditions afin de <strong>maintenir la sécurité</strong> 🦺
+          des bâtiments tout en préservant la <strong>santé</strong> de vos arbres.
+        </p>
+        <p>
+          Votre <strong>partenaire de confiance</strong> pour tous vos besoins en
+          <strong>abattage</strong> dans des <strong>zones délicates</strong> ⚠️
+          et/ou proches de <strong>lignes électriques</strong> ⚡ et
+          <strong>téléphoniques</strong> ☎️.
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <InfoCards cards={infoCards} />
+</MainLayout>
+
+<style>
+  .containerSinglePage {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    transform: translateY(-44vh);
+  }
+
+  .paragrapheSingle {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: auto;
+    align-items: center;
+    margin-right: 4vw;
+  }
+
+  .paragrapheSingle :global(p) {
+    margin-bottom: 3vh;
+    font-size: 1.2vw;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .containerSinglePage {
+      flex-direction: column;
+      transform: translateY(0);
+    }
+
+    .paragrapheSingle {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .paragrapheSingle :global(p) {
+      width: 100%;
+      height: auto;
+      font-size: 5vw;
+      padding: 2vh;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('.animated-element');
+    animatedElements.forEach((el) => el.classList.add('animate'));
+  });
+
+  document.addEventListener('scroll', () => {
+    const animatedElements2 = document.querySelectorAll('.animated-element-2');
+    const windowHeight = window.innerHeight;
+
+    animatedElements2.forEach((el) => {
+      const elementOffset = el.getBoundingClientRect().top;
+      if (elementOffset < windowHeight * 1) {
+        el.classList.add('animate');
+      }
+    });
+  });
+</script>

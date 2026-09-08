@@ -1,0 +1,56 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const title = 'Erreur 404 — Page non trouvée | Pradel Elagage';
+const description = 'La page que vous recherchez est introuvable. Retournez à l\'accueil de Pradel Elagage.';
+---
+
+<MainLayout title={title} description={description} footerVariant="page" noindex={true}>
+  <div class="container404">
+    <h1 class="title404">Erreur 404</h1>
+    <p class="text404">Désolé, la page que vous recherchez est introuvable.</p>
+    <a href="/" class="btn-pradel btn404">Retour à l'accueil</a>
+  </div>
+</MainLayout>
+
+<style>
+  .container404 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    padding: 5vh 2vw;
+  }
+
+  .title404 {
+    font-size: 6vw;
+    color: var(--colorVar3);
+    margin-bottom: 3vh;
+  }
+
+  .text404 {
+    font-size: 1.5vw;
+    margin-bottom: 5vh;
+  }
+
+  .btn404 {
+    font-size: 1.5vw;
+    padding: 2vh 3vw;
+  }
+
+  @media (max-width: 768px) {
+    .title404 {
+      font-size: 12vw;
+    }
+
+    .text404 {
+      font-size: 5vw;
+    }
+
+    .btn404 {
+      font-size: 4vw;
+    }
+  }
+</style>

@@ -1,0 +1,59 @@
+# Configuration Apache pour Astro (mode statique) sur O2switch.
+# Ce fichier est copié automatiquement dans dist/ lors du build
+# (Astro copie tout le contenu de public/ à la racine de dist/).
+
+# Compression et cache pour les fichiers statiques
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+  ExpiresByType application/octet-stream "access plus 1 year"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# En-têtes de sécurité de base
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# Ne jamais servir de fichiers .env ou de config sensible
+<FilesMatch "^\.env">
+  Require all denied
+</FilesMatch>
+
+# Redirections depuis les anciennes URLs WordPress vers les nouvelles pages Astro
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Anciennes URLs WordPress → nouvelles pages Astro
+  RewriteRule ^elagage-thiers-forez/?$ /elagage-thiers-forez/ [L,R=301]
+  RewriteRule ^bois-de-chauffage-thiers/?$ /bois-de-chauffage-thiers/ [L,R=301]
+  RewriteRule ^contact/?$ /contact/ [L,R=301]
+  RewriteRule ^mentions-legales/?$ /mentions-legales/ [L,R=301]
+
+  # Rediriger wp-login.php, wp-admin et autres fichiers WP vers la home (sécurité)
+  RewriteRule ^wp-(login|admin|content|includes|config)/?.*$ / [L,R=301]
+  RewriteRule ^xmlrpc\.php$ / [L,R=301]
+
+  # Fallback pour les pages statiques Astro
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ /404.html [L]
+</IfModule>
+
+# Page d'erreur 404 personnalisée
+ErrorDocument 404 /404.html

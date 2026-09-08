@@ -1,12 +1,8 @@
-# === Sécurité : ne JAMAIS committer les identifiants / secrets ===
-wp-config.php
-wp-config-sample.php
-.ftpquota
-.htaccess
-.htaccess.wpmanager.bkp
+# === Sauvegarde WordPress locale : ne jamais versionner ===
+wordpress-backup/
 
-# === Fichiers serveur non pertinents pour le code ===
-.well-known/
+# Astro generated
+.astro/
 
 # === Astro (refonte à venir) ===
 # build output

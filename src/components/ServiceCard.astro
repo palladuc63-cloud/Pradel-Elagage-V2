@@ -1,0 +1,94 @@
+---
+export interface Props {
+  title: string;
+  icon: string;
+  iconAlt: string;
+  description: string;
+  link: string;
+  linkLabel: string;
+}
+
+const { title, icon, iconAlt, description, link, linkLabel } = Astro.props;
+---
+
+<div class="shapeWhiteOrder">
+  <img class="svgCardHome" src="/svg/imgBackgroundHomePageOffer.svg" alt={title} loading="eager" />
+  <img class="imgOrigamiPreparation" src={icon} alt={iconAlt} loading="eager" />
+  <h1>{title}</h1>
+  <p set:html={description} />
+  <a href={link} class="btn-pradel card-btn">{linkLabel}</a>
+</div>
+
+<style>
+  .shapeWhiteOrder {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .svgCardHome {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+  }
+
+  .shapeWhiteOrder:hover .svgCardHome {
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.5));
+  }
+
+  .shapeWhiteOrder :global(p) {
+    width: 80%;
+    height: auto;
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    text-align: center;
+    font-size: 1vw;
+  }
+
+  .shapeWhiteOrder h1 {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100%;
+    text-align: center;
+  }
+
+  .imgOrigamiPreparation {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+  }
+
+  .card-btn {
+    width: 9vw;
+    height: 6vh;
+    transform: translateY(-21vh);
+  }
+
+  @media (max-width: 768px) {
+    .shapeWhiteOrder :global(p) {
+      font-size: 5vw;
+    }
+
+    .shapeWhiteOrder h1 {
+      font-size: 2em;
+    }
+
+    .card-btn {
+      width: 40vw;
+      height: 7vh;
+      font-size: 5vw;
+    }
+
+    .imgOrigamiPreparation {
+      width: 60%;
+      height: auto;
+    }
+  }
+</style>

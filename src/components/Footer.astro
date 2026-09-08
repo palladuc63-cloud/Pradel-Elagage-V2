@@ -1,0 +1,404 @@
+---
+import { site } from '../data/site.js';
+
+export interface Props {
+  variant?: 'default' | 'page';
+}
+
+const { variant = 'page' } = Astro.props;
+const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY?.trim() ?? '';
+---
+
+{variant === 'default' ? (
+  <div class="containerMap">
+    <div class="custom-shape-divider-top">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+      </svg>
+    </div>
+
+    <div
+      id="google-map"
+      class="googleMaps"
+      data-api-key={googleMapsApiKey}
+      data-lat={site.geo.lat}
+      data-lng={site.geo.lng}
+      role="region"
+      aria-label="Carte de localisation de Pradel Elagage"
+    >
+      <p class="map-status" role="status">
+        {googleMapsApiKey
+          ? 'La carte Google Maps est désactivée tant que vous n’avez pas accepté les services externes.'
+          : 'La carte est indisponible. Retrouvez notre adresse et nos coordonnées ci-dessous.'}
+      </p>
+    </div>
+
+    <div class="containerFooter">
+      <img class="logoPradelFooter" src="/img/LogoTeddyFooterV2.webp" alt="Logo Pradel Elagage Thiers" />
+
+      <div class="containerAdresseContact">
+        <h1>ADRESSE</h1>
+        <p>
+          {site.address.street}<br />
+          {site.address.locality}<br />
+          {site.address.postalCode} {site.address.city}
+        </p>
+
+        <h1>CONTACT</h1>
+        <p>
+          <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br />
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+
+      <div class="containerReseauxMentionsLegales">
+        <h1 class="footerReseauxEtMentionsLegales">RESEAUX</h1>
+        <div class="logoReseauxFooter">
+          <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <img class="facebookPradelElagageFooter" src="/img/facebook.webp" alt="Facebook Pradel Elagage" />
+          </a>
+          <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <img class="linkedinThiersElagageFooter" src="/img/linkedin.webp" alt="LinkedIn Pradel Elagage" />
+          </a>
+        </div>
+        <h1 class="footerReseauxEtMentionsLegales">
+          <a href="/mentions-legales/">MENTIONS LEGALES</a>
+        </h1>
+      </div>
+    </div>
+  </div>
+) : (
+  <div>
+    {/* Séparateur chaîne des Puys */}
+    <div class="containerSperatorPuyFooter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 847.3 91.7">
+        <path fill="var(--colorVar2)" d="M843.6,54.9c-10.4-2.4-30.7-10.5-40.8-13.4c-9.4-2.6-18.7-3.3-28.4-1.4c-3.2,0.6-7.5,1.1-9.9-0.5c-7.6-5.1-13.6-1.7-19.9,2.1c-8.6,5.3-17.7,8.2-27.9,7c-6.7-0.8-13.6-1.1-20.2-2.5c-12.2-2.6-24.3-6.2-36.5-8.8c-3.6-0.8-8.6-1.3-11.3,0.5c-12.4,8.4-25.6,9.3-39.4,5.7c-14.5-3.8-28.8-8.1-43.2-12c-2.1-0.6-5-0.9-6.7,0.1c-7.4,4.5-13.8,2.8-20.6-1.6c-13.7-8.9-27.8-17.1-41.8-25.7c-2.2-1.3-4.1-3-5.8-4.3c-0.4,0.5-1.5,3.5-3.2,3.8c-7.6,1.8-15.4,3.8-23.1,3.9c-12.4,0.1-24,2.8-33.7,9.9c-16.3,11.9-31.4,25.4-52.7,27.4c-1.6,0.1-3.1,0.5-4.6,1.1c-12,4.8-23.6,2.9-35-1.9c-4.3-1.8-8.3-2.6-13.2-1.2c-5.8,1.6-12.4,3.3-18,2c-13.5-3.1-26.7-3.9-40.2-0.4c-1.8,0.5-4.2,0.9-5.8,0.2c-13.4-5.8-27.2-5.5-41.1-2.5c-6.3,1.3-12,3.3-19.3,0.7c-12.8-4.5-26.7-6.2-39.9-9.7c-15-3.9-66.5,2.4-79.7,11.1c-1.2,0.8-36.9,4-41.7,9L0,53.5v38.4h847.3v-37H843.6z" />
+      </svg>
+    </div>
+
+    <div class="containerFooterPage">
+      <img class="logoPradelFooterPage" src="/img/LogoTeddyFooterV2.webp" alt="Logo Pradel Elagage Thiers" />
+
+      <div class="containerAdresseContactPage">
+        <div class="containerAdresseColumn">
+          <h1>ADRESSE</h1>
+          <p>
+            {site.address.street}<br />
+            {site.address.locality}<br />
+            {site.address.postalCode} {site.address.city}
+          </p>
+        </div>
+
+        <div class="containerAdresseColumn">
+          <h1>CONTACT</h1>
+          <p>
+            <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br />
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+{/* Menu responsive footer (mobile) */}
+<div class="containerMenuResponsive">
+  <div class="containerSperatorPuyFooter">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 847.3 91.7">
+      <path fill="#036344" d="M843.6,54.9c-10.4-2.4-30.7-10.5-40.8-13.4c-9.4-2.6-18.7-3.3-28.4-1.4c-3.2,0.6-7.5,1.1-9.9-0.5c-7.6-5.1-13.6-1.7-19.9,2.1c-8.6,5.3-17.7,8.2-27.9,7c-6.7-0.8-13.6-1.1-20.2-2.5c-12.2-2.6-24.3-6.2-36.5-8.8c-3.6-0.8-8.6-1.3-11.3,0.5c-12.4,8.4-25.6,9.3-39.4,5.7c-14.5-3.8-28.8-8.1-43.2-12c-2.1-0.6-5-0.9-6.7,0.1c-7.4,4.5-13.8,2.8-20.6-1.6c-13.7-8.9-27.8-17.1-41.8-25.7c-2.2-1.3-4.1-3-5.8-4.3c-0.4,0.5-1.5,3.5-3.2,3.8c-7.6,1.8-15.4,3.8-23.1,3.9c-12.4,0.1-24,2.8-33.7,9.9c-16.3,11.9-31.4,25.4-52.7,27.4c-1.6,0.1-3.1,0.5-4.6,1.1c-12,4.8-23.6,2.9-35-1.9c-4.3-1.8-8.3-2.6-13.2-1.2c-5.8,1.6-12.4,3.3-18,2c-13.5-3.1-26.7-3.9-40.2-0.4c-1.8,0.5-4.2,0.9-5.8,0.2c-13.4-5.8-27.2-5.5-41.1-2.5c-6.3,1.3-12,3.3-19.3,0.7c-12.8-4.5-26.7-6.2-39.9-9.7c-15-3.9-66.5,2.4-79.7,11.1c-1.2,0.8-36.9,4-41.7,9L0,53.5v38.4h847.3v-37H843.6z" />
+    </svg>
+  </div>
+
+  <div class="containerFooterPage">
+    <img class="logoPradelFooterPage" src="/img/LogoTeddyFooterV2.webp" alt="Logo Pradel Elagage Thiers" />
+    <div class="containerAdresseContactPage">
+      <div class="containerAdresseColumn">
+        <h1>Adresse</h1>
+        <p>
+          {site.address.street}<br />
+          {site.address.locality}<br />
+          {site.address.postalCode} {site.address.city}
+        </p>
+      </div>
+      <div class="containerAdresseColumn">
+        <h1>Contact</h1>
+        <p>
+          <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br />
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* === Footer default (avec Google Maps) === */
+  .custom-shape-divider-top {
+    width: 100%;
+    margin-bottom: -10vh;
+  }
+
+  .custom-shape-divider-top svg {
+    position: relative;
+    display: block;
+    width: calc(300% + 1.3px);
+    height: 110px;
+    z-index: 5;
+  }
+
+  .custom-shape-divider-top .shape-fill {
+    fill: #ffffff;
+  }
+
+  .containerMap {
+    overflow: hidden;
+    position: relative;
+    bottom: -120vh;
+    left: 0;
+    width: 100%;
+    height: 80vh;
+  }
+
+  .googleMaps {
+    width: 100%;
+    height: 80vh;
+  }
+
+  .containerFooter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    top: -35vh;
+    left: 25vw;
+    width: 50vw;
+    min-width: 500px;
+    min-height: 280px;
+    height: 25vh;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.85);
+  }
+
+  .containerFooter:hover {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    transition-duration: 100ms;
+    transition-property: background-color;
+  }
+
+  .footerReseauxEtMentionsLegales {
+    font-size: 1em;
+    font-weight: 800;
+  }
+
+  .containerReseauxMentionsLegales {
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 1.1vw;
+  }
+
+  .containerAdresseContact {
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+
+  .containerAdresseContact h1 {
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-size: 1.5vw;
+  }
+
+  .containerAdresseContact p {
+    font-size: 1vw;
+  }
+
+  .logoReseauxFooter {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .facebookPradelElagageFooter {
+    width: 50px;
+    height: 50px;
+    margin-right: 50px;
+  }
+
+  .linkedinThiersElagageFooter {
+    width: 50px;
+    height: 50px;
+  }
+
+  .logoPradelFooter {
+    width: 300px;
+    height: 230px;
+  }
+
+  /* === Footer page (simple) === */
+  .containerFooterPage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    background-color: var(--colorVar2);
+    transform: translateY(-10px);
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+    margin-top: -9vh;
+  }
+
+  .containerFooterPage img,
+  .containerAdresseContactPage {
+    padding-right: 3vw;
+  }
+
+  .containerAdresseContactPage {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .containerAdresseColumn {
+    display: flex;
+    flex-direction: column;
+    padding-right: 3vw;
+  }
+
+  .containerAdresseColumn p {
+    font-size: 1vw;
+    color: var(--color1);
+  }
+
+  .containerAdresseColumn h1 {
+    color: white;
+    text-shadow: 1px 3px 0px var(--colorVar3);
+  }
+
+  .containerMenuResponsive {
+    display: none;
+  }
+
+  /* Responsive */
+  @media screen and (max-width: 768px) {
+    .containerMap {
+      display: none;
+    }
+
+    .containerMenuResponsive {
+      display: block;
+    }
+
+    .containerFooterPage {
+      flex-direction: column;
+      width: 100%;
+      height: auto;
+      background-color: #036344;
+      transform: translateY(0);
+    }
+
+    .containerFooterPage img,
+    .containerAdresseContactPage {
+      padding-right: 0;
+      transform: translateY(-10vh);
+    }
+
+    .containerFooterPage img {
+      width: 80%;
+      height: auto;
+    }
+
+    .containerAdresseContactPage {
+      display: flex;
+      flex-direction: column;
+      margin-top: 5vh;
+    }
+
+    .containerAdresseColumn {
+      display: flex;
+      align-items: center;
+      padding-right: 0;
+    }
+
+    .containerAdresseColumn h1 {
+      font-size: 10vw;
+      font-weight: bold;
+      color: white;
+      text-shadow: 1px 3px 0px var(--colorVar3);
+    }
+
+    .containerAdresseColumn p {
+      font-size: 5vw;
+      font-weight: 400;
+    }
+
+    .containerSperatorPuyFooter {
+      transform: translateY(2vh);
+    }
+  }
+</style>
+
+<script>
+  declare global {
+    interface Window { google?: any; }
+  }
+
+  function loadGoogleMap() {
+    const mapElement = document.getElementById('google-map');
+    if (!(mapElement instanceof HTMLElement)) return;
+
+    const apiKey = mapElement.dataset.apiKey;
+    if (!apiKey) return;
+    if (localStorage.getItem('externalServicesConsent') !== 'accepted') {
+      if (mapElement.dataset.loaded === 'true') {
+        mapElement.dataset.loaded = 'false';
+        mapElement.innerHTML = '<p class="map-status" role="status">La carte Google Maps est désactivée selon vos préférences.</p>';
+      }
+      return;
+    }
+    if (mapElement.dataset.loaded === 'true') return;
+
+    mapElement.dataset.loaded = 'true';
+    mapElement.innerHTML = '<p class="map-status" role="status">Chargement de la carte…</p>';
+
+    const initialise = () => {
+      if (!window.google) return;
+      const companyLocation = {
+        lat: Number(mapElement.dataset.lat),
+        lng: Number(mapElement.dataset.lng),
+      };
+      mapElement.innerHTML = '';
+      const map = new window.google.maps.Map(mapElement, {
+        center: companyLocation,
+        zoom: 13,
+        mapTypeControl: false,
+      });
+      new window.google.maps.Marker({ position: companyLocation, map, title: 'Pradel Elagage' });
+    };
+
+    if (window.google) {
+      initialise();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}`;
+    script.async = true;
+    script.addEventListener('load', initialise, { once: true });
+    script.addEventListener('error', () => {
+      mapElement.dataset.loaded = 'false';
+      mapElement.innerHTML = '<p class="map-status" role="status">La carte n’a pas pu être chargée. Utilisez les coordonnées ci-dessous.</p>';
+    }, { once: true });
+    document.head.append(script);
+  }
+
+  document.addEventListener('astro:page-load', loadGoogleMap);
+  window.addEventListener('external-services-consent', loadGoogleMap);
+</script>

@@ -1,0 +1,93 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Slider from '../components/Slider.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import PuySeparator from '../components/PuySeparator.astro';
+import { homeServices } from '../data/site.js';
+
+const title = 'Pradel Elagage — Élagage, Abattage, Bois de chauffage & Travaux TP à Thiers (63300)';
+const description = 'Pradel Elagage à Thiers : élagage, abattage sécurisé, vente et livraison de bois de chauffage, et travaux TP. Intervention sur Thiers, le Forez et la montagne Thiernoise. Devis gratuit.';
+---
+
+<MainLayout title={title} description={description} footerVariant="default">
+  <Slider />
+
+  {/* Séparateur chaîne des Puys */}
+  <PuySeparator />
+
+  {/* Cards services */}
+  <div class="containerShapeElagageBois">
+    <div class="blocShapeOrder">
+      {homeServices.map((service) => (
+        <ServiceCard
+          title={service.title}
+          icon={service.icon}
+          iconAlt={service.iconAlt}
+          description={service.description}
+          link={service.link}
+          linkLabel={service.linkLabel}
+        />
+      ))}
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  .containerShapeElagageBois {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: -82vh;
+    z-index: 500;
+  }
+
+  .blocShapeOrder {
+    width: 90vw;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: hidden;
+    gap: 2vw;
+  }
+
+  @media (max-width: 768px) {
+    .blocShapeOrder {
+      width: 100%;
+      height: auto;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+      margin: 10px;
+    }
+
+    .containerShapeElagageBois {
+      width: 100%;
+      margin-top: -22vh;
+      margin-bottom: 5vh;
+      z-index: 500;
+    }
+  }
+</style>
+
+<script>
+  // Animations fade-in au chargement et au scroll
+  document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('.animated-element');
+    animatedElements.forEach((el) => el.classList.add('animate'));
+  });
+
+  document.addEventListener('scroll', () => {
+    const animatedElements2 = document.querySelectorAll('.animated-element-2');
+    const windowHeight = window.innerHeight;
+
+    animatedElements2.forEach((el) => {
+      const elementOffset = el.getBoundingClientRect().top;
+      if (elementOffset < windowHeight * 1) {
+        el.classList.add('animate');
+      }
+    });
+  });
+</script>

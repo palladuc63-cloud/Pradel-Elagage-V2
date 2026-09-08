@@ -1,0 +1,111 @@
+---
+export interface Props {
+  cards: {
+    image?: string;
+    imageAlt?: string;
+    title: string;
+    text: string;
+  }[];
+}
+
+const { cards } = Astro.props as Props;
+---
+
+<div class="containerInformationSingle animated-element-2">
+  {cards.map((card) => (
+    <div class="containerCARDSInformationSingle card-gradient">
+      {card.image && (
+        <img src={card.image} alt={card.imageAlt || ''} loading="lazy" />
+      )}
+      <h1>{card.title}</h1>
+      <p set:html={card.text} />
+    </div>
+  ))}
+</div>
+
+<style>
+  .containerInformationSingle {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    margin-top: -25vh;
+    position: relative;
+    z-index: 800;
+  }
+
+  .containerCARDSInformationSingle {
+    width: 20%;
+    height: auto;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .containerCARDSInformationSingle:hover {
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  .containerCARDSInformationSingle :global(p) {
+    padding: 30px 20px 60px 20px;
+    text-align: center;
+    font-size: 1.2em;
+    opacity: 0.8;
+  }
+
+  .containerCARDSInformationSingle:hover :global(p) {
+    opacity: 1;
+  }
+
+  .containerCARDSInformationSingle h1 {
+    font-size: 2vw;
+    text-align: center;
+    margin-top: 5vh;
+    opacity: 0.8;
+    color: var(--colorVar3);
+  }
+
+  .containerCARDSInformationSingle:hover h1 {
+    opacity: 1;
+    color: var(--colorVar2);
+  }
+
+  .containerCARDSInformationSingle img {
+    padding-bottom: 0;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .containerCARDSInformationSingle:hover img {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    .containerInformationSingle {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: static;
+      z-index: 800;
+      margin-top: 0;
+    }
+
+    .containerCARDSInformationSingle {
+      width: 80%;
+      margin-bottom: 5vh;
+    }
+
+    .containerCARDSInformationSingle:hover img {
+      transform: none;
+    }
+
+    .containerCARDSInformationSingle h1 {
+      font-size: 8vw;
+    }
+  }
+</style>

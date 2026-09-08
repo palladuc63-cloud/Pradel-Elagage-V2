@@ -1,0 +1,28 @@
+{
+  "name": "pradel-elagage",
+  "version": "2.0.0",
+  "description": "Site Pradel Elagage — élagage, abattage, bois de chauffage et travaux TP à Thiers. Refonte WordPress → Astro.",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev --host",
+    "dev:open": "astro dev --host --open",
+    "start": "astro dev --host",
+    "build": "astro build",
+    "check": "astro check",
+    "validate": "npm run check && npm run build && npm audit --omit=dev",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.1",
+    "swiper": "^14.2.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
+  }
+}

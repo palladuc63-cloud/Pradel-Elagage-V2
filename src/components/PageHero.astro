@@ -1,0 +1,62 @@
+---
+export interface Props {
+  image: string;
+  imageAlt: string;
+  title: string;
+}
+
+const { image, imageAlt, title } = Astro.props;
+---
+
+<div class="containerImagePresentation fade-in">
+  <div class="imgPrezSingle">
+    <img src={image} alt={imageAlt} />
+  </div>
+  <h1 class="titleSinglePage">{title}</h1>
+</div>
+
+<style>
+  .containerImagePresentation {
+    opacity: 0;
+    transform: translateY(-20vh);
+  }
+
+  .imgPrezSingle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .imgPrezSingle img {
+    width: 100%;
+    max-height: 60vh;
+    object-fit: cover;
+    z-index: -5;
+  }
+
+  .titleSinglePage {
+    width: 100%;
+    padding: 2vw 1vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 6vw;
+    transform: translateY(-25vh);
+    font-weight: 600;
+    text-shadow: 1px 3px 0px var(--colorVar3);
+  }
+
+  @media (max-width: 768px) {
+    .containerImagePresentation {
+      width: 100%;
+      height: 40vh;
+    }
+
+    .titleSinglePage {
+      font-size: 10vw;
+      transform: translateY(-10vh);
+    }
+  }
+</style>

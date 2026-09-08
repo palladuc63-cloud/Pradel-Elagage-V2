@@ -1,2 +1,0 @@
-var burgerMenu=document.getElementById('burger-menu');var overlay=document.getElementById('menu');burgerMenu.addEventListener('click',function(){this.classList.toggle("close");console.log('testpour vooir')
-overlay.classList.toggle("overlay");});

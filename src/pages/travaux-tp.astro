@@ -1,138 +1,97 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import PageHero from '../components/PageHero.astro';
-import Carousel from '../components/Carousel.astro';
-import InfoCards from '../components/InfoCards.astro';
+import { site } from '../data/site.js';
 
-const title = 'Travaux TP à Thiers (63300) — Pradel Elagage | Terrassement et défrichage';
-const description = 'Travaux TP à Thiers par Pradel Elagage : terrassement, défrichage, préparation de terrain, aménagement extérieur. Matériel professionnel pour vos projets. Devis gratuit.';
-
-// TODO: remplacer par les images réelles des travaux TP
-const carouselImages = [
-  { src: '/img/un-camion.webp', alt: 'Travaux TP Thiers — camion' },
-  { src: '/img/foret.png', alt: 'Défrichage Thiers — préparation terrain' },
-  { src: '/img/arbre.png', alt: 'Terrassement Thiers — travaux' },
+const title = 'Travaux TP et terrassement à Thiers — Mini-pelle | Pradel Élagage';
+const description = 'Travaux TP à Thiers : terrassement, nivellement, défrichage, préparation de terrain, accès et aménagement extérieur avec mini-pelle. Devis gratuit.';
+const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
+const assurances = [
+  { value: 'Local', label: 'autour de Thiers' },
+  { value: 'Précis', label: 'travail à la mini-pelle' },
+  { value: 'Complet', label: 'préparation et nettoyage' },
+  { value: 'Gratuit', label: 'devis sur place' },
 ];
-
-const infoCards = [
-  {
-    image: '/img/un-camion.webp',
-    imageAlt: 'Terrassement Thiers',
-    title: 'TERRASSEMENT',
-    text: 'Travaux de terrassement pour préparer votre terrain : nivellement, excavation, déblai-remblai.',
-  },
-  {
-    image: '/img/arbreRelou.webp',
-    imageAlt: 'Défrichage Thiers',
-    title: 'DÉFRICHAGE',
-    text: 'Défrichage et débroussaillage pour nettoyer et préparer votre terrain à l\'aménagement.',
-  },
-  {
-    image: '/img/chainsaw.webp',
-    imageAlt: 'Broyage Thiers',
-    title: 'BROYAGE',
-    text: 'Broyage de végétaux et branches pour valoriser les déchets verts et nettoyer votre terrain.',
-  },
-  {
-    image: '/img/foret.png',
-    imageAlt: 'Aménagement extérieur Thiers',
-    title: 'AMÉNAGEMENT',
-    text: 'Aménagement de vos espaces extérieurs : préparation de terrain, accès, chemins et plus encore.',
-  },
+const services = [
+  { icon: '↧', title: 'Terrassement', text: 'Décaissement, excavation et préparation du sol avant vos travaux de construction ou d’aménagement extérieur.' },
+  { icon: '⌁', title: 'Nivellement', text: 'Mise à niveau et réglage du terrain pour obtenir une surface propre, régulière et adaptée à votre projet.' },
+  { icon: '♧', title: 'Défrichage', text: 'Nettoyage des terrains envahis, retrait des végétaux gênants et préparation des zones à remettre en valeur.' },
+  { icon: '⇢', title: 'Création d’accès', text: 'Préparation de chemins, passages et accès de chantier pour faciliter la circulation sur votre propriété.' },
+  { icon: '⌂', title: 'Aménagement extérieur', text: 'Préparation des espaces destinés aux cours, terrasses, jardins, stationnements et autres installations.' },
+  { icon: '♻', title: 'Évacuation', text: 'Chargement et évacuation propre des matériaux, terres ou déchets végétaux issus de l’intervention.' },
+];
+const steps = [
+  { number: '01', title: 'Étude du terrain', text: 'Échange sur votre projet, visite des accès et repérage des contraintes techniques.' },
+  { number: '02', title: 'Préparation du chantier', text: 'Choix de la méthode, organisation des mouvements de terre et sécurisation de la zone.' },
+  { number: '03', title: 'Réalisation propre', text: 'Travaux précis, finitions soignées et évacuation selon les besoins convenus.' },
 ];
 ---
 
 <MainLayout title={title} description={description} footerVariant="page">
-  <PageHero
-    image="/img/un-camion.webp"
-    imageAlt="Travaux TP Thiers 63300 — Pradel Elagage"
-    title="TRAVAUX TP"
-  />
-
-  <article class="post">
-    <div class="containerSinglePage">
-      <Carousel images={carouselImages} />
-
-      <div class="paragrapheSingle animated-element">
-        <p>
-          Des <strong>travaux de terrassement</strong> et <strong>TP</strong>
-          réalisés avec un matériel professionnel 🚜 pour vos projets
-          d'aménagement, de défrichage et de préparation de terrain.
-        </p>
-        <p>
-          Interventions sur Thiers, le Forez et la montagne Thiernoise ⛰️.
-          <strong>Devis gratuit</strong> sur demande.
-        </p>
-      </div>
+  <section class="tp-hero">
+    <img src="/img/pexels-timothy-huliselan-205951426-20609454.jpg" alt="Mini-pelle pour travaux de terrassement à Thiers" fetchpriority="high" />
+    <div class="tp-hero-overlay"></div>
+    <div class="tp-hero-content">
+      <p class="eyebrow">Terrassement & aménagement à Thiers</p>
+      <h1>Travaux<br />TP</h1>
+      <p class="hero-lead">Une intervention précise à la mini-pelle pour préparer, nettoyer et transformer votre terrain dans la montagne Thiernoise et le Forez.</p>
+      <div class="hero-actions"><a class="primary-action" href="/contact/">Demander un devis</a><a class="secondary-action" href={phoneHref}>Appeler le {site.phone}</a></div>
     </div>
-  </article>
+    <svg class="hero-curve" viewBox="0 0 1200 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 55c220 65 370-45 600-20s390 75 600 5v60H0Z" /></svg>
+  </section>
 
-  <InfoCards cards={infoCards} />
+  <section class="assurance-strip" aria-label="Les engagements Travaux TP">
+    {assurances.map((item) => <div><strong>{item.value}</strong><span>{item.label}</span></div>)}
+  </section>
+
+  <section class="machine-section">
+    <div class="machine-visual">
+      <span class="machine-ring" aria-hidden="true"></span>
+      <img src="/svg/mini-pelle.svg" alt="Mini-pelle utilisée pour les travaux TP" />
+    </div>
+    <div class="machine-copy">
+      <p class="section-kicker">Du matériel adapté</p>
+      <h2>La précision d’une mini-pelle sur votre terrain</h2>
+      <p>Compacte et maniable, la mini-pelle permet d’intervenir avec précision dans les jardins, les accès étroits et les espaces proches des bâtiments. Elle limite l’emprise du chantier tout en apportant la puissance nécessaire aux opérations de terrassement et de préparation.</p>
+      <p>Chaque intervention commence par l’analyse du terrain, des accès et du résultat attendu. Cette préparation permet de travailler efficacement et de préserver autant que possible les zones qui ne sont pas concernées par les travaux.</p>
+      <ul><li>Accès aux espaces contraints</li><li>Travail précis près des constructions</li><li>Chantier organisé et finitions soignées</li></ul>
+    </div>
+  </section>
+
+  <section class="tp-services-section">
+    <div class="section-heading"><p class="section-kicker">Du premier coup de godet aux finitions</p><h2>Des solutions pour aménager vos extérieurs</h2><p>Les prestations sont adaptées à la configuration du terrain et à la nature de votre projet.</p></div>
+    <div class="tp-services-grid">
+      {services.map((service, index) => (
+        <article class="tp-service-card">
+          <div class="service-icon"><span>{service.icon}</span><small>{String(index + 1).padStart(2, '0')}</small></div>
+          <h3>{service.title}</h3><p>{service.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="project-section">
+    <div class="project-image"><img src="/img/pexels-timothy-huliselan-205951426-20609454.jpg" alt="Mini-pelle en intervention sur un chantier de terrassement" loading="lazy" /></div>
+    <div class="project-copy"><p class="section-kicker">Une intervention maîtrisée</p><h2>Votre chantier en trois étapes</h2><div class="steps">{steps.map((step) => <article><span>{step.number}</span><div><h3>{step.title}</h3><p>{step.text}</p></div></article>)}</div></div>
+  </section>
+
+  <section class="area-section">
+    <div><p class="section-kicker">Intervention locale</p><h2>Travaux TP dans la montagne Thiernoise</h2><p>Basé à Thiers, Pradel Élagage intervient également à Saint-Rémy-sur-Durolle, Courpière, Celles-sur-Durolle, Chabreloche, La Monnerie-le-Montel, Vollore-Ville, Puy-Guillaume, Noirétable et dans les communes voisines du Puy-de-Dôme et du Forez.</p><p>La faisabilité dépend des accès, de la pente, de la nature du sol et du volume de matériaux à déplacer. Une visite permet de définir une solution réaliste et un devis adapté.</p></div>
+    <img src="/svg/mini-pelle.svg" alt="" aria-hidden="true" />
+  </section>
+
+  <section class="final-cta">
+    <div><p class="section-kicker">Préparons votre terrain</p><h2>Un projet de terrassement à Thiers ?</h2><p>Expliquez votre besoin et convenons d’une visite pour évaluer les accès, les volumes et les contraintes du chantier.</p></div>
+    <div class="final-actions"><a class="primary-action" href="/contact/">Obtenir un devis</a><a class="outline-action" href={phoneHref}>{site.phone}</a></div>
+  </section>
 </MainLayout>
 
 <style>
-  .containerSinglePage {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: row;
-    transform: translateY(-44vh);
-  }
-
-  .paragrapheSingle {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: auto;
-    align-items: center;
-    margin-right: 4vw;
-  }
-
-  .paragrapheSingle :global(p) {
-    margin-bottom: 3vh;
-    font-size: 1.2vw;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  @media (max-width: 768px) {
-    .containerSinglePage {
-      flex-direction: column;
-      transform: translateY(0);
-    }
-
-    .paragrapheSingle {
-      width: 100%;
-      height: auto;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .paragrapheSingle :global(p) {
-      width: 100%;
-      height: auto;
-      font-size: 5vw;
-      padding: 2vh;
-    }
-  }
+  .tp-hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:clamp(680px,82vh,900px);overflow:hidden;color:#fff}.tp-hero>img,.tp-hero-overlay{position:absolute;inset:0;z-index:-2;width:100%;height:100%}.tp-hero>img{object-fit:cover;object-position:center 58%;transform:scaleX(-1)}.tp-hero-overlay{z-index:-1;background:linear-gradient(90deg,rgba(22,40,43,.86),rgba(29,52,58,.54) 48%,rgba(29,52,58,.08) 82%)}.tp-hero-content{width:min(1280px,88vw);margin:0 auto;padding-top:120px}.eyebrow,.section-kicker{margin-bottom:.65rem;color:var(--colorVar2);font-size:.78rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.tp-hero .eyebrow{color:#c8ddd0}.tp-hero h1{color:#fff;font-size:clamp(5rem,9vw,9rem);line-height:.8;text-shadow:0 10px 30px rgba(0,0,0,.3)}.hero-lead{max-width:610px;margin-top:1.6rem;font-size:clamp(1.05rem,1.4vw,1.3rem);line-height:1.7}.hero-actions,.final-actions{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2rem}.primary-action,.secondary-action,.outline-action{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:.8rem 1.3rem;border:2px solid var(--colorVar2);border-radius:999px;font-size:.9rem;font-weight:800;transition:.2s ease}.primary-action{color:#fff;background:var(--colorVar2);box-shadow:0 12px 28px rgba(57,136,123,.3)}.secondary-action{color:#fff;border-color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);backdrop-filter:blur(8px)}.outline-action{color:var(--colorVar3);border-color:var(--colorVar3)}.primary-action:hover,.secondary-action:hover,.outline-action:hover,.primary-action:focus-visible,.secondary-action:focus-visible,.outline-action:focus-visible{color:#fff;border-color:var(--colorVar3);background:var(--colorVar3);transform:translateY(-2px)}.hero-curve{position:absolute;right:0;bottom:-1px;left:0;width:100%;height:100px}.hero-curve path{fill:#fff}
+  .assurance-strip{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);width:min(1080px,88vw);margin:-72px auto 0;padding:1.5rem 2rem;border:1px solid rgba(57,136,123,.13);border-radius:24px;background:#fff;box-shadow:0 10px 18px rgba(29,52,58,.12),0 24px 48px rgba(29,52,58,.18)}.assurance-strip>div{display:flex;flex-direction:column;align-items:center;padding:.35rem 1rem;border-right:1px solid rgba(57,136,123,.16);text-align:center}.assurance-strip>div:last-child{border:0}.assurance-strip strong{color:var(--colorVar2);font-family:var(--font-heading);font-size:2rem;line-height:1}.assurance-strip span{margin-top:.4rem;color:var(--colorVar3);font-size:.76rem;font-weight:750;text-transform:uppercase}
+  .machine-section{display:grid;grid-template-columns:minmax(340px,.85fr) minmax(0,1fr);align-items:center;gap:clamp(3rem,8vw,8rem);width:min(1180px,88vw);margin:0 auto;padding:8rem 0}.machine-visual{position:relative;isolation:isolate;display:grid;min-height:480px;place-items:center;border-radius:40px;background:linear-gradient(145deg,#e8eee6,#cbdac6);overflow:hidden}.machine-visual img{width:min(420px,88%);filter:drop-shadow(0 25px 24px rgba(29,52,58,.2))}.machine-ring{position:absolute;z-index:-1;width:380px;height:380px;border:1px solid rgba(255,255,255,.65);border-radius:50%;box-shadow:0 0 0 35px rgba(255,255,255,.14),0 0 0 75px rgba(255,255,255,.08)}.machine-copy h2,.section-heading h2,.project-copy h2,.area-section h2,.final-cta h2{color:var(--colorVar3);font-size:clamp(2.8rem,4.5vw,4.8rem);line-height:.98;text-wrap:balance}.machine-copy>p:not(.section-kicker),.section-heading>p:not(.section-kicker),.final-cta p:not(.section-kicker){margin-top:1.3rem;color:#4b5a5c;line-height:1.85}.machine-copy ul{display:grid;gap:.7rem;margin-top:1.7rem;list-style:none}.machine-copy li{display:flex;gap:.65rem;color:var(--colorVar3);font-weight:750}.machine-copy li::before{color:var(--colorVar2);content:'●'}
+  .tp-services-section{padding:7rem max(4vw,1.5rem) 8rem;background:linear-gradient(180deg,#f8faf7,#e8eee6)}.section-heading{max-width:780px;margin:0 auto 3.5rem;text-align:center}.tp-services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;width:min(1200px,92vw);margin:0 auto}.tp-service-card{min-height:310px;padding:2rem;border:1px solid rgba(57,136,123,.14);border-radius:28px;background:#fff;box-shadow:0 14px 35px rgba(29,52,58,.1);transition:transform .22s ease,box-shadow .22s ease}.tp-service-card:hover{transform:translateY(-7px);box-shadow:0 24px 48px rgba(29,52,58,.17)}.service-icon{display:flex;align-items:center;justify-content:space-between}.service-icon>span{display:grid;width:62px;height:62px;place-items:center;border-radius:20px;color:#fff;background:var(--colorVar2);font-size:2rem}.service-icon small{color:#b9cbc2;font-family:var(--font-heading);font-size:2rem}.tp-service-card h3{margin-top:1.5rem;color:var(--colorVar3);font-size:2.15rem}.tp-service-card p{margin-top:.8rem;color:#526164;line-height:1.75}
+  .project-section{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(3rem,7vw,7rem);width:min(1220px,88vw);margin:0 auto;padding:8rem 0}.project-image{height:620px;overflow:hidden;border-radius:36px;box-shadow:0 25px 55px rgba(29,52,58,.2)}.project-image img{width:100%;height:100%;object-fit:cover;object-position:55% center;transform:scaleX(-1)}.steps{display:grid;gap:1rem;margin-top:2rem}.steps article{display:grid;grid-template-columns:64px 1fr;gap:1.2rem;padding:1.25rem;border-radius:20px;background:#f4f7f2}.steps article>span{color:var(--colorVar2);font-family:var(--font-heading);font-size:2rem}.steps h3{color:var(--colorVar3);font-size:1.6rem}.steps p{margin-top:.35rem;color:#59686a;line-height:1.65}
+  .area-section{display:grid;grid-template-columns:minmax(0,1fr) 300px;align-items:center;gap:4rem;padding:7rem max(8vw,1.5rem);color:#fff;background:linear-gradient(135deg,#1d343a,#315f52)}.area-section>div{max-width:860px}.area-section .section-kicker{color:#b8ccb0}.area-section h2{color:#fff}.area-section p:not(.section-kicker){margin-top:1.3rem;line-height:1.85}.area-section>img{width:290px;filter:drop-shadow(0 25px 25px rgba(0,0,0,.25))}.final-cta{display:flex;align-items:center;justify-content:space-between;gap:3rem;width:min(1160px,88vw);margin:0 auto;padding:7rem 0 9rem}.final-cta>div:first-child{max-width:680px}
+  @media(max-width:980px){.machine-section,.project-section{grid-template-columns:1fr}.tp-services-grid{grid-template-columns:repeat(2,1fr)}.area-section{grid-template-columns:1fr}.area-section>img{display:none}.final-cta{align-items:flex-start;flex-direction:column}}
+  @media(max-width:768px){.tp-hero{min-height:780px;align-items:flex-end}.tp-hero-content{padding:150px 0 130px}.tp-hero h1{font-size:clamp(4.5rem,22vw,7rem)}.hero-actions,.final-actions{flex-direction:column}.primary-action,.secondary-action,.outline-action{width:100%}.assurance-strip{grid-template-columns:repeat(2,1fr);gap:1rem 0}.assurance-strip>div:nth-child(2){border:0}.machine-section{width:90vw;padding:6rem 0}.machine-visual{min-height:340px}.tp-services-grid{grid-template-columns:1fr;width:min(92vw,520px)}.tp-services-section,.area-section{padding-top:5rem;padding-bottom:5rem}.project-section{width:90vw;padding:5rem 0}.project-image{height:420px}}
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll('.animated-element');
-    animatedElements.forEach((el) => el.classList.add('animate'));
-  });
-
-  document.addEventListener('scroll', () => {
-    const animatedElements2 = document.querySelectorAll('.animated-element-2');
-    const windowHeight = window.innerHeight;
-
-    animatedElements2.forEach((el) => {
-      const elementOffset = el.getBoundingClientRect().top;
-      if (elementOffset < windowHeight * 1) {
-        el.classList.add('animate');
-      }
-    });
-  });
-</script>

@@ -11,7 +11,7 @@ export interface Props {
   description?: string;
   image?: string;
   noindex?: boolean;
-  /** 'default' = footer avec Google Maps (accueil), 'page' = footer simple */
+  /** 'default' = footer avec OpenStreetMap (accueil), 'page' = footer simple */
   footerVariant?: 'default' | 'page';
 }
 
@@ -23,16 +23,18 @@ const {
   footerVariant = 'page',
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, site.url).href;
-const ogImage = new URL(image, site.url).href;
+const publicSiteUrl = Astro.site ?? new URL(site.url);
+const basePath = import.meta.env.BASE_URL;
+const canonical = new URL(Astro.url.pathname, publicSiteUrl).href;
+const ogImage = new URL(`${basePath}${image.replace(/^\//, '')}`, publicSiteUrl).href;
 
 // Données structurées JSON-LD (LocalBusiness) pour le SEO local
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: site.name,
-  image: new URL('/img/LogoTeddyV2.webp', site.url).href,
-  url: site.url,
+  image: new URL(`${basePath}img/LogoTeddyV2.webp`, publicSiteUrl).href,
+  url: publicSiteUrl.href,
   telephone: site.phone,
   email: site.email,
   address: {

@@ -6,399 +6,626 @@ export interface Props {
 }
 
 const { variant = 'page' } = Astro.props;
-const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY?.trim() ?? '';
+const mapTilerApiKey = import.meta.env.PUBLIC_MAPTILER_API_KEY?.trim() ?? '';
+const mapTilerMapId = import.meta.env.PUBLIC_MAPTILER_MAP_ID?.trim() || 'streets-v2';
+const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${site.geo.lat},${site.geo.lng}`;
 ---
 
 {variant === 'default' ? (
-  <div class="containerMap">
-    <div class="custom-shape-divider-top">
-      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+  <footer class="map-footer">
+    <div class="map-wave" aria-hidden="true">
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="map-wave-gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#e8eee6" />
+            <stop offset="100%" stop-color="#cbdac6" />
+          </linearGradient>
+        </defs>
+        <path fill="url(#map-wave-gradient)" d="M0 0h1200v110c-245 0-365-92-600-92S245 110 0 110V0Z" />
       </svg>
+    </div>
+
+    <div class="map-trees" data-map-trees aria-hidden="true">
+      <svg class="map-tree tree-1" viewBox="0 0 40 62"><path d="M20 0 8 19h7L4 38h10L0 56h16v6h8v-6h16L26 38h10L25 19h7Z" /></svg>
+      <svg class="map-tree tree-2" viewBox="0 0 40 62"><path d="M20 0 8 19h7L4 38h10L0 56h16v6h8v-6h16L26 38h10L25 19h7Z" /></svg>
+      <svg class="map-tree tree-3" viewBox="0 0 40 62"><path d="M20 0 8 19h7L4 38h10L0 56h16v6h8v-6h16L26 38h10L25 19h7Z" /></svg>
+      <svg class="map-tree tree-5" viewBox="0 0 40 62"><path d="M20 0 8 19h7L4 38h10L0 56h16v6h8v-6h16L26 38h10L25 19h7Z" /></svg>
+      <svg class="map-tree tree-6" viewBox="0 0 40 62"><path d="M20 0 8 19h7L4 38h10L0 56h16v6h8v-6h16L26 38h10L25 19h7Z" /></svg>
+      <svg class="map-tree tree-7" viewBox="0 0 40 62"><path d="M20 0 8 19h7L4 38h10L0 56h16v6h8v-6h16L26 38h10L25 19h7Z" /></svg>
     </div>
 
     <div
-      id="google-map"
-      class="googleMaps"
-      data-api-key={googleMapsApiKey}
+      id="openstreet-map"
+      class="openstreet-map"
+      data-maptiler-key={mapTilerApiKey}
+      data-map-id={mapTilerMapId}
       data-lat={site.geo.lat}
       data-lng={site.geo.lng}
+      data-name={site.name}
+      data-phone={site.phone}
+      data-address={`${site.address.street}, ${site.address.locality}, ${site.address.postalCode} ${site.address.city}`}
+      data-directions={directionsUrl}
       role="region"
-      aria-label="Carte de localisation de Pradel Elagage"
+      aria-label="Carte OpenStreetMap de localisation de Pradel Élagage"
     >
-      <p class="map-status" role="status">
-        {googleMapsApiKey
-          ? 'La carte Google Maps est désactivée tant que vous n’avez pas accepté les services externes.'
-          : 'La carte est indisponible. Retrouvez notre adresse et nos coordonnées ci-dessous.'}
-      </p>
+      <p class="map-status" role="status">Chargement de la carte OpenStreetMap…</p>
     </div>
 
-    <div class="containerFooter">
-      <img class="logoPradelFooter" src="/img/LogoTeddyFooterV2.webp" alt="Logo Pradel Elagage Thiers" />
+    <div class="footer-panel">
+      <a class="footer-brand" href="/" aria-label="Accueil — Pradel Élagage">
+        <span class="brand-rings" aria-hidden="true"></span>
+        <img src="/img/LogoTeddyFooterV2.webp" alt="Pradel Élagage" />
+      </a>
 
-      <div class="containerAdresseContact">
-        <h1>ADRESSE</h1>
-        <p>
-          {site.address.street}<br />
-          {site.address.locality}<br />
-          {site.address.postalCode} {site.address.city}
-        </p>
-
-        <h1>CONTACT</h1>
-        <p>
-          <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br />
-          <a href={`mailto:${site.email}`}>{site.email}</a>
-        </p>
-      </div>
-
-      <div class="containerReseauxMentionsLegales">
-        <h1 class="footerReseauxEtMentionsLegales">RESEAUX</h1>
-        <div class="logoReseauxFooter">
-          <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <img class="facebookPradelElagageFooter" src="/img/facebook.webp" alt="Facebook Pradel Elagage" />
-          </a>
-          <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <img class="linkedinThiersElagageFooter" src="/img/linkedin.webp" alt="LinkedIn Pradel Elagage" />
-          </a>
-        </div>
-        <h1 class="footerReseauxEtMentionsLegales">
-          <a href="/mentions-legales/">MENTIONS LEGALES</a>
-        </h1>
-      </div>
-    </div>
-  </div>
-) : (
-  <div>
-    {/* Séparateur chaîne des Puys */}
-    <div class="containerSperatorPuyFooter">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 847.3 91.7">
-        <path fill="var(--colorVar2)" d="M843.6,54.9c-10.4-2.4-30.7-10.5-40.8-13.4c-9.4-2.6-18.7-3.3-28.4-1.4c-3.2,0.6-7.5,1.1-9.9-0.5c-7.6-5.1-13.6-1.7-19.9,2.1c-8.6,5.3-17.7,8.2-27.9,7c-6.7-0.8-13.6-1.1-20.2-2.5c-12.2-2.6-24.3-6.2-36.5-8.8c-3.6-0.8-8.6-1.3-11.3,0.5c-12.4,8.4-25.6,9.3-39.4,5.7c-14.5-3.8-28.8-8.1-43.2-12c-2.1-0.6-5-0.9-6.7,0.1c-7.4,4.5-13.8,2.8-20.6-1.6c-13.7-8.9-27.8-17.1-41.8-25.7c-2.2-1.3-4.1-3-5.8-4.3c-0.4,0.5-1.5,3.5-3.2,3.8c-7.6,1.8-15.4,3.8-23.1,3.9c-12.4,0.1-24,2.8-33.7,9.9c-16.3,11.9-31.4,25.4-52.7,27.4c-1.6,0.1-3.1,0.5-4.6,1.1c-12,4.8-23.6,2.9-35-1.9c-4.3-1.8-8.3-2.6-13.2-1.2c-5.8,1.6-12.4,3.3-18,2c-13.5-3.1-26.7-3.9-40.2-0.4c-1.8,0.5-4.2,0.9-5.8,0.2c-13.4-5.8-27.2-5.5-41.1-2.5c-6.3,1.3-12,3.3-19.3,0.7c-12.8-4.5-26.7-6.2-39.9-9.7c-15-3.9-66.5,2.4-79.7,11.1c-1.2,0.8-36.9,4-41.7,9L0,53.5v38.4h847.3v-37H843.6z" />
-      </svg>
-    </div>
-
-    <div class="containerFooterPage">
-      <img class="logoPradelFooterPage" src="/img/LogoTeddyFooterV2.webp" alt="Logo Pradel Elagage Thiers" />
-
-      <div class="containerAdresseContactPage">
-        <div class="containerAdresseColumn">
-          <h1>ADRESSE</h1>
+      <div class="footer-details">
+        <section>
+          <h2>Adresse</h2>
           <p>
             {site.address.street}<br />
             {site.address.locality}<br />
             {site.address.postalCode} {site.address.city}
           </p>
-        </div>
+        </section>
 
-        <div class="containerAdresseColumn">
-          <h1>CONTACT</h1>
+        <section>
+          <h2>Contact</h2>
           <p>
             <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br />
             <a href={`mailto:${site.email}`}>{site.email}</a>
           </p>
+        </section>
+      </div>
+
+      <div class="footer-links">
+        <h2>Réseaux</h2>
+        <div class="footer-socials">
+          <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <img src="/img/facebook.webp" alt="" />
+          </a>
+          <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <img src="/img/linkedin.webp" alt="" />
+          </a>
         </div>
+        <a class="legal-link" href="/mentions-legales/">Mentions légales</a>
+        <button class="privacy-link" type="button" data-open-privacy>Préférences de confidentialité</button>
       </div>
     </div>
-  </div>
+  </footer>
+) : (
+  <footer class="page-footer">
+    {/* Séparateur chaîne des Puys */}
+    <div class="page-footer-wave" aria-hidden="true">
+      <svg viewBox="0 0 847.3 91.7" preserveAspectRatio="none">
+        <path d="M843.6 54.9c-10.4-2.4-30.7-10.5-40.8-13.4-9.4-2.6-18.7-3.3-28.4-1.4-3.2.6-7.5 1.1-9.9-.5-7.6-5.1-13.6-1.7-19.9 2.1-8.6 5.3-17.7 8.2-27.9 7-6.7-.8-13.6-1.1-20.2-2.5-12.2-2.6-24.3-6.2-36.5-8.8-3.6-.8-8.6-1.3-11.3.5-12.4 8.4-25.6 9.3-39.4 5.7-14.5-3.8-28.8-8.1-43.2-12-2.1-.6-5-.9-6.7.1-7.4 4.5-13.8 2.8-20.6-1.6-13.7-8.9-27.8-17.1-41.8-25.7-2.2-1.3-4.1-3-5.8-4.3-.4.5-1.5 3.5-3.2 3.8-7.6 1.8-15.4 3.8-23.1 3.9-12.4.1-24 2.8-33.7 9.9-16.3 11.9-31.4 25.4-52.7 27.4-1.6.1-3.1.5-4.6 1.1-12 4.8-23.6 2.9-35-1.9-4.3-1.8-8.3-2.6-13.2-1.2-5.8 1.6-12.4 3.3-18 2-13.5-3.1-26.7-3.9-40.2-.4-1.8.5-4.2.9-5.8.2-13.4-5.8-27.2-5.5-41.1-2.5-6.3 1.3-12 3.3-19.3.7-12.8-4.5-26.7-6.2-39.9-9.7-15-3.9-66.5 2.4-79.7 11.1-1.2.8-36.9 4-41.7 9L0 53.5v38.4h847.3v-37Z" />
+      </svg>
+    </div>
+    <div class="page-footer-content">
+      <img src="/img/LogoTeddyFooterV2.webp" alt="Pradel Élagage" />
+      <div>
+        <h2>Adresse</h2>
+        <p>{site.address.street}<br />{site.address.locality}<br />{site.address.postalCode} {site.address.city}</p>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <p><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
+      </div>
+      <div class="page-footer-links">
+        <a class="page-legal-link" href="/mentions-legales/">Mentions légales</a>
+        <button class="privacy-link page-privacy-link" type="button" data-open-privacy>Préférences de confidentialité</button>
+      </div>
+    </div>
+  </footer>
 )}
 
-{/* Menu responsive footer (mobile) */}
-<div class="containerMenuResponsive">
-  <div class="containerSperatorPuyFooter">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 847.3 91.7">
-      <path fill="#036344" d="M843.6,54.9c-10.4-2.4-30.7-10.5-40.8-13.4c-9.4-2.6-18.7-3.3-28.4-1.4c-3.2,0.6-7.5,1.1-9.9-0.5c-7.6-5.1-13.6-1.7-19.9,2.1c-8.6,5.3-17.7,8.2-27.9,7c-6.7-0.8-13.6-1.1-20.2-2.5c-12.2-2.6-24.3-6.2-36.5-8.8c-3.6-0.8-8.6-1.3-11.3,0.5c-12.4,8.4-25.6,9.3-39.4,5.7c-14.5-3.8-28.8-8.1-43.2-12c-2.1-0.6-5-0.9-6.7,0.1c-7.4,4.5-13.8,2.8-20.6-1.6c-13.7-8.9-27.8-17.1-41.8-25.7c-2.2-1.3-4.1-3-5.8-4.3c-0.4,0.5-1.5,3.5-3.2,3.8c-7.6,1.8-15.4,3.8-23.1,3.9c-12.4,0.1-24,2.8-33.7,9.9c-16.3,11.9-31.4,25.4-52.7,27.4c-1.6,0.1-3.1,0.5-4.6,1.1c-12,4.8-23.6,2.9-35-1.9c-4.3-1.8-8.3-2.6-13.2-1.2c-5.8,1.6-12.4,3.3-18,2c-13.5-3.1-26.7-3.9-40.2-0.4c-1.8,0.5-4.2,0.9-5.8,0.2c-13.4-5.8-27.2-5.5-41.1-2.5c-6.3,1.3-12,3.3-19.3,0.7c-12.8-4.5-26.7-6.2-39.9-9.7c-15-3.9-66.5,2.4-79.7,11.1c-1.2,0.8-36.9,4-41.7,9L0,53.5v38.4h847.3v-37H843.6z" />
-    </svg>
-  </div>
-
-  <div class="containerFooterPage">
-    <img class="logoPradelFooterPage" src="/img/LogoTeddyFooterV2.webp" alt="Logo Pradel Elagage Thiers" />
-    <div class="containerAdresseContactPage">
-      <div class="containerAdresseColumn">
-        <h1>Adresse</h1>
-        <p>
-          {site.address.street}<br />
-          {site.address.locality}<br />
-          {site.address.postalCode} {site.address.city}
-        </p>
-      </div>
-      <div class="containerAdresseColumn">
-        <h1>Contact</h1>
-        <p>
-          <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br />
-          <a href={`mailto:${site.email}`}>{site.email}</a>
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
 <style>
-  /* === Footer default (avec Google Maps) === */
-  .custom-shape-divider-top {
-    width: 100%;
-    margin-bottom: -10vh;
-  }
-
-  .custom-shape-divider-top svg {
+  .map-footer {
     position: relative;
-    display: block;
-    width: calc(300% + 1.3px);
-    height: 110px;
-    z-index: 5;
-  }
-
-  .custom-shape-divider-top .shape-fill {
-    fill: #ffffff;
-  }
-
-  .containerMap {
+    z-index: 90;
+    isolation: isolate;
+    width: 100%;
+    margin-top: -280px;
+    height: clamp(680px, 80vh, 900px);
     overflow: hidden;
-    position: relative;
-    bottom: -120vh;
-    left: 0;
-    width: 100%;
-    height: 80vh;
+    background: transparent;
   }
 
-  .googleMaps {
-    width: 100%;
-    height: 80vh;
-  }
-
-  .containerFooter {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    position: relative;
-    top: -35vh;
-    left: 25vw;
-    width: 50vw;
-    min-width: 500px;
-    min-height: 280px;
-    height: 25vh;
-    border-radius: 50px;
-    background-color: rgba(255, 255, 255, 0.85);
-  }
-
-  .containerFooter:hover {
-    background-color: rgba(255, 255, 255, 1);
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    transition-duration: 100ms;
-    transition-property: background-color;
-  }
-
-  .footerReseauxEtMentionsLegales {
-    font-size: 1em;
-    font-weight: 800;
-  }
-
-  .containerReseauxMentionsLegales {
-    height: 100%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    font-size: 1.1vw;
-  }
-
-  .containerAdresseContact {
-    height: 100%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    margin-bottom: 20px;
-  }
-
-  .containerAdresseContact h1 {
-    margin-top: 20px;
-    margin-bottom: 0;
-    font-size: 1.5vw;
-  }
-
-  .containerAdresseContact p {
-    font-size: 1vw;
-  }
-
-  .logoReseauxFooter {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .facebookPradelElagageFooter {
-    width: 50px;
-    height: 50px;
-    margin-right: 50px;
-  }
-
-  .linkedinThiersElagageFooter {
-    width: 50px;
-    height: 50px;
-  }
-
-  .logoPradelFooter {
-    width: 300px;
-    height: 230px;
-  }
-
-  /* === Footer page (simple) === */
-  .containerFooterPage {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    width: 100%;
-    height: auto;
-    background-color: var(--colorVar2);
-    transform: translateY(-10px);
-    padding-top: 3vh;
-    padding-bottom: 3vh;
-    margin-top: -9vh;
-  }
-
-  .containerFooterPage img,
-  .containerAdresseContactPage {
-    padding-right: 3vw;
-  }
-
-  .containerAdresseContactPage {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .containerAdresseColumn {
-    display: flex;
-    flex-direction: column;
-    padding-right: 3vw;
-  }
-
-  .containerAdresseColumn p {
-    font-size: 1vw;
-    color: var(--color1);
-  }
-
-  .containerAdresseColumn h1 {
-    color: white;
-    text-shadow: 1px 3px 0px var(--colorVar3);
-  }
-
-  .containerMenuResponsive {
+  .map-wave {
     display: none;
   }
 
-  /* Responsive */
-  @media screen and (max-width: 768px) {
-    .containerMap {
+  .map-trees {
+    position: absolute;
+    z-index: 450;
+    inset: 0 0 auto;
+    height: 120px;
+    pointer-events: none;
+  }
+
+  .map-tree {
+    position: absolute;
+    overflow: visible;
+    fill: #9ebca8;
+    opacity: 0;
+    filter: drop-shadow(0 3px 3px rgba(29, 52, 58, 0.16));
+    transform: translateY(-34px) scale(0.62);
+    transform-origin: bottom center;
+    transition: opacity 600ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .map-trees.is-visible .map-tree {
+    opacity: 0.9;
+    transform: translateY(-26px) scale(0.7);
+  }
+
+  .tree-1 { top: 69px; left: 7%; width: 26px; height: 40px; transition-delay: 80ms; }
+  .tree-2 { top: 51px; left: 10.2%; width: 34px; height: 53px; transition-delay: 150ms; }
+  .tree-3 { top: 20px; left: 35%; width: 22px; height: 34px; transition-delay: 240ms; }
+  .tree-5 { top: 17px; left: 64%; width: 25px; height: 39px; transition-delay: 390ms; }
+  .tree-6 { top: 48px; left: 84%; width: 38px; height: 59px; transition-delay: 470ms; }
+  .tree-7 { top: 73px; left: 88.2%; width: 22px; height: 34px; transition-delay: 540ms; }
+
+  .openstreet-map {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #b8ccb0;
+    mask: url('/svg/map-curve-mask.svg') center / 100% 100% no-repeat;
+    -webkit-mask: url('/svg/map-curve-mask.svg') center / 100% 100% no-repeat;
+  }
+
+  .map-status {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--colorVar3);
+    transform: translate(-50%, -50%);
+  }
+
+  .footer-panel {
+    position: absolute;
+    z-index: 600;
+    top: 68%;
+    left: 50%;
+    display: grid;
+    grid-template-columns: minmax(245px, 0.95fr) minmax(330px, 1.35fr) minmax(175px, 0.7fr);
+    align-items: stretch;
+    gap: 0;
+    width: min(980px, 88vw);
+    min-height: 220px;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.82);
+    border-radius: 34px 64px 34px 64px;
+    background: rgba(248, 250, 247, 0.95);
+    box-shadow: 0 34px 80px rgba(29, 52, 58, 0.3), 0 8px 20px rgba(29, 52, 58, 0.15);
+    backdrop-filter: blur(16px) saturate(118%);
+    -webkit-backdrop-filter: blur(16px) saturate(118%);
+    transform: translate(-50%, -45%);
+  }
+
+  .footer-brand {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    overflow: hidden;
+    color: #fff;
+    background: linear-gradient(145deg, #1d343a 0%, #315f52 100%);
+  }
+
+  .brand-rings {
+    position: absolute;
+    z-index: -1;
+    right: -70px;
+    bottom: -85px;
+    width: 230px;
+    height: 230px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 22px rgba(255, 255, 255, 0.035),
+      0 0 0 48px rgba(255, 255, 255, 0.025),
+      0 0 0 76px rgba(255, 255, 255, 0.018);
+  }
+
+  .footer-brand img {
+    width: min(180px, 100%);
+    margin: 0 auto;
+    filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.2));
+  }
+
+  .footer-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: center;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+  }
+
+  .footer-panel h2,
+  .page-footer h2 {
+    margin-bottom: 0.65rem;
+    color: var(--colorVar3);
+    font-size: 1.55rem;
+    text-transform: uppercase;
+  }
+
+  .footer-panel p {
+    color: #344e50;
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  .footer-panel a:hover,
+  .footer-panel a:focus-visible {
+    color: var(--colorVar2);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 1.5rem 1.6rem;
+    border-left: 1px solid rgba(57, 136, 123, 0.16);
+    background: linear-gradient(180deg, rgba(184, 204, 176, 0.16), rgba(255, 255, 255, 0.35));
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 0.9rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .footer-socials a {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(57, 136, 123, 0.1);
+    transition: background 180ms ease, transform 180ms ease;
+  }
+
+  .footer-socials a:hover,
+  .footer-socials a:focus-visible {
+    background: rgba(57, 136, 123, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .footer-socials img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+  }
+
+  .legal-link {
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .privacy-link {
+    margin-top: 0.55rem;
+    padding: 0;
+    border: 0;
+    color: var(--colorVar3);
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+    transition: color 180ms ease;
+  }
+
+  .privacy-link:hover,
+  .privacy-link:focus-visible {
+    color: var(--colorVar2);
+  }
+
+  :global(.openstreet-map .leaflet-tile-pane) {
+    filter: saturate(0.62) contrast(1.04) brightness(0.94);
+  }
+
+  .openstreet-map::after {
+    position: absolute;
+    z-index: 400;
+    inset: 0;
+    background: rgba(29, 52, 58, 0.48);
+    content: "";
+    pointer-events: none;
+    mix-blend-mode: color;
+  }
+
+  :global(.openstreet-map .leaflet-control-zoom) {
+    margin-top: 130px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 12px;
+    box-shadow: 0 8px 22px rgba(29, 52, 58, 0.2);
+  }
+
+  :global(.openstreet-map .leaflet-control-zoom a) {
+    color: var(--colorVar3);
+  }
+
+  :global(.pradel-map-marker) {
+    display: grid;
+    place-items: center;
+    background: transparent;
+    filter: drop-shadow(0 6px 7px rgba(29, 52, 58, 0.35));
+  }
+
+  :global(.pradel-map-marker img) {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+  }
+
+  :global(.pradel-popup) {
+    min-width: 235px;
+    color: #344e50;
+    line-height: 1.5;
+  }
+
+  :global(.pradel-popup strong) {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--colorVar3);
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+  }
+
+  :global(.pradel-popup a) {
+    display: inline-flex;
+    margin-top: 0.7rem;
+    padding: 0.55rem 0.8rem;
+    border-radius: 999px;
+    color: #fff;
+    background: var(--colorVar2);
+    font-weight: 700;
+  }
+
+  .page-footer {
+    margin-top: 2rem;
+    color: #fff;
+    background: var(--colorVar2);
+  }
+
+  .page-footer-wave {
+    height: 92px;
+    transform: translateY(-90px);
+  }
+
+  .page-footer-wave svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .page-footer-wave path {
+    fill: var(--colorVar2);
+  }
+
+  .page-footer-content {
+    display: grid;
+    grid-template-columns: 220px repeat(2, minmax(160px, 1fr)) auto;
+    align-items: center;
+    gap: 2.5rem;
+    width: min(1100px, 90vw);
+    margin: -70px auto 0;
+    padding: 2rem 0 3rem;
+  }
+
+  .page-footer-content > img {
+    width: 200px;
+  }
+
+  .page-footer-content h2 {
+    color: #fff;
+  }
+
+  .page-footer-content p {
+    line-height: 1.7;
+  }
+
+  .page-footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page-legal-link {
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .page-privacy-link {
+    color: #fff;
+  }
+
+  @media (max-width: 900px) {
+    .footer-panel {
+      grid-template-columns: 150px 1fr;
+      width: min(680px, 88vw);
+    }
+
+    .footer-links {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .footer-socials {
+      margin: 0;
+    }
+
+    .page-footer-content {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .map-footer {
+      height: auto;
+      padding-top: 420px;
+      background: var(--colorVar2);
+    }
+
+    .openstreet-map {
+      height: 480px;
+    }
+
+    .map-wave {
+      height: 75px;
+    }
+
+    .map-trees {
+      height: 120px;
+    }
+
+    .tree-2,
+    .tree-3,
+    .tree-5 {
       display: none;
     }
 
-    .containerMenuResponsive {
-      display: block;
+    .tree-1 { left: 5%; }
+    .tree-6 { left: 78%; }
+    .tree-7 { left: 88%; }
+
+    .footer-panel {
+      position: relative;
+      top: auto;
+      left: auto;
+      grid-template-columns: 1fr;
+      width: calc(100% - 2rem);
+      margin: 0 auto 1rem;
+      padding: 2rem;
+      border-radius: 28px;
+      transform: none;
     }
 
-    .containerFooterPage {
-      flex-direction: column;
-      width: 100%;
-      height: auto;
-      background-color: #036344;
-      transform: translateY(0);
+    .footer-brand img {
+      width: 190px;
     }
 
-    .containerFooterPage img,
-    .containerAdresseContactPage {
-      padding-right: 0;
-      transform: translateY(-10vh);
+    .footer-details {
+      grid-template-columns: 1fr 1fr;
+      text-align: center;
     }
 
-    .containerFooterPage img {
-      width: 80%;
-      height: auto;
+    .footer-links {
+      grid-column: auto;
     }
 
-    .containerAdresseContactPage {
-      display: flex;
-      flex-direction: column;
-      margin-top: 5vh;
-    }
-
-    .containerAdresseColumn {
-      display: flex;
-      align-items: center;
-      padding-right: 0;
-    }
-
-    .containerAdresseColumn h1 {
-      font-size: 10vw;
-      font-weight: bold;
-      color: white;
-      text-shadow: 1px 3px 0px var(--colorVar3);
-    }
-
-    .containerAdresseColumn p {
-      font-size: 5vw;
-      font-weight: 400;
-    }
-
-    .containerSperatorPuyFooter {
-      transform: translateY(2vh);
+    .page-footer-content {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
     }
   }
 </style>
 
 <script>
-  declare global {
-    interface Window { google?: any; }
-  }
+  import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
 
-  function loadGoogleMap() {
-    const mapElement = document.getElementById('google-map');
-    if (!(mapElement instanceof HTMLElement)) return;
-
-    const apiKey = mapElement.dataset.apiKey;
-    if (!apiKey) return;
-    if (localStorage.getItem('externalServicesConsent') !== 'accepted') {
-      if (mapElement.dataset.loaded === 'true') {
-        mapElement.dataset.loaded = 'false';
-        mapElement.innerHTML = '<p class="map-status" role="status">La carte Google Maps est désactivée selon vos préférences.</p>';
-      }
-      return;
-    }
-    if (mapElement.dataset.loaded === 'true') return;
-
+  function initializeOpenStreetMap() {
+    const mapElement = document.getElementById('openstreet-map');
+    if (!(mapElement instanceof HTMLElement) || mapElement.dataset.loaded === 'true') return;
     mapElement.dataset.loaded = 'true';
-    mapElement.innerHTML = '<p class="map-status" role="status">Chargement de la carte…</p>';
+    mapElement.innerHTML = '';
 
-    const initialise = () => {
-      if (!window.google) return;
-      const companyLocation = {
-        lat: Number(mapElement.dataset.lat),
-        lng: Number(mapElement.dataset.lng),
-      };
-      mapElement.innerHTML = '';
-      const map = new window.google.maps.Map(mapElement, {
-        center: companyLocation,
-        zoom: 13,
-        mapTypeControl: false,
-      });
-      new window.google.maps.Marker({ position: companyLocation, map, title: 'Pradel Elagage' });
-    };
+    const lat = Number(mapElement.dataset.lat);
+    const lng = Number(mapElement.dataset.lng);
+    const mapTilerKey = mapElement.dataset.maptilerKey ?? '';
+    const mapId = mapElement.dataset.mapId || 'streets-v2';
+    const companyLocation: L.LatLngExpression = [lat, lng];
+    const map = L.map(mapElement, {
+      center: companyLocation,
+      zoom: 13,
+      zoomControl: true,
+      attributionControl: true,
+      scrollWheelZoom: false,
+    });
 
-    if (window.google) {
-      initialise();
+    const tileUrl = mapTilerKey
+      ? `https://api.maptiler.com/maps/${encodeURIComponent(mapId)}/{z}/{x}/{y}.png?key=${encodeURIComponent(mapTilerKey)}`
+      : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+    const attribution = mapTilerKey
+      ? '&copy; MapTiler &copy; OpenStreetMap contributors'
+      : '&copy; OpenStreetMap contributors';
+
+    L.tileLayer(tileUrl, {
+      attribution,
+      maxZoom: 19,
+      tileSize: 256,
+    }).addTo(map);
+
+    const markerIcon = L.divIcon({
+      className: 'pradel-map-marker',
+      html: '<img src="/favicon.ico" alt="" />',
+      iconSize: [52, 52],
+      iconAnchor: [26, 48],
+      popupAnchor: [0, -44],
+    });
+
+    const name = mapElement.dataset.name ?? 'Pradel Élagage';
+    const phone = mapElement.dataset.phone ?? '';
+    const address = mapElement.dataset.address ?? '';
+    const directions = mapElement.dataset.directions ?? '#';
+    const popup = `
+      <div class="pradel-popup">
+        <strong>${name}</strong>
+        <span>Élagage, abattage, bois de chauffage et travaux TP à Thiers.</span><br />
+        <span>${address}</span><br />
+        <a href="tel:${phone.replaceAll(' ', '')}">${phone}</a><br />
+        <a href="${directions}" target="_blank" rel="noopener noreferrer">Ouvrir l’itinéraire</a>
+      </div>`;
+
+    L.marker(companyLocation, { icon: markerIcon, title: name })
+      .addTo(map)
+      .bindPopup(popup, { maxWidth: 290 });
+
+    window.setTimeout(() => map.invalidateSize(), 150);
+  }
+
+  function initializeMapTrees() {
+    const trees = document.querySelector<HTMLElement>('[data-map-trees]');
+    if (!trees || trees.dataset.initialized === 'true') return;
+    trees.dataset.initialized = 'true';
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      trees.classList.add('is-visible');
       return;
     }
 
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}`;
-    script.async = true;
-    script.addEventListener('load', initialise, { once: true });
-    script.addEventListener('error', () => {
-      mapElement.dataset.loaded = 'false';
-      mapElement.innerHTML = '<p class="map-status" role="status">La carte n’a pas pu être chargée. Utilisez les coordonnées ci-dessous.</p>';
-    }, { once: true });
-    document.head.append(script);
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry?.isIntersecting) return;
+      trees.classList.add('is-visible');
+      observer.disconnect();
+    }, { threshold: 0.15 });
+    observer.observe(trees);
   }
 
-  document.addEventListener('astro:page-load', loadGoogleMap);
-  window.addEventListener('external-services-consent', loadGoogleMap);
+  function initializeFooter() {
+    initializeOpenStreetMap();
+    initializeMapTrees();
+  }
+
+  document.addEventListener('astro:page-load', initializeFooter);
+  initializeFooter();
 </script>

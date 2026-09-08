@@ -1,9 +1,11 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import Slider from '../components/Slider.astro';
-import ServiceCard from '../components/ServiceCard.astro';
 import PuySeparator from '../components/PuySeparator.astro';
+import ServiceCard from '../components/ServiceCard.astro';
 import { homeServices } from '../data/site.js';
+
+const featuredServices = homeServices.filter((service) => service.title !== 'ABATTAGE');
 
 const title = 'Pradel Elagage — Élagage, Abattage, Bois de chauffage & Travaux TP à Thiers (63300)';
 const description = 'Pradel Elagage à Thiers : élagage, abattage sécurisé, vente et livraison de bois de chauffage, et travaux TP. Intervention sur Thiers, le Forez et la montagne Thiernoise. Devis gratuit.';
@@ -15,79 +17,56 @@ const description = 'Pradel Elagage à Thiers : élagage, abattage sécurisé, v
   {/* Séparateur chaîne des Puys */}
   <PuySeparator />
 
-  {/* Cards services */}
-  <div class="containerShapeElagageBois">
-    <div class="blocShapeOrder">
-      {homeServices.map((service) => (
+  <section class="services-section" aria-label="Nos principaux services">
+    <div class="services-grid">
+      {featuredServices.map((service) => (
         <ServiceCard
           title={service.title}
           icon={service.icon}
           iconAlt={service.iconAlt}
           description={service.description}
           link={service.link}
-          linkLabel={service.linkLabel}
         />
       ))}
     </div>
-  </div>
+  </section>
 </MainLayout>
 
 <style>
-  .containerShapeElagageBois {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    margin-top: -82vh;
-    z-index: 500;
+  .services-section {
+    position: relative;
+    margin-top: -10.8vw;
+    padding: 0 max(4vw, 1.5rem) 8rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, #fff 42%, #e8eee6 100%);
   }
 
-  .blocShapeOrder {
-    width: 90vw;
-    height: auto;
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-    flex-wrap: wrap;
-    overflow: hidden;
-    gap: 2vw;
+  .services-grid {
+    position: relative;
+    z-index: 130;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.25rem, 2.6vw, 2.8rem);
+    width: min(1320px, 92vw);
+    margin: 0 auto;
+    transform: translateY(-70px);
+  }
+
+  @media (max-width: 980px) {
+    .services-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   @media (max-width: 768px) {
-    .blocShapeOrder {
-      width: 100%;
-      height: auto;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      overflow: hidden;
-      margin: 10px;
+    .services-section {
+      margin-top: -4rem;
+      padding-bottom: 5rem;
     }
 
-    .containerShapeElagageBois {
-      width: 100%;
-      margin-top: -22vh;
-      margin-bottom: 5vh;
-      z-index: 500;
+    .services-grid {
+      grid-template-columns: 1fr;
+      width: min(92vw, 520px);
+      transform: translateY(-30px);
     }
   }
 </style>
-
-<script>
-  // Animations fade-in au chargement et au scroll
-  document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll('.animated-element');
-    animatedElements.forEach((el) => el.classList.add('animate'));
-  });
-
-  document.addEventListener('scroll', () => {
-    const animatedElements2 = document.querySelectorAll('.animated-element-2');
-    const windowHeight = window.innerHeight;
-
-    animatedElements2.forEach((el) => {
-      const elementOffset = el.getBoundingClientRect().top;
-      if (elementOffset < windowHeight * 1) {
-        el.classList.add('animate');
-      }
-    });
-  });
-</script>

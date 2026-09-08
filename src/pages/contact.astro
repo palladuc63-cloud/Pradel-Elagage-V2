@@ -1,275 +1,133 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import { site } from '../data/site.js';
 
-const title = 'Contact — Pradel Elagage à Thiers (63300) | Élagage, Bois, TP';
-const description = 'Contactez Pradel Elagage à Thiers pour vos besoins en élagage, abattage, bois de chauffage et travaux TP. Téléphone, email ou formulaire de contact. Devis gratuit.';
-const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID?.trim() ?? '';
+const title = 'Contact et devis — Pradel Élagage à Thiers';
+const description = 'Contactez Pradel Élagage à Thiers pour vos projets d’élagage, abattage, bois de chauffage ou travaux TP. Téléphone, email, adresse et demande de devis.';
+const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
+const addressText = `${site.address.street}, ${site.address.locality}, ${site.address.postalCode} ${site.address.city}`;
+const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${site.geo.lat},${site.geo.lng}`;
 ---
 
 <MainLayout title={title} description={description} footerVariant="page">
-  <PageHero
-    image="/img/foret.png"
-    imageAlt="Contact Pradel Elagage Thiers"
-    title="CONTACT"
-  />
-
-  <div class="containerContact">
-    <article class="post">
-      <div class="containerSinglePage">
-        <div class="paragrapheSingle">
-          <h1 class="titreContactPage">Laissez-moi un message</h1>
-          <p class="contenuContact">
-            Pour toute demande d'élagage, d'abattage, de bois de chauffage ou de
-            travaux TP, n'hésitez pas à me contacter. Je vous répondrai dans les
-            meilleurs délais.
-          </p>
-          <p class="contenuContact">
-            📞 <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br />
-            ✉️ <a href={`mailto:${site.email}`}>{site.email}</a><br />
-            📍 {site.address.street}, {site.address.locality}, {site.address.postalCode} {site.address.city}
-          </p>
-        </div>
-      </div>
-    </article>
-
-    <div class="containerForm fade-in-contact">
-      {formspreeId ? (
-        <form action={`https://formspree.io/f/${formspreeId}`} method="post">
-          <input type="hidden" name="_subject" value="Nouveau message depuis pradel-elagage.fr" />
-
-          <label class="txtForm" for="favoriteOnly">Quel est l'objet de votre email :</label>
-          <select name="objet" id="favoriteOnly" required>
-            <option value="Elagage">Elagage</option>
-            <option value="Abattage">Abattage</option>
-            <option value="Bois de chauffage">Bois de chauffage</option>
-            <option value="Travaux TP">Travaux TP</option>
-            <option value="Autre">Autre</option>
-          </select>
-
-          <label class="txtForm" for="name">Nom :</label>
-          <input type="text" name="name" id="name" autocomplete="name" required />
-
-          <label class="txtForm" for="email">Email :</label>
-          <input type="email" name="email" id="email" autocomplete="email" required />
-
-          <label class="txtForm" for="phone">Téléphone (optionnel) :</label>
-          <input type="tel" name="phone" id="phone" autocomplete="tel" />
-
-          <label class="txtForm" for="message">Message :</label>
-          <textarea name="message" id="message" required></textarea>
-
-          <p class="privacy-notice">Les informations saisies sont transmises à Formspree afin de répondre à votre demande. Consultez nos <a href="/mentions-legales/">mentions légales et informations de confidentialité</a>.</p>
-          <button type="submit" class="btnForm">Envoyer ✉️</button>
-        </form>
-      ) : (
-        <div class="formFallback" role="status">
-          <h2>Formulaire temporairement indisponible</h2>
-          <p>Vous pouvez nous contacter directement par téléphone au <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a> ou par email à <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
-        </div>
-      )}
+  <section class="contact-hero">
+    <img src="/img/slider-elagage.webp" alt="Intervention d’élagage dans un grand arbre à Thiers" fetchpriority="high" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Échangeons sur votre projet</p>
+      <h1>Contact<br />& devis</h1>
+      <p>Élagage, abattage, bois de chauffage ou travaux TP : décrivez votre besoin et choisissez le moyen de contact qui vous convient.</p>
     </div>
-  </div>
+    <svg class="hero-curve" viewBox="0 0 1200 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 55c220 65 370-45 600-20s390 75 600 5v60H0Z" /></svg>
+  </section>
+
+  <section class="contact-methods" aria-label="Coordonnées de Pradel Élagage">
+    <a href={phoneHref} class="contact-method">
+      <span class="method-icon" aria-hidden="true">☎</span>
+      <span class="method-label">Téléphone</span>
+      <strong>{site.phone}</strong>
+      <small>Appeler directement</small>
+    </a>
+    <a href={`mailto:${site.email}`} class="contact-method">
+      <span class="method-icon" aria-hidden="true">@</span>
+      <span class="method-label">Email</span>
+      <strong>{site.email}</strong>
+      <small>Écrire un message</small>
+    </a>
+    <a href={directionsUrl} target="_blank" rel="noopener noreferrer" class="contact-method">
+      <span class="method-icon" aria-hidden="true">⌖</span>
+      <span class="method-label">Adresse</span>
+      <strong>{site.address.postalCode} {site.address.city}</strong>
+      <small>Ouvrir l’itinéraire</small>
+    </a>
+  </section>
+
+  <section class="contact-intro">
+    <p class="section-kicker">Une réponse adaptée à votre terrain</p>
+    <h2>Parlez-moi de votre besoin</h2>
+    <p>Quelques informations simples permettent de mieux comprendre votre projet avant un premier échange. Le formulaire ci-dessous peut être rempli pour préparer votre demande, mais son envoi en ligne n’est pas encore activé.</p>
+  </section>
+
+  <section class="contact-main">
+    <div class="form-card">
+      <div class="form-heading">
+        <span>Demande de contact</span>
+        <h2>Votre projet</h2>
+        <p>Les champs restent disponibles pour préparer votre message. Pour l’envoyer dès maintenant, utilisez le téléphone ou l’email.</p>
+      </div>
+
+      <form id="contact-form" novalidate>
+        <div class="field field-wide">
+          <label for="contact-service">Service concerné</label>
+          <select id="contact-service" name="service">
+            <option value="">Sélectionnez un service</option>
+            <option value="elagage">Élagage</option>
+            <option value="abattage">Abattage</option>
+            <option value="bois">Bois de chauffage</option>
+            <option value="tp">Travaux TP</option>
+            <option value="autre">Autre demande</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="contact-name">Nom et prénom</label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Votre nom" />
+        </div>
+        <div class="field">
+          <label for="contact-town">Commune</label>
+          <input id="contact-town" name="town" type="text" autocomplete="address-level2" placeholder="Votre commune" />
+        </div>
+        <div class="field">
+          <label for="contact-email">Adresse email</label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="vous@exemple.fr" />
+        </div>
+        <div class="field">
+          <label for="contact-phone">Téléphone</label>
+          <input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder="06 00 00 00 00" />
+        </div>
+        <div class="field field-wide">
+          <label for="contact-message">Décrivez votre projet</label>
+          <textarea id="contact-message" name="message" rows="7" placeholder="Type de travaux, accès, dimensions, quantité de bois ou toute autre information utile…"></textarea>
+        </div>
+        <div class="form-footer field-wide">
+          <p>Envoi en ligne bientôt disponible. Aucune information saisie dans ce formulaire n’est actuellement transmise ou enregistrée.</p>
+          <button type="button" disabled aria-disabled="true">Envoi bientôt disponible</button>
+        </div>
+      </form>
+    </div>
+
+    <aside class="contact-aside">
+      <div class="aside-image"><img src="/img/elagage-difficile-card.webp" alt="Pradel Élagage en intervention" loading="lazy" /></div>
+      <div class="aside-content">
+        <p class="section-kicker">Contact direct</p>
+        <h2>Une question urgente ?</h2>
+        <p>Pour un arbre dangereux, une livraison de bois ou une demande nécessitant une réponse rapide, privilégiez le téléphone.</p>
+        <a class="primary-action" href={phoneHref}>{site.phone}</a>
+      </div>
+    </aside>
+  </section>
+
+  <section class="address-section">
+    <div>
+      <p class="section-kicker">Retrouvez-nous à Thiers</p>
+      <h2>{site.name}</h2>
+      <p>{addressText}</p>
+    </div>
+    <a class="route-action" href={directionsUrl} target="_blank" rel="noopener noreferrer">Ouvrir l’itinéraire</a>
+  </section>
+
+  <section class="privacy-note">
+    <h2>Vos informations restent privées</h2>
+    <p>Le formulaire n’étant pas encore connecté à un service d’envoi, les informations saisies restent uniquement dans votre navigateur et disparaissent lorsque vous quittez ou rechargez la page. Consultez les <a href="/mentions-legales/#confidentialite">informations de confidentialité</a>.</p>
+  </section>
 </MainLayout>
 
 <style>
-  .containerContact {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    transform: translateY(-55vh);
-    z-index: 5000;
-  }
-
-  .containerContact article {
-    width: 40%;
-    height: auto;
-  }
-
-  .containerSinglePage {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: row;
-  }
-
-  .paragrapheSingle {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-  }
-
-  .paragrapheSingle :global(p) {
-    font-size: 1.5em;
-    text-align: center;
-    margin-bottom: 2vh;
-  }
-
-  .titreContactPage {
-    text-align: center;
-    margin-bottom: 2vh;
-  }
-
-  .containerForm {
-    width: 30%;
-    height: auto;
-    padding: 2vw;
-    margin-left: 5vw;
-    border-radius: 20px;
-    box-shadow:
-      inset 0 0 0.5px 1px hsla(0, 0%, 100%, 0.075),
-      0 0 0 1px hsla(0, 0%, 0%, 0.05),
-      0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
-      0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
-      0 3.5px 6px hsla(0, 0%, 0%, 0.09);
-    background: linear-gradient(to right, #ffffff, #ece9e6);
-  }
-
-  .containerForm form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .containerForm form select,
-  .containerForm form input,
-  .containerForm form textarea {
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    font-size: 14px;
-    width: 100%;
-    max-width: 25vw;
-    margin: 5px 0;
-  }
-
-  .containerForm form textarea {
-    padding-top: 2vh;
-    padding-bottom: 10vh;
-    padding-left: 2vh;
-    padding-right: 2vh;
-  }
-
-  .containerForm form select {
-    margin-top: 10px;
-  }
-
-  .containerForm form .txtForm {
-    font-size: 1.3em;
-    font-weight: 600;
-    margin: 1vh;
-  }
-
-  .containerForm form .btnForm {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--btnColor);
-    width: 45%;
-    border-radius: 10px;
-    color: var(--color1);
-    border: transparent;
-    padding: 2vh;
-    margin: 2vh;
-    font-size: 1.2vw;
-    font-family: var(--font-body);
-    font-weight: 800;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease,
-      background-color 0.3s ease, color 0.3s ease;
-  }
-
-  .containerForm form .btnForm::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease;
-    z-index: -1;
-  }
-
-  .containerForm form .btnForm:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    background-color: var(--btnColorHover);
-    color: var(--txtColor);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-  }
-
-  .containerForm form .btnForm:hover::before {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
-
-  .fade-in-contact {
-    animation: fadeInContact 1s ease-in-out forwards;
-  }
-
-  @keyframes fadeInContact {
-    from {
-      opacity: 0;
-      transform: translateY(-50vh);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @media (max-width: 768px) {
-    .containerContact {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      transform: translateY(-8vh);
-    }
-
-    .containerContact article {
-      height: auto;
-      width: 100%;
-    }
-
-    .containerForm {
-      width: 90%;
-      height: auto;
-      margin-left: 0;
-    }
-
-    .containerForm form select,
-    .containerForm form input,
-    .containerForm form textarea {
-      max-width: 80%;
-    }
-
-    .paragrapheSingle :global(p) {
-      font-size: 5vw;
-      text-align: center;
-      padding: 5vw;
-      transform: translateY(-23vh);
-    }
-
-    .titreContactPage {
-      width: 100%;
-      font-size: 7vw;
-      transform: translateY(-20vh);
-      margin-bottom: 0;
-    }
-
-    .containerForm form .btnForm {
-      font-size: 5vw;
-    }
-  }
+  .contact-hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:clamp(610px,72vh,780px);overflow:hidden;color:#fff}.contact-hero>img,.hero-overlay{position:absolute;inset:0;z-index:-2;width:100%;height:100%}.contact-hero>img{object-fit:cover;object-position:center 55%}.hero-overlay{z-index:-1;background:linear-gradient(90deg,rgba(20,43,45,.86),rgba(29,52,58,.48) 55%,rgba(29,52,58,.12))}.hero-content{width:min(1240px,88vw);margin:0 auto;padding-top:110px}.eyebrow,.section-kicker{margin-bottom:.65rem;color:var(--colorVar2);font-size:.78rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.contact-hero .eyebrow{color:#c8ddd0}.contact-hero h1{color:#fff;font-size:clamp(4.8rem,8vw,8rem);line-height:.82;text-shadow:0 10px 30px rgba(0,0,0,.3)}.hero-content>p:last-child{max-width:640px;margin-top:1.5rem;font-size:clamp(1.05rem,1.4vw,1.3rem);line-height:1.75}.hero-curve{position:absolute;right:0;bottom:-1px;left:0;width:100%;height:100px}.hero-curve path{fill:#fff}
+  .contact-methods{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);width:min(1120px,90vw);margin:-68px auto 0;border:1px solid rgba(57,136,123,.14);border-radius:26px;background:#fff;box-shadow:0 12px 22px rgba(29,52,58,.12),0 28px 52px rgba(29,52,58,.18);overflow:hidden}.contact-method{position:relative;display:grid;grid-template-columns:58px 1fr;grid-template-rows:auto auto auto;column-gap:1rem;padding:1.6rem 2rem;border-right:1px solid rgba(57,136,123,.15);transition:background .2s ease}.contact-method:last-child{border:0}.contact-method:hover,.contact-method:focus-visible{background:#f1f5ef}.method-icon{grid-row:1/4;display:grid;width:54px;height:54px;place-items:center;border-radius:18px;color:#fff;background:var(--colorVar2);font-size:1.5rem;font-weight:800}.method-label{color:var(--colorVar2);font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.contact-method strong{color:var(--colorVar3);font-size:1rem;overflow-wrap:anywhere}.contact-method small{color:#748083}
+  .contact-intro{max-width:820px;margin:0 auto;padding:8rem 1.5rem 3rem;text-align:center}.contact-intro h2,.form-heading h2,.contact-aside h2,.address-section h2,.privacy-note h2{color:var(--colorVar3);font-size:clamp(2.7rem,4.4vw,4.6rem);line-height:.98;text-wrap:balance}.contact-intro>p:last-child{margin-top:1.3rem;color:#536164;line-height:1.85}
+  .contact-main{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(320px,.65fr);align-items:start;gap:2rem;width:min(1240px,92vw);margin:0 auto;padding:2rem 0 8rem}.form-card{padding:clamp(2rem,4vw,4rem);border:1px solid rgba(57,136,123,.14);border-radius:36px;background:linear-gradient(145deg,#fff,#f4f7f2);box-shadow:0 22px 55px rgba(29,52,58,.13)}.form-heading>span{color:var(--colorVar2);font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.form-heading p{max-width:650px;margin-top:1rem;color:#5b686b;line-height:1.7}.form-card form{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-top:2.5rem}.field{display:flex;flex-direction:column;gap:.45rem}.field-wide{grid-column:1/-1}.field label{color:var(--colorVar3);font-size:.82rem;font-weight:800}.field input,.field select,.field textarea{width:100%;padding:.9rem 1rem;border:1px solid #cbd8d1;border-radius:13px;color:var(--colorVar3);background:rgba(255,255,255,.9);font:inherit;transition:border-color .18s ease,box-shadow .18s ease}.field textarea{resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{outline:0;border-color:var(--colorVar2);box-shadow:0 0 0 3px rgba(57,136,123,.14)}.form-footer{display:flex;align-items:center;justify-content:space-between;gap:2rem;margin-top:.5rem}.form-footer p{max-width:500px;color:#677477;font-size:.78rem;line-height:1.6}.form-footer button{flex:none;min-height:50px;padding:.75rem 1.2rem;border:0;border-radius:999px;color:#687577;background:#dce4df;font-weight:800;cursor:not-allowed}
+  .contact-aside{overflow:hidden;border-radius:36px;background:linear-gradient(145deg,#1d343a,#315f52);box-shadow:0 22px 55px rgba(29,52,58,.2);color:#fff}.aside-image{height:250px;overflow:hidden}.aside-image img{width:100%;height:100%;object-fit:cover}.aside-content{padding:2rem}.aside-content .section-kicker{color:#b8ccb0}.aside-content h2{color:#fff;font-size:2.8rem}.aside-content>p:not(.section-kicker){margin-top:1rem;line-height:1.75}.primary-action,.route-action{display:inline-flex;align-items:center;justify-content:center;min-height:52px;margin-top:1.6rem;padding:.8rem 1.3rem;border:2px solid var(--colorVar2);border-radius:999px;color:#fff;background:var(--colorVar2);font-weight:800;transition:.2s ease}.primary-action:hover,.route-action:hover,.primary-action:focus-visible,.route-action:focus-visible{border-color:var(--colorVar3);background:var(--colorVar3);transform:translateY(-2px)}
+  .address-section{display:flex;align-items:center;justify-content:space-between;gap:3rem;padding:6rem max(8vw,1.5rem);color:#fff;background:linear-gradient(135deg,#1d343a,#315f52)}.address-section .section-kicker{color:#b8ccb0}.address-section h2{color:#fff}.address-section p:not(.section-kicker){margin-top:1rem;font-size:1.05rem}.route-action{margin:0;white-space:nowrap}.privacy-note{max-width:900px;margin:0 auto;padding:6rem 1.5rem 8rem;text-align:center}.privacy-note h2{font-size:2.8rem}.privacy-note p{margin-top:1rem;color:#5d6a6c;line-height:1.8}.privacy-note a{color:var(--colorVar2);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+  @media(max-width:980px){.contact-methods{grid-template-columns:1fr}.contact-method{border-right:0;border-bottom:1px solid rgba(57,136,123,.15)}.contact-main{grid-template-columns:1fr}.contact-aside{display:grid;grid-template-columns:280px 1fr}.aside-image{height:100%}.address-section{align-items:flex-start;flex-direction:column}}
+  @media(max-width:768px){.contact-hero{min-height:700px;align-items:flex-end}.hero-content{padding:150px 0 130px}.contact-hero h1{font-size:clamp(4rem,20vw,6.5rem)}.contact-methods{margin-top:-48px}.contact-method{padding:1.25rem}.contact-intro{padding-top:6rem}.contact-main{width:90vw}.form-card{padding:1.5rem}.form-card form{grid-template-columns:1fr}.field-wide{grid-column:auto}.form-footer{align-items:stretch;flex-direction:column}.form-footer button{width:100%}.contact-aside{display:block}.aside-image{height:240px}.address-section{padding-top:5rem;padding-bottom:5rem}.route-action{width:100%}}
 </style>

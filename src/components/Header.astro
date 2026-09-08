@@ -1,144 +1,372 @@
 ---
 import { navLinks } from '../data/site.js';
 
-const currentPath = Astro.url.pathname;
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const currentPath = basePath && Astro.url.pathname.startsWith(basePath)
+  ? Astro.url.pathname.slice(basePath.length) || '/'
+  : Astro.url.pathname;
+const homeLink = navLinks.find((link) => link.href === '/');
+const elagageLink = navLinks.find((link) => link.class === 'page-elagage');
+const tpLink = navLinks.find((link) => link.class === 'page-tp');
+const boisLink = navLinks.find((link) => link.class === 'page-bois');
+const contactLink = navLinks.find((link) => link.class === 'page-contact');
+const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
 ---
 
-<header class="header">
+<header class="header" data-header>
   {/* Menu responsive (burger) */}
   <div class="containerMenuHeaderResponsive">
-    <button id="burger-menu" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
+    <button id="burger-menu" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">
       <span></span>
     </button>
-    <a href="/">
-      <img src="/img/LogoTeddyV2.webp" alt="Logo Elagage Thiers" />
+    <a href="/" aria-label="Accueil — Pradel Elagage">
+      <img src="/img/LogoTeddyV2.webp" alt="" />
     </a>
     <nav id="menu" aria-label="Navigation mobile">
       <ul>
         {navLinks.map((link) => (
-          <li><a href={link.href}>{link.label}</a></li>
+          <li><a href={link.href} aria-current={currentPath === link.href ? 'page' : undefined}>{link.label}</a></li>
         ))}
       </ul>
     </nav>
   </div>
 
   {/* Menu classique desktop */}
-  <nav class="containerMenuHeader" aria-label="Navigation principale">
-    {navLinks.slice(0, 2).map((link) => (
-      <a
-        class={`lienMenu ${link.class}`}
-        href={link.href}
-        aria-current={currentPath === link.href ? 'page' : undefined}
-      >
-        {link.label.toUpperCase()}
-      </a>
-    ))}
+  <nav class="desktop-nav" aria-label="Navigation principale">
+    <div class="nav-side nav-side-left">
+      {homeLink && (
+        <a class="nav-link" href={homeLink.href} aria-current={currentPath === homeLink.href ? 'page' : undefined}>
+          <img class="nav-icon" src={`/img/${homeLink.icon}`} alt="" />
+          <span>Accueil</span>
+        </a>
+      )}
 
-    <div class="containerLogo">
-      <a href="/">
-        <img class="logoHeader" src="/img/LogoTeddy.png" alt="Logo Elagage Thiers" />
-      </a>
+      {elagageLink && (
+        <a class="nav-link" href={elagageLink.href} aria-current={currentPath === elagageLink.href ? 'page' : undefined}>
+          <img class="nav-icon" src={`/img/${elagageLink.icon}`} alt="" />
+          <span>Élagage</span>
+        </a>
+      )}
     </div>
 
-    {navLinks.slice(2).map((link) => (
-      <a
-        class={`lienMenu ${link.class}`}
-        href={link.href}
-        aria-current={currentPath === link.href ? 'page' : undefined}
-      >
-        {link.label.toUpperCase()}
-      </a>
-    ))}
+    <a class="brand-link" href="/" aria-label="Accueil — Pradel Elagage">
+      <img class="logoHeader" src="/img/LogoTeddy.png" alt="Pradel Elagage" />
+    </a>
+
+    <div class="nav-side nav-side-right">
+      <div class="services-menu" data-services>
+        <button
+          class="nav-link services-trigger"
+          type="button"
+          aria-expanded="false"
+          aria-controls="services-submenu"
+          aria-current={servicesActive ? 'page' : undefined}
+        >
+          <span class="services-icons" aria-hidden="true">
+            <img class="services-icon-wood" src="/img/IconeBois.png" alt="" />
+            <img class="services-icon-digger" src="/svg/mini-pelle.svg" alt="" />
+          </span>
+          <span>Services</span>
+          <svg class="menu-chevron" viewBox="0 0 12 8" aria-hidden="true">
+            <path d="m1 1 5 5 5-5" />
+          </svg>
+        </button>
+        <div id="services-submenu" class="services-submenu">
+          {boisLink && (
+            <a href={boisLink.href} aria-current={currentPath === boisLink.href ? 'page' : undefined}>
+              <span class="submenu-wood" aria-hidden="true"></span>
+              <span>Bois de chauffage</span>
+            </a>
+          )}
+          {tpLink && (
+            <a href={tpLink.href} aria-current={currentPath === tpLink.href ? 'page' : undefined}>
+              <img src={`/img/${tpLink.icon}`} alt="" />
+              <span>Travaux TP</span>
+            </a>
+          )}
+        </div>
+      </div>
+      {contactLink && (
+        <a class="nav-link" href={contactLink.href} aria-current={currentPath === contactLink.href ? 'page' : undefined}>
+          <img class="nav-icon" src={`/img/${contactLink.icon}`} alt="" />
+          <span>Contact</span>
+        </a>
+      )}
+    </div>
   </nav>
 </header>
 
 <style>
   .header {
-    position: relative;
-    z-index: 5;
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 10000;
     display: flex;
     justify-content: center;
     width: 100%;
-    height: auto;
-    flex-direction: row;
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%);
+    height: 190px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.9) 56%, rgba(255, 255, 255, 0) 100%);
+    transition: height 320ms ease, background 320ms ease, box-shadow 320ms ease;
   }
 
-  .containerMenuHeader {
-    width: 80vw;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-  }
-
-  .containerMenuHeader a {
-    width: 20vw;
-  }
-
-  .lienMenu {
-    min-width: 236px;
-    min-height: 95px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: -12vh;
-    font-family: var(--font-heading);
-    font-size: xx-large;
-    font-weight: bolder;
-    text-decoration: none;
-    color: var(--colorVar3);
-    transition: background 0.2s ease, text-shadow 0.3s ease, color 0.3s ease;
-  }
-
-  .lienMenu:hover {
-    color: var(--colorVar2);
-  }
-
-  .lienMenu[aria-current="page"] {
-    color: var(--colorVar2);
-  }
-
-  .backgroundImage {
-    position: absolute;
-    top: -10%;
-    left: 0%;
-    width: 100%;
+  .desktop-nav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 210px minmax(0, 1fr);
+    align-items: start;
+    width: min(1420px, 94vw);
     height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
+  }
+
+  .nav-side {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    align-items: start;
+    gap: clamp(0.5rem, 2vw, 2.5rem);
+    padding-top: 38px;
+  }
+
+  .nav-side-left {
+    padding-right: clamp(1rem, 3vw, 3rem);
+  }
+
+  .nav-side-right {
+    padding-left: clamp(1rem, 3vw, 3rem);
+  }
+
+  .nav-link {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-height: 64px;
+    padding: 0.75rem 1rem;
+    border: 0;
+    background: transparent;
+    color: var(--colorVar3);
+    font-family: var(--font-heading);
+    font-size: clamp(1.45rem, 2vw, 2rem);
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color 220ms ease, transform 220ms ease;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible,
+  .nav-link[aria-current="page"] {
+    color: var(--colorVar2);
+  }
+
+  .nav-icon {
+    position: absolute;
+    z-index: -1;
+    width: 222px;
+    height: 174px;
+    object-fit: contain;
     opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: -300;
+    transform: translateY(6px) scale(0.86) rotate(-4deg);
+    transition: opacity 240ms ease, transform 280ms ease;
+  }
+
+  .nav-link:hover .nav-icon,
+  .nav-link:focus-visible .nav-icon,
+  .nav-link[aria-current="page"] .nav-icon {
+    opacity: 0.14;
+    transform: translateY(0) scale(1) rotate(0);
+  }
+
+  .services-icons {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 430px;
+    opacity: 0;
+    transform: translate(-50%, -44%) scale(0.86);
+    transition: opacity 240ms ease, transform 280ms ease;
+  }
+
+  .services-icons img {
+    flex: none;
+    object-fit: contain;
+  }
+
+  .services-icon-wood {
+    width: 227px;
+    height: 189px;
+    margin-left: -30px;
+  }
+
+  .services-icon-digger {
+    position: relative;
+    left: -50px;
+    width: 85px;
+    height: 67px;
+    margin-right: 40px;
+  }
+
+  .services-trigger:hover .services-icons,
+  .services-trigger:focus-visible .services-icons,
+  .services-trigger[aria-current="page"] .services-icons {
+    opacity: 0.14;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .brand-link {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 210px;
+  }
+
+  .logoHeader {
+    width: 200px;
+    height: auto;
+    filter: drop-shadow(0 5px 8px rgba(29, 52, 58, 0.08));
+    transform-origin: top center;
+    transition: width 320ms ease, transform 320ms ease;
+  }
+
+  .services-menu {
+    position: relative;
+  }
+
+  .services-trigger {
+    cursor: pointer;
+  }
+
+  .menu-chevron {
+    width: 12px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+    transition: transform 220ms ease;
+  }
+
+  .services-trigger[aria-expanded="true"] .menu-chevron {
+    transform: rotate(180deg);
+  }
+
+  .services-submenu {
+    position: absolute;
+    top: calc(100% + 0.35rem);
+    left: 50%;
+    display: grid;
+    width: max-content;
+    min-width: 250px;
+    padding: 0.55rem;
+    border: 1px solid rgba(57, 136, 123, 0.16);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 18px 45px rgba(29, 52, 58, 0.16);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -8px);
+    transition: opacity 180ms ease, transform 220ms ease;
+  }
+
+  .services-menu:hover .services-submenu,
+  .services-menu:focus-within .services-submenu,
+  .services-menu.is-open .services-submenu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+  }
+
+  .services-submenu a {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 11px;
+    color: var(--colorVar3);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition: color 180ms ease, background 180ms ease;
+  }
+
+  .services-submenu a:hover,
+  .services-submenu a:focus-visible,
+  .services-submenu a[aria-current="page"] {
+    color: var(--colorVar2);
+    background: rgba(57, 136, 123, 0.09);
+  }
+
+  .services-submenu img {
+    justify-self: center;
+    width: 38px;
+    height: 34px;
+    object-fit: contain;
+  }
+
+  .services-submenu .submenu-wood {
+    justify-self: center;
+    width: 57px;
+    height: 26px;
+    background-image: url('/img/IconeBois.png');
+    background-repeat: no-repeat;
+    background-position: 110% 50%;
+    background-size: 102px auto;
+  }
+
+  .header.is-compact {
+    height: 104px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(255, 255, 255, 0.96) 78%, rgba(255, 255, 255, 0.82) 100%);
+    box-shadow: 0 8px 28px rgba(29, 52, 58, 0.1);
+  }
+
+  .header.is-compact .desktop-nav {
+    grid-template-columns: minmax(0, 1fr) 126px minmax(0, 1fr);
+  }
+
+  .header.is-compact .nav-side {
+    padding-top: 15px;
+  }
+
+  .header.is-compact .nav-link {
+    min-height: 55px;
+    font-size: clamp(1.25rem, 1.7vw, 1.7rem);
+  }
+
+  .header.is-compact .brand-link {
+    width: 126px;
+  }
+
+  .header.is-compact .logoHeader {
+    width: 112px;
+    transform: translateY(-2px);
   }
 
   .containerMenuHeaderResponsive {
     display: none;
   }
 
-  .containerLogo img {
-    max-width: 200px;
-    height: auto;
-  }
-
   /* Burger menu responsive */
   @media screen and (max-width: 768px) {
-    .containerMenuHeader {
+    .desktop-nav {
       display: none;
     }
 
-    .header {
-      position: fixed;
-      top: 0;
+    .header,
+    .header.is-compact {
       right: 0;
       z-index: 500000;
       width: 100%;
       height: auto;
-      flex-direction: row;
-      background: var(--colorVar3);
       background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%);
+      box-shadow: none;
     }
 
     .containerMenuHeaderResponsive {
@@ -150,7 +378,7 @@ const currentPath = Astro.url.pathname;
       height: auto;
     }
 
-    .containerMenuHeaderResponsive a {
+    .containerMenuHeaderResponsive > a {
       display: flex;
       align-items: center;
     }
@@ -161,26 +389,25 @@ const currentPath = Astro.url.pathname;
     }
 
     #burger-menu {
-      cursor: pointer;
-      height: 27px;
-      width: 27px;
-      margin: 50px;
-      overflow: visible;
       position: relative;
       z-index: 2;
-      background: none;
-      border: none;
+      width: 27px;
+      height: 27px;
+      margin: 50px;
       padding: 0;
+      overflow: visible;
+      border: none;
+      background: none;
     }
 
     #burger-menu span,
     #burger-menu span::before,
     #burger-menu span::after {
-      background: var(--btnColor);
+      position: absolute;
       display: block;
       height: 4px;
+      background: var(--btnColor);
       opacity: 1;
-      position: absolute;
       transition: 0.3s ease-in-out;
     }
 
@@ -190,143 +417,136 @@ const currentPath = Astro.url.pathname;
     }
 
     #burger-menu span {
-      right: 0px;
       top: 13px;
+      right: 0;
       width: 27px;
     }
 
     #burger-menu span::before {
-      left: 0px;
       top: -10px;
+      left: 0;
       width: 16px;
     }
 
     #burger-menu span::after {
-      left: 0px;
       top: 10px;
+      left: 0;
       width: 20px;
     }
 
     #burger-menu.close span {
-      transform: rotate(-45deg);
       top: 13px;
       width: 27px;
+      transform: rotate(-45deg);
     }
 
     #burger-menu.close span::before {
-      top: 0px;
-      transform: rotate(90deg);
+      top: 0;
       width: 27px;
+      transform: rotate(90deg);
     }
 
     #burger-menu.close span::after {
-      top: 0px;
+      top: 0;
       left: 0;
-      transform: rotate(90deg);
-      opacity: 0;
       width: 0;
+      opacity: 0;
+      transform: rotate(90deg);
     }
 
     #menu {
+      position: fixed;
       z-index: 1;
+      top: 0;
       min-width: 100%;
       min-height: 100%;
-      position: fixed;
-      top: 0;
       height: 0;
+      padding-top: 20px;
       visibility: hidden;
       opacity: 0;
       text-align: center;
-      padding-top: 20px;
       transition: all 0.3s ease-in-out;
     }
 
     #menu.overlay {
+      padding-top: 100px;
       visibility: visible;
       opacity: 1;
-      padding-top: 100px;
       background: rgba(29, 58, 63, 0.85);
     }
 
     #menu ul {
-      list-style: none;
       padding: 0;
+      list-style: none;
     }
 
     #menu a {
-      color: #fff;
       display: block;
-      font-size: 32px;
       margin-bottom: 30px;
-      text-decoration: none;
+      color: #fff;
       font-family: var(--font-heading);
+      font-size: 32px;
     }
   }
 </style>
 
 <script>
-  // Burger menu toggle
-  const burgerMenu = document.getElementById('burger-menu');
-  const overlay = document.getElementById('menu');
+  function initializeHeader() {
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    const burgerMenu = document.getElementById('burger-menu');
+    const mobileMenu = document.getElementById('menu');
+    const services = document.querySelector<HTMLElement>('[data-services]');
+    const servicesTrigger = services?.querySelector<HTMLButtonElement>('.services-trigger');
 
-  burgerMenu?.addEventListener('click', () => {
-    const expanded = burgerMenu.getAttribute('aria-expanded') === 'true';
-    burgerMenu.classList.toggle('close');
-    overlay?.classList.toggle('overlay');
-    burgerMenu.setAttribute('aria-expanded', String(!expanded));
-    burgerMenu.setAttribute('aria-label', expanded ? 'Ouvrir le menu' : 'Fermer le menu');
-  });
+    if (!header || header.dataset.initialized === 'true') return;
+    header.dataset.initialized = 'true';
 
-  // Fermer le menu après clic sur un lien
-  overlay?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      burgerMenu?.classList.remove('close');
-      overlay?.classList.remove('overlay');
-      burgerMenu?.setAttribute('aria-expanded', 'false');
-    });
-  });
+    const updateHeader = () => header.classList.toggle('is-compact', window.scrollY > 80);
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
 
-  // Image de fond au survol des liens du menu desktop
-  const lienMenus = document.querySelectorAll('.lienMenu');
-  const imageBaseUrl = '/img/';
-  const currentPageUrl = window.location.href;
-
-  const iconMap: Record<string, string> = {
-    'page-accueil': 'IconeAccueil.png',
-    'page-contact': 'IconeContact.png',
-    'page-elagage': 'IconeElagage.png',
-    'page-bois': 'IconeBois.png',
-    'page-tp': 'un-camion.webp',
-  };
-
-  lienMenus.forEach((lienMenu) => {
-    const backgroundImage = document.createElement('div');
-    backgroundImage.classList.add('backgroundImage');
-
-    const menuLinkUrl = lienMenu.getAttribute('href');
-    const fullUrl = menuLinkUrl ? new URL(menuLinkUrl, window.location.origin).href : '';
-
-    if (currentPageUrl === fullUrl) {
-      backgroundImage.style.opacity = '0.2';
-    }
-
-    for (const [className, icon] of Object.entries(iconMap)) {
-      if (lienMenu.classList.contains(className)) {
-        backgroundImage.style.backgroundImage = `url(${imageBaseUrl}${icon})`;
-        break;
-      }
-    }
-
-    lienMenu.appendChild(backgroundImage);
-
-    lienMenu.addEventListener('mouseenter', () => {
-      backgroundImage.style.opacity = '0.2';
+    burgerMenu?.addEventListener('click', () => {
+      const expanded = burgerMenu.getAttribute('aria-expanded') === 'true';
+      burgerMenu.classList.toggle('close', !expanded);
+      mobileMenu?.classList.toggle('overlay', !expanded);
+      burgerMenu.setAttribute('aria-expanded', String(!expanded));
+      burgerMenu.setAttribute('aria-label', expanded ? 'Ouvrir le menu' : 'Fermer le menu');
     });
 
-    lienMenu.addEventListener('mouseleave', () => {
-      if (currentPageUrl !== fullUrl) {
-        backgroundImage.style.opacity = '0';
+    mobileMenu?.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        burgerMenu?.classList.remove('close');
+        mobileMenu.classList.remove('overlay');
+        burgerMenu?.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    servicesTrigger?.addEventListener('click', () => {
+      const open = services?.classList.toggle('is-open') ?? false;
+      servicesTrigger.setAttribute('aria-expanded', String(open));
+    });
+
+    services?.addEventListener('mouseenter', () => servicesTrigger?.setAttribute('aria-expanded', 'true'));
+    services?.addEventListener('mouseleave', () => {
+      if (!services.classList.contains('is-open')) servicesTrigger?.setAttribute('aria-expanded', 'false');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (services && event.target instanceof Node && !services.contains(event.target)) {
+        services.classList.remove('is-open');
+        servicesTrigger?.setAttribute('aria-expanded', 'false');
       }
     });
-  });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        services?.classList.remove('is-open');
+        servicesTrigger?.setAttribute('aria-expanded', 'false');
+        servicesTrigger?.focus();
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initializeHeader);
+  initializeHeader();
 </script>

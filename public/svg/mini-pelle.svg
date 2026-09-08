@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 230" role="img" aria-labelledby="title desc">
+  <title id="title">Mini-pelle</title>
+  <desc id="desc">Mini-pelle jaune avec cabine, chenilles et godet</desc>
+  <g stroke="#26383b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path fill="#26383b" d="M22 190h153c12 0 22 10 22 22s-10 22-22 22H22C10 234 1 224 1 212s9-22 21-22Z"/>
+    <path fill="#819093" d="M26 200h145c7 0 12 5 12 12s-5 12-12 12H26c-7 0-12-5-12-12s5-12 12-12Z"/>
+    <g fill="#26383b" stroke="none">
+      <circle cx="35" cy="212" r="4"/><circle cx="59" cy="212" r="4"/><circle cx="83" cy="212" r="4"/><circle cx="107" cy="212" r="4"/><circle cx="131" cy="212" r="4"/><circle cx="155" cy="212" r="4"/>
+    </g>
+    <path fill="#eeb536" d="M26 85c0-12 10-22 22-22h58c12 0 22 10 22 22v83c0 12-10 22-22 22H26Z"/>
+    <path fill="#8dd5e4" d="M43 76h54c7 0 13 6 13 13v52H43Z"/>
+    <path fill="none" d="M73 76v65M43 145h68"/>
+    <path fill="#d49221" d="M28 146h77v26H28Z"/>
+    <path fill="none" stroke="#6d5326" stroke-width="5" d="M34 153h50M34 164h61"/>
+    <path fill="#eeb536" d="m116 166 29-79 73-53 16 21-62 54-21 70Z"/>
+    <path fill="#ffd15b" d="m144 87 15-31 57-39 10 17Z"/>
+    <path fill="#eeb536" d="m216 18 17-10c8-5 18 0 20 9l21 94-20 5-30-76Z"/>
+    <circle fill="#819093" cx="264" cy="114" r="10"/>
+    <path fill="#26383b" d="m260 123 25 18 25-9c7 27-6 50-34 58-22-3-36-15-44-34l23-8Z"/>
+    <path fill="#819093" d="m283 142 16-14 11 4c4 18-1 35-14 46-16 14-42 14-58-1 26 2 42-10 45-35Z"/>
+    <path fill="#26383b" d="m188 190 20 29h33l-13-39-18 12Z"/>
+    <circle fill="#819093" cx="143" cy="174" r="12"/>
+    <circle fill="#819093" cx="227" cy="34" r="5" stroke="none"/>
+  </g>
+</svg>

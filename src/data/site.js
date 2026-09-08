@@ -69,8 +69,8 @@ export const homeServices = [
   },
   {
     title: 'TRAVAUX TP',
-    icon: '/img/un-camion.webp',
-    iconAlt: 'Travaux TP Thiers',
+    icon: '/svg/mini-pelle.svg',
+    iconAlt: 'Mini-pelle pour travaux TP à Thiers',
     description: 'Des <strong>travaux de terrassement</strong> et <strong> TP</strong> réalisés avec un matériel professionnel 🚜 pour vos projets d\'aménagement, défrichage et préparation de terrain.',
     link: '/travaux-tp/',
     linkLabel: 'En savoir +',
@@ -83,24 +83,30 @@ export const homeServices = [
 */
 export const homeSlides = [
   {
-    image: '/img/foret.png', // TODO: remplacer par l'image réelle du slide A
-    alt: 'Elagage Thiers 63300',
-    text: '<h1>ÉLAGAGE</h1><p>Un savoir-faire au service de la santé de vos arbres et de votre sécurité.</p>',
+    image: '/img/slider-elagage.webp',
+    alt: 'Élagage professionnel à Thiers',
+    eyebrow: 'Notre cœur de métier',
+    title: 'Élagage',
+    description: 'Un savoir-faire de plus de 15 ans pour préserver la santé de vos arbres et sécuriser durablement votre environnement.',
     link: '/elagage-thiers-forez/',
-    linkLabel: 'En savoir +',
+    linkLabel: 'Découvrir l’élagage',
   },
   {
-    image: '/img/arbre.png', // TODO: remplacer par l'image réelle du slide B
-    alt: 'Abattage Elagage Thiers 63300',
-    text: '<h1>ABATTAGE</h1><p>Abattage sécurisé dans les zones délicates, proches de lignes électriques et téléphoniques.</p>',
-    link: '/elagage-thiers-forez/',
-    linkLabel: 'En savoir +',
-  },
-  {
-    image: '/img/bois-de-chauffage.webp', // TODO: remplacer par l'image réelle du slide C
-    alt: 'Bois de chauffage Thiers 63300',
-    text: '<h1>BOIS DE CHAUFFAGE</h1><p>Bois de chauffage 100% feuux, dimensions 25, 33, 40, 50 cm. Livraison de 5 stères sur Thiers et la montagne Thiernoise.</p>',
+    image: '/img/slider-bois-chauffage.webp',
+    alt: 'Bois de chauffage livré autour de Thiers',
+    eyebrow: 'Chaleur locale',
+    title: 'Bois de chauffage',
+    description: 'Du bois de qualité préparé en plusieurs dimensions, avec livraison sur Thiers et dans la montagne Thiernoise.',
     link: '/bois-de-chauffage-thiers/',
-    linkLabel: 'En savoir +',
+    linkLabel: 'Découvrir le bois',
+  },
+  {
+    image: '/img/pexels-timothy-huliselan-205951426-20609454.jpg',
+    alt: 'Travaux de terrassement et travaux publics à Thiers',
+    eyebrow: 'Aménager vos extérieurs',
+    title: 'Travaux TP',
+    description: 'Terrassement, défrichage et préparation de terrain réalisés avec un matériel professionnel adapté à votre projet.',
+    link: '/travaux-tp/',
+    linkLabel: 'Découvrir les travaux TP',
   },
 ];

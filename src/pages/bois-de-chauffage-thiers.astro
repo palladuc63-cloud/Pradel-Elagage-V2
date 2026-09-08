@@ -1,134 +1,161 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import Carousel from '../components/Carousel.astro';
-import InfoCards from '../components/InfoCards.astro';
+import { site } from '../data/site.js';
 
-const title = 'Bois de chauffage à Thiers (63300) — Pradel Elagage | Vente et livraison';
-const description = 'Vente et livraison de bois de chauffage 100% feuillus à Thiers. Dimensions 25, 33, 40, 50 cm. Livraison de 5 stères sur Thiers et la montagne Thiernoise. Bois de qualité supérieure.';
-
-// TODO: remplacer par les images réelles depuis la BDD (champs ACF imgcarrouselbois-a, etc.)
-const carouselImages = [
-  { src: '/img/bois-de-chauffage.webp', alt: 'Bois de chauffage Thiers' },
-  { src: '/img/wood.webp', alt: 'Bois de chauffage 100% feuillus Thiers' },
-  { src: '/img/bois-de-chauffage.png', alt: 'Livraison bois de chauffage Thiers' },
+const title = 'Bois de chauffage à Thiers — Vente et livraison | Pradel Élagage';
+const description = 'Bois de chauffage 100 % feuillus à Thiers : chêne, hêtre et frêne en 25, 33, 40 ou 50 cm. Livraison dès 5 stères dans la montagne Thiernoise.';
+const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
+const galleryImages = [
+  { src: '/img/bois-stock.jpg', alt: 'Stock de bois de chauffage à Thiers' },
+  { src: '/img/bois-grapin.jpg', alt: 'Préparation du bois de chauffage avec un grappin' },
+  { src: '/img/bois-presentation.jpg', alt: 'Bois de chauffage préparé pour la livraison' },
 ];
-
-// TODO: remplacer par les contenus réels depuis la BDD (champs ACF imgessences, titreessence, etc.)
-const infoCards = [
-  {
-    image: '/img/wood.webp',
-    imageAlt: 'Essences de bois Thiers',
-    title: 'ESSENCES',
-    text: 'Bois de chauffage 100% feuillus. Chêne, hêtre et autres essences de qualité pour un chauffage efficace et durable.',
-  },
-  {
-    image: '/img/bois-de-chauffage.webp',
-    imageAlt: 'Dimensions bois de chauffage Thiers',
-    title: 'DIMENSIONS',
-    text: 'Dimensions disponibles : 25, 33, 40 et 50 cm pour s\'adapter à tous les types de foyers et de poêles.',
-  },
-  {
-    image: '/img/un-camion.webp',
-    imageAlt: 'Livraison bois de chauffage Thiers',
-    title: 'LIVRAISON',
-    text: 'Livraison de 5 stères minimum sur Thiers et la montagne Thiernoise. Service rapide et fiable.',
-  },
+const sizes = ['25 cm', '33 cm', '40 cm', '50 cm'];
+const assurances = [
+  { value: '100 %', label: 'bois feuillus' },
+  { value: '4', label: 'dimensions disponibles' },
+  { value: '5 stères', label: 'minimum en livraison' },
+  { value: 'Local', label: 'Thiers et alentours' },
 ];
 ---
 
 <MainLayout title={title} description={description} footerVariant="page">
-  <PageHero
-    image="/img/bois-de-chauffage.webp"
-    imageAlt="Bois de chauffage Thiers 63300 — Pradel Elagage"
-    title="BOIS DE CHAUFFAGE"
-  />
-
-  <article class="post">
-    <div class="containerSinglePage">
-      <Carousel images={carouselImages} />
-
-      <div class="paragrapheSingle animated-element">
-        <p>
-          Je suis fier de vous fournir 💁 un <strong>approvisionnement en bois
-          de chauffage 🪵 de qualité supérieure</strong> pour répondre à vos
-          besoins hivernaux ⛄.
-        </p>
-        <p>
-          <strong>100% feuillus</strong> 🌳, mes dimensions : 25, 33, 40, 50 cm,
-          en livraison 🚚 de 5 stères et sur la zone de Thiers et de la
-          montagne Thiernoise ⛰️.
-        </p>
+  <section class="wood-hero">
+    <img src="/img/bois-hero.webp" alt="Bois de chauffage préparé à Thiers" fetchpriority="high" />
+    <div class="wood-hero-overlay"></div>
+    <div class="wood-hero-content">
+      <p class="eyebrow">Vente & livraison autour de Thiers</p>
+      <h1>Bois de<br />chauffage</h1>
+      <p class="hero-lead">Un approvisionnement local en bois 100 % feuillus pour profiter d’une chaleur efficace et confortable tout au long de l’hiver.</p>
+      <div class="hero-actions">
+        <a class="primary-action" href={phoneHref}>Commander par téléphone</a>
+        <a class="secondary-action" href="/contact/">Demander un devis</a>
       </div>
     </div>
-  </article>
+    <svg class="hero-curve" viewBox="0 0 1200 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 55c220 65 370-45 600-20s390 75 600 5v60H0Z" /></svg>
+  </section>
 
-  <InfoCards cards={infoCards} />
+  <section class="assurance-strip" aria-label="Caractéristiques du bois de chauffage">
+    {assurances.map((item) => <div><strong>{item.value}</strong><span>{item.label}</span></div>)}
+  </section>
+
+  <section class="quality-section">
+    <div class="quality-copy">
+      <p class="section-kicker">Une chaleur naturelle</p>
+      <h2>Du bois sélectionné pour votre foyer</h2>
+      <p>Pradel Élagage fournit du bois de chauffage issu exclusivement d’essences feuillues comme le chêne, le hêtre et le frêne. Ces bois denses offrent une combustion régulière et une chaleur durable adaptée aux poêles, inserts et cheminées.</p>
+      <p>Chaque commande est préparée dans la dimension qui correspond à votre appareil. Vous bénéficiez ainsi d’un bois pratique à manipuler, prêt à être stocké et livré directement à votre domicile autour de Thiers.</p>
+      <ul>
+        <li>Essences feuillues soigneusement sélectionnées</li>
+        <li>Formats adaptés à votre poêle ou insert</li>
+        <li>Préparation et livraison avec du matériel professionnel</li>
+      </ul>
+    </div>
+    <div class="gallery-wrap"><Carousel images={galleryImages} /></div>
+  </section>
+
+  <section class="sizes-section">
+    <div class="section-heading">
+      <p class="section-kicker">Choisissez votre format</p>
+      <h2>Quatre dimensions disponibles</h2>
+      <p>Indiquez le format accepté par votre appareil lors de votre demande. Les tarifs seront communiqués selon la quantité, la dimension et l’adresse de livraison.</p>
+    </div>
+    <div class="sizes-grid">
+      {sizes.map((size, index) => (
+        <article class="size-card">
+          <span class="log-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+          <p>Format</p>
+          <h3>{size}</h3>
+          <span>{index < 2 ? 'Bûches compactes' : 'Bûches classiques'}</span>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="wood-benefits">
+    <article>
+      <img src="/img/bois-essences.jpg" alt="Différentes essences de bois feuillus" loading="lazy" />
+      <div><p class="section-kicker">Qualité</p><h2>Chêne, hêtre et frêne</h2><p>Des essences feuillues reconnues pour leur densité et leur pouvoir calorifique, sélectionnées pour assurer une combustion efficace et régulière.</p></div>
+    </article>
+    <article>
+      <img src="/img/bois-dimensions.jpg" alt="Bûches de bois préparées dans plusieurs dimensions" loading="lazy" />
+      <div><p class="section-kicker">Préparation</p><h2>À la bonne dimension</h2><p>25, 33, 40 ou 50 cm : choisissez un format compatible avec votre foyer pour faciliter le rangement, la manipulation et l’alimentation du feu.</p></div>
+    </article>
+  </section>
+
+  <section class="delivery-section">
+    <img src="/img/bois-livraison.jpg" alt="Camion de livraison de bois de chauffage" loading="lazy" />
+    <div class="delivery-overlay"></div>
+    <div class="delivery-content">
+      <p class="section-kicker">Livraison locale</p>
+      <h2>Votre bois directement à domicile</h2>
+      <p>Livraison à partir de 5 stères sur Thiers, Saint-Rémy-sur-Durolle, Courpière, Puy-Guillaume, Celles-sur-Durolle, Chabreloche, La Monnerie-le-Montel et dans la montagne Thiernoise.</p>
+      <div class="hero-actions">
+        <a class="primary-action" href={phoneHref}>Appeler le {site.phone}</a>
+        <a class="secondary-action" href="/contact/">Vérifier ma zone</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div><p class="section-kicker">Préparez votre hiver</p><h2>Besoin de bois de chauffage à Thiers ?</h2><p>Indiquez la dimension, la quantité souhaitée et votre commune pour obtenir une réponse adaptée.</p></div>
+    <div class="final-actions"><a class="primary-action" href={phoneHref}>Téléphoner</a><a class="outline-action" href="/contact/">Envoyer une demande</a></div>
+  </section>
 </MainLayout>
 
 <style>
-  .containerSinglePage {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: row;
-    transform: translateY(-44vh);
-  }
-
-  .paragrapheSingle {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: auto;
-    align-items: center;
-    margin-right: 4vw;
-  }
-
-  .paragrapheSingle :global(p) {
-    margin-bottom: 3vh;
-    font-size: 1.2vw;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  @media (max-width: 768px) {
-    .containerSinglePage {
-      flex-direction: column;
-      transform: translateY(0);
-    }
-
-    .paragrapheSingle {
-      width: 100%;
-      height: auto;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .paragrapheSingle :global(p) {
-      width: 100%;
-      height: auto;
-      font-size: 5vw;
-      padding: 2vh;
-    }
-  }
+  .wood-hero { position: relative; isolation: isolate; display: flex; align-items: center; min-height: clamp(650px, 80vh, 850px); overflow: hidden; color: #fff; }
+  .wood-hero > img, .wood-hero-overlay { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; }
+  .wood-hero > img { object-fit: cover; object-position: center; }
+  .wood-hero-overlay { z-index: -1; background: linear-gradient(90deg, rgba(35, 31, 23, .84), rgba(49, 64, 50, .5) 50%, rgba(29, 52, 58, .08) 82%); }
+  .wood-hero-content { width: min(1280px, 88vw); margin: 0 auto; padding-top: 120px; }
+  .eyebrow, .section-kicker { margin-bottom: .65rem; color: var(--colorVar2); font-size: .78rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+  .wood-hero .eyebrow { color: #d9e5d4; }
+  .wood-hero h1 { max-width: 9ch; color: #fff; font-size: clamp(4.5rem, 8vw, 8rem); line-height: .82; text-shadow: 0 10px 30px rgba(0,0,0,.32); }
+  .hero-lead { max-width: 590px; margin-top: 1.6rem; font-size: clamp(1.05rem, 1.4vw, 1.3rem); line-height: 1.7; }
+  .hero-actions, .final-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+  .primary-action, .secondary-action, .outline-action { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: .8rem 1.3rem; border: 2px solid var(--colorVar2); border-radius: 999px; font-size: .9rem; font-weight: 800; transition: .2s ease; }
+  .primary-action { color: #fff; background: var(--colorVar2); box-shadow: 0 12px 28px rgba(57,136,123,.3); }
+  .secondary-action { color: #fff; border-color: rgba(255,255,255,.75); background: rgba(255,255,255,.12); backdrop-filter: blur(8px); }
+  .outline-action { color: var(--colorVar3); border-color: var(--colorVar3); }
+  .primary-action:hover, .secondary-action:hover, .outline-action:hover, .primary-action:focus-visible, .secondary-action:focus-visible, .outline-action:focus-visible { color: #fff; border-color: var(--colorVar3); background: var(--colorVar3); transform: translateY(-2px); }
+  .hero-curve { position: absolute; right: 0; bottom: -1px; left: 0; width: 100%; height: 100px; }
+  .hero-curve path { fill: #fff; }
+  .assurance-strip { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); width: min(1080px, 88vw); margin: -72px auto 0; padding: 1.5rem 2rem; border: 1px solid rgba(57,136,123,.13); border-radius: 24px; background: #fff; box-shadow: 0 10px 18px rgba(29,52,58,.12), 0 24px 48px rgba(29,52,58,.18); }
+  .assurance-strip > div { display: flex; flex-direction: column; align-items: center; padding: .35rem 1rem; border-right: 1px solid rgba(57,136,123,.16); text-align: center; }
+  .assurance-strip > div:last-child { border: 0; }
+  .assurance-strip strong { color: var(--colorVar2); font-family: var(--font-heading); font-size: 2rem; line-height: 1; }
+  .assurance-strip span { margin-top: .4rem; color: var(--colorVar3); font-size: .76rem; font-weight: 750; text-transform: uppercase; }
+  .quality-section { display: grid; grid-template-columns: minmax(0,1fr) minmax(380px,.9fr); align-items: center; gap: clamp(3rem,7vw,7rem); width: min(1240px,88vw); margin: 0 auto; padding: 8rem 0; }
+  .quality-copy h2, .section-heading h2, .wood-benefits h2, .delivery-content h2, .final-cta h2 { color: var(--colorVar3); font-size: clamp(2.8rem,4.5vw,4.8rem); line-height: .98; text-wrap: balance; }
+  .quality-copy > p:not(.section-kicker), .section-heading > p:not(.section-kicker), .wood-benefits article p:not(.section-kicker), .final-cta p:not(.section-kicker) { margin-top: 1.3rem; color: #4b5a5c; line-height: 1.85; }
+  .quality-copy ul { display: grid; gap: .7rem; margin-top: 1.7rem; list-style: none; }
+  .quality-copy li { display: flex; gap: .65rem; color: var(--colorVar3); font-weight: 750; }
+  .quality-copy li::before { color: var(--colorVar2); content: '●'; }
+  .gallery-wrap { display: flex; justify-content: center; padding: 1rem; border-radius: 32px; background: linear-gradient(145deg, rgba(184,204,176,.48), rgba(57,136,123,.1)); }
+  .sizes-section { padding: 7rem max(4vw,1.5rem) 8rem; background: linear-gradient(180deg,#f8faf7,#e8eee6); }
+  .section-heading { max-width: 780px; margin: 0 auto 3.5rem; text-align: center; }
+  .sizes-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem; width: min(1100px,92vw); margin: 0 auto; }
+  .size-card { display: flex; min-height: 280px; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; border: 1px solid rgba(57,136,123,.14); border-radius: 28px; background: #fff; box-shadow: 0 15px 35px rgba(29,52,58,.1); text-align: center; transition: transform .22s ease, box-shadow .22s ease; }
+  .size-card:hover { transform: translateY(-6px); box-shadow: 0 24px 45px rgba(29,52,58,.16); }
+  .size-card > p { margin-top: 1rem; color: var(--colorVar2); font-size: .72rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+  .size-card h3 { color: var(--colorVar3); font-size: 3rem; }
+  .size-card > span:last-child { color: #687577; font-size: .85rem; }
+  .log-icon { position: relative; display: flex; align-items: flex-end; width: 90px; height: 55px; }
+  .log-icon i { position: absolute; bottom: 0; width: 58px; height: 24px; border: 4px solid #8a5d35; border-radius: 999px; background: #c88a4b; }
+  .log-icon i::before { position: absolute; top: 3px; left: 4px; width: 10px; height: 10px; border: 2px solid #8a5d35; border-radius: 50%; content: ''; }
+  .log-icon i:nth-child(2) { right: 0; bottom: 17px; }.log-icon i:nth-child(3) { left: 15px; bottom: 32px; }
+  .wood-benefits { display: grid; gap: 6rem; width: min(1200px,88vw); margin: 0 auto; padding: 8rem 0; }
+  .wood-benefits article { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(2rem,6vw,6rem); }
+  .wood-benefits article:nth-child(even) img { order: 2; }
+  .wood-benefits img { width: 100%; height: 360px; border-radius: 30px; object-fit: cover; box-shadow: 0 22px 50px rgba(29,52,58,.16); }
+  .delivery-section { position: relative; isolation: isolate; display: flex; min-height: 620px; align-items: center; overflow: hidden; color: #fff; }
+  .delivery-section > img, .delivery-overlay { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+  .delivery-overlay { z-index: -1; background: linear-gradient(90deg,rgba(29,52,58,.9),rgba(29,52,58,.58) 55%,rgba(29,52,58,.15)); }
+  .delivery-content { width: min(1180px,88vw); margin: 0 auto; }
+  .delivery-content .section-kicker { color: #b8ccb0; }.delivery-content h2 { max-width: 10ch; color: #fff; }.delivery-content > p:not(.section-kicker) { max-width: 660px; margin-top: 1.3rem; line-height: 1.8; }
+  .final-cta { display: flex; align-items: center; justify-content: space-between; gap: 3rem; width: min(1160px,88vw); margin: 0 auto; padding: 7rem 0 9rem; }.final-cta > div:first-child { max-width: 680px; }
+  @media(max-width:980px){.quality-section{grid-template-columns:1fr}.sizes-grid{grid-template-columns:repeat(2,1fr)}.wood-benefits article{grid-template-columns:1fr}.wood-benefits article:nth-child(even) img{order:0}.final-cta{align-items:flex-start;flex-direction:column}}
+  @media(max-width:768px){.wood-hero{min-height:760px;align-items:flex-end}.wood-hero-content{padding:150px 0 130px}.wood-hero h1{font-size:clamp(3.8rem,19vw,6rem)}.hero-actions,.final-actions{flex-direction:column}.primary-action,.secondary-action,.outline-action{width:100%}.assurance-strip{grid-template-columns:repeat(2,1fr);gap:1rem 0}.assurance-strip>div:nth-child(2){border:0}.quality-section{width:90vw;padding:6rem 0}.sizes-grid{grid-template-columns:1fr}.wood-benefits{padding:5rem 0}.wood-benefits img{height:280px}.delivery-section{min-height:680px}.sizes-section{padding-top:5rem;padding-bottom:5rem}}
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll('.animated-element');
-    animatedElements.forEach((el) => el.classList.add('animate'));
-  });
-
-  document.addEventListener('scroll', () => {
-    const animatedElements2 = document.querySelectorAll('.animated-element-2');
-    const windowHeight = window.innerHeight;
-
-    animatedElements2.forEach((el) => {
-      const elementOffset = el.getBoundingClientRect().top;
-      if (elementOffset < windowHeight * 1) {
-        el.classList.add('animate');
-      }
-    });
-  });
-</script>

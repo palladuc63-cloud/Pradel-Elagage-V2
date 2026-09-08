@@ -2,104 +2,200 @@
 // Bannière de consentement cookies (repris du thème WP teddy-elagage)
 ---
 
-<div id="cookie-banner-container">
-  <button id="manage-cookies" class="manage-cookies" type="button" aria-haspopup="dialog">
-    Gérer mes préférences
-  </button>
-  <p id="consent-status" class="visually-hidden" role="status" aria-live="polite"></p>
+<div id="privacy-banner" class="privacy-banner" data-privacy-banner hidden role="region" aria-labelledby="privacy-title">
+  <div class="privacy-content">
+    <div class="privacy-copy">
+      <h2 id="privacy-title">Vos préférences de confidentialité</h2>
+      <p>
+        Nous utilisons le stockage local pour mémoriser votre choix. La carte OpenStreetMap est chargée directement pour afficher notre localisation.
+        <a href="/mentions-legales/#confidentialite">En savoir plus</a>
+      </p>
+    </div>
+    <div class="privacy-actions">
+      <button class="privacy-refuse" type="button" data-privacy-choice="refused">Tout refuser</button>
+      <button class="privacy-accept" type="button" data-privacy-choice="accepted">Tout accepter</button>
+    </div>
+  </div>
 </div>
+<p id="privacy-status" class="visually-hidden" role="status" aria-live="polite"></p>
 
 <script>
-  type Consent = 'accepted' | 'refused';
-  const consentKey = 'externalServicesConsent';
+  type PrivacyChoice = 'accepted' | 'refused';
+  const privacyKey = 'privacyPreference';
 
-  function getConsent(): Consent | null {
-    const value = localStorage.getItem(consentKey);
+  function getPrivacyChoice(): PrivacyChoice | null {
+    const value = localStorage.getItem(privacyKey);
     return value === 'accepted' || value === 'refused' ? value : null;
   }
 
-  function createCookieBanner() {
-    const container = document.getElementById('cookie-banner-container');
-    if (!container || document.getElementById('cookie-banner')) return;
-
-    const dialog = document.createElement('div');
-    dialog.id = 'cookie-banner';
-    dialog.className = 'containerCookie';
-    dialog.setAttribute('role', 'dialog');
-    dialog.setAttribute('aria-modal', 'true');
-    dialog.setAttribute('aria-labelledby', 'consent-title');
-    dialog.setAttribute('aria-describedby', 'consent-description');
-    dialog.innerHTML = `
-      <div class="cookie-banner">
-        <h2 id="consent-title">Vos préférences de confidentialité</h2>
-        <p id="consent-description" class="cookieTxt">Google Maps est un service externe susceptible de déposer des cookies. Vous pouvez l’accepter ou le refuser. Votre choix reste modifiable à tout moment.</p>
-        <div class="cookie-actions">
-          <button id="accept-cookies" type="button">ACCEPTER GOOGLE MAPS</button>
-          <button id="reject-cookies" type="button">REFUSER</button>
-        </div>
-      </div>`;
-    container.append(dialog);
-
-    const saveConsent = (value: Consent) => {
-      localStorage.setItem(consentKey, value);
-      dialog.remove();
-      const status = document.getElementById('consent-status');
-      if (status) status.textContent = value === 'accepted'
-        ? 'Google Maps est autorisé.'
-        : 'Google Maps reste désactivé.';
-      window.dispatchEvent(new CustomEvent('external-services-consent', { detail: value }));
-      document.getElementById('manage-cookies')?.focus();
-    };
-
-    dialog.querySelector('#accept-cookies')?.addEventListener('click', () => saveConsent('accepted'));
-    dialog.querySelector('#reject-cookies')?.addEventListener('click', () => saveConsent('refused'));
-    (dialog.querySelector('#accept-cookies') as HTMLButtonElement | null)?.focus();
+  function showPrivacyBanner(moveFocus = false) {
+    const banner = document.querySelector<HTMLElement>('[data-privacy-banner]');
+    if (!banner) return;
+    banner.hidden = false;
+    if (moveFocus) banner.querySelector<HTMLButtonElement>('[data-privacy-choice]')?.focus();
   }
 
-  function initialiseConsent() {
-    document.getElementById('manage-cookies')?.addEventListener('click', createCookieBanner);
-    if (!getConsent()) createCookieBanner();
+  function hidePrivacyBanner() {
+    const banner = document.querySelector<HTMLElement>('[data-privacy-banner]');
+    if (banner) banner.hidden = true;
   }
 
-  document.addEventListener('astro:page-load', initialiseConsent);
+  function savePrivacyChoice(choice: PrivacyChoice) {
+    localStorage.setItem(privacyKey, choice);
+    hidePrivacyBanner();
+    const status = document.getElementById('privacy-status');
+    if (status) status.textContent = choice === 'accepted'
+      ? 'Les services facultatifs sont acceptés.'
+      : 'Les services facultatifs sont refusés.';
+    window.dispatchEvent(new CustomEvent('privacy-preference-change', { detail: choice }));
+    document.querySelector<HTMLButtonElement>('[data-open-privacy]')?.focus();
+  }
+
+  function initializePrivacyBanner() {
+    const banner = document.querySelector<HTMLElement>('[data-privacy-banner]');
+    if (!banner) return;
+    if (!getPrivacyChoice()) showPrivacyBanner();
+
+    if (document.documentElement.dataset.privacyInitialized === 'true') return;
+    document.documentElement.dataset.privacyInitialized = 'true';
+
+    document.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element)) return;
+      const choiceButton = event.target.closest<HTMLElement>('[data-privacy-choice]');
+      const choice = choiceButton?.dataset.privacyChoice;
+      if (choice === 'accepted' || choice === 'refused') savePrivacyChoice(choice);
+      if (event.target.closest('[data-open-privacy]')) showPrivacyBanner(true);
+    });
+  }
+
+  document.addEventListener('astro:page-load', initializePrivacyBanner);
+  initializePrivacyBanner();
 </script>
 
 <style>
-  .containerCookie {
+  .privacy-banner {
+    position: fixed;
+    z-index: 600000;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 24px;
+    background: rgba(184, 204, 176, 0.96);
+    box-shadow: 0 20px 55px rgba(29, 52, 58, 0.28);
+    backdrop-filter: blur(12px) saturate(115%);
+    -webkit-backdrop-filter: blur(12px) saturate(115%);
+  }
+
+  .privacy-banner[hidden] {
+    display: none;
+  }
+
+  .privacy-content {
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: fixed;
-    inset: auto 0 0;
-    min-height: 10vh;
-    padding: 1rem;
-    background-color: #b8ccb0;
-    z-index: 5000;
-    text-align: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: min(1180px, 100%);
+    margin: 0 auto;
   }
 
-  .cookie-banner { max-width: 900px; }
-  .cookie-banner h2 { font-size: 1.2rem; }
-  .cookieTxt { font-family: var(--font-body); color: var(--colorVar3); }
-  .cookie-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
-  .cookie-banner button,
-  .manage-cookies {
-    border-radius: 10px;
-    padding: 10px;
-    font-family: var(--font-heading);
-    color: white;
-    border: none;
-    background-color: var(--colorVar2);
-    cursor: pointer;
+  .privacy-copy {
+    max-width: 760px;
   }
-  .cookie-banner button:hover, .cookie-banner button:focus-visible,
-  .manage-cookies:hover, .manage-cookies:focus-visible { background-color: var(--colorVar3); }
-  .manage-cookies { position: fixed; right: 1rem; bottom: 1rem; z-index: 4999; font-size: .8rem; }
-  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+  .privacy-copy h2 {
+    margin-bottom: 0.3rem;
+    color: var(--colorVar3);
+    font-size: 1.55rem;
+  }
+
+  .privacy-copy p {
+    color: #344e50;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .privacy-copy a {
+    color: var(--colorVar3);
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .privacy-actions {
+    display: flex;
+    flex: none;
+    gap: 0.75rem;
+  }
+
+  .privacy-actions button {
+    min-height: 48px;
+    padding: 0.7rem 1.15rem;
+    border: 2px solid var(--colorVar3);
+    border-radius: 999px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    white-space: nowrap;
+    transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+
+  .privacy-actions button:hover,
+  .privacy-actions button:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .privacy-refuse {
+    color: var(--colorVar3);
+    background: rgba(255, 255, 255, 0.45);
+  }
+
+  .privacy-refuse:hover,
+  .privacy-refuse:focus-visible,
+  .privacy-accept {
+    color: #fff;
+    background: var(--colorVar3);
+  }
+
+  .privacy-accept:hover,
+  .privacy-accept:focus-visible {
+    background: var(--colorVar2);
+    border-color: var(--colorVar2);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 
   @media (max-width: 768px) {
-    .cookieTxt { font-size: 1rem; }
-    .cookie-actions { flex-direction: column; }
-    .manage-cookies { right: .5rem; bottom: .5rem; }
+    .privacy-banner {
+      right: 0.6rem;
+      bottom: 0.6rem;
+      left: 0.6rem;
+      border-radius: 20px;
+    }
+
+    .privacy-content {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+
+    .privacy-actions {
+      flex-direction: column-reverse;
+    }
+
+    .privacy-actions button {
+      width: 100%;
+    }
   }
 </style>

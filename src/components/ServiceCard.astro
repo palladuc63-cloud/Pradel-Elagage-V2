@@ -5,90 +5,186 @@ export interface Props {
   iconAlt: string;
   description: string;
   link: string;
-  linkLabel: string;
+  linkLabel?: string;
 }
 
-const { title, icon, iconAlt, description, link, linkLabel } = Astro.props;
+const { title, icon, iconAlt, description, link } = Astro.props;
+const cardClass = `service-card service-card-${title.toLowerCase().replaceAll(' ', '-')}`;
 ---
 
-<div class="shapeWhiteOrder">
-  <img class="svgCardHome" src="/svg/imgBackgroundHomePageOffer.svg" alt={title} loading="eager" />
-  <img class="imgOrigamiPreparation" src={icon} alt={iconAlt} loading="eager" />
-  <h1>{title}</h1>
-  <p set:html={description} />
-  <a href={link} class="btn-pradel card-btn">{linkLabel}</a>
-</div>
+<a class={cardClass} href={link} aria-label={`Découvrir le service ${title}`}>
+  <span class="historical-card-shape" aria-hidden="true"></span>
+  <span class="service-icon-wrap">
+    <img class="service-icon" src={icon} alt={iconAlt} loading="lazy" />
+  </span>
+  <span class="service-content">
+    <h2>{title}</h2>
+    <span class="service-description" set:html={description}></span>
+  </span>
+  <span class="service-link" aria-hidden="true">
+    Découvrir
+    <svg viewBox="0 0 20 20">
+      <path d="M4 10h11M11 5l5 5-5 5" />
+    </svg>
+  </span>
+</a>
 
 <style>
-  .shapeWhiteOrder {
+  .service-card {
     position: relative;
-    z-index: 100;
+    isolation: isolate;
     display: flex;
+    width: 100%;
+    max-width: 370px;
+    min-width: 0;
+    aspect-ratio: 370 / 626;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    padding: 3.4rem 2rem 9.5rem;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    color: var(--colorVar3);
+    text-align: center;
+    filter: drop-shadow(0 10px 12px rgba(29, 52, 58, 0.22)) drop-shadow(0 28px 30px rgba(29, 52, 58, 0.32));
+    transition: transform 260ms ease, filter 260ms ease;
+  }
+
+  .service-card:hover,
+  .service-card:focus-visible {
+    filter: drop-shadow(0 12px 16px rgba(29, 52, 58, 0.26)) drop-shadow(0 38px 40px rgba(29, 52, 58, 0.38));
+    transform: translateY(-10px);
+  }
+
+  .historical-card-shape {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px) saturate(125%);
+    -webkit-backdrop-filter: blur(15px) saturate(125%);
+    filter: drop-shadow(0 8px 10px rgba(29, 52, 58, 0.16)) drop-shadow(0 24px 32px rgba(29, 52, 58, 0.28));
+    mask: url('/svg/imgBackgroundHomePageOffer.svg') center / 100% 100% no-repeat;
+    -webkit-mask: url('/svg/imgBackgroundHomePageOffer.svg') center / 100% 100% no-repeat;
+    transition: background 260ms ease, filter 260ms ease;
+  }
+
+  .service-card:hover .historical-card-shape,
+  .service-card:focus-visible .historical-card-shape {
+    background: rgba(255, 255, 255, 0.9);
+    filter: drop-shadow(0 10px 14px rgba(29, 52, 58, 0.2)) drop-shadow(0 34px 42px rgba(29, 52, 58, 0.34));
+  }
+
+  .service-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 130px;
+    margin-bottom: 0.9rem;
+  }
+
+  .service-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 9px 12px rgba(29, 52, 58, 0.14));
+  }
+
+  .service-card-elagage .service-icon {
+    width: 150%;
+    height: 150%;
+  }
+
+  .service-card-bois-de-chauffage .service-icon {
+    width: 94px;
+  }
+
+  .service-card-travaux-tp .service-icon {
+    width: 145px;
+  }
+
+  .service-content {
+    display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
   }
 
-  .svgCardHome {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+  .service-content h2 {
+    max-width: 12ch;
+    margin-bottom: 1rem;
+    color: var(--colorVar3);
+    font-size: clamp(2rem, 2.6vw, 2.8rem);
+    line-height: 0.98;
+    text-wrap: balance;
   }
 
-  .shapeWhiteOrder:hover .svgCardHome {
-    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.5));
+  .service-description {
+    max-width: 34ch;
+    color: #3f4e50;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    line-height: 1.72;
   }
 
-  .shapeWhiteOrder :global(p) {
-    width: 80%;
-    height: auto;
+  .service-description :global(strong) {
+    color: var(--colorVar3);
+    font-weight: 750;
+  }
+
+  .service-link {
     position: absolute;
-    top: 42%;
+    bottom: 112px;
     left: 50%;
-    transform: translate(-50%, -40%);
-    text-align: center;
-    font-size: 1vw;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 50px;
+    margin: 0;
+    padding: 0.75rem 1.15rem;
+    border: 2px solid var(--colorVar2);
+    border-radius: 999px;
+    color: #fff;
+    background: var(--colorVar2);
+    box-shadow: 0 9px 24px rgba(57, 136, 123, 0.26);
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    transition: background 200ms ease, border-color 200ms ease;
   }
 
-  .shapeWhiteOrder h1 {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    width: 100%;
-    text-align: center;
+  .service-card:hover .service-link,
+  .service-card:focus-visible .service-link {
+    background: var(--colorVar3);
+    border-color: var(--colorVar3);
   }
 
-  .imgOrigamiPreparation {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, -40%);
+  .service-link svg {
+    width: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+    transition: transform 220ms ease;
   }
 
-  .card-btn {
-    width: 9vw;
-    height: 6vh;
-    transform: translateY(-21vh);
+  .service-card:hover .service-link svg,
+  .service-card:focus-visible .service-link svg {
+    transform: translateX(5px);
   }
 
   @media (max-width: 768px) {
-    .shapeWhiteOrder :global(p) {
-      font-size: 5vw;
-    }
-
-    .shapeWhiteOrder h1 {
-      font-size: 2em;
-    }
-
-    .card-btn {
-      width: 40vw;
-      height: 7vh;
-      font-size: 5vw;
-    }
-
-    .imgOrigamiPreparation {
-      width: 60%;
-      height: auto;
+    .service-card {
+      max-width: 370px;
     }
   }
 </style>

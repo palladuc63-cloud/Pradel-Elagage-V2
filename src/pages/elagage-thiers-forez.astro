@@ -1,142 +1,583 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import Carousel from '../components/Carousel.astro';
-import InfoCards from '../components/InfoCards.astro';
+import { site } from '../data/site.js';
 
-const title = 'Élagage à Thiers (63300) — Pradel Elagage | Élagage et abattage sécurisé';
-const description = 'Service d\'élagage et d\'abattage à Thiers par Pradel Elagage. Intervention en zones délicates, proches de lignes électriques et téléphoniques. Maintien de la sécurité des bâtiments et santé de vos arbres. Devis gratuit.';
+const title = 'Élagage et abattage à Thiers — Élagueur professionnel | Pradel Élagage';
+const description = 'Élagueur à Thiers depuis plus de 15 ans : élagage raisonné, taille, abattage sécurisé, démontage et interventions près des lignes. Devis gratuit dans la montagne Thiernoise et le Forez.';
+const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
 
-// TODO: remplacer par les images réelles depuis la BDD WordPress (champs ACF imgcarrousel1, imgcarrousela, etc.)
-const carouselImages = [
-  { src: '/img/foret.png', alt: 'Élagage Thiers — intervention sur arbre' },
-  { src: '/img/arbre.png', alt: 'Abattage Thiers — zone délicate' },
-  { src: '/img/chainsaw.webp', alt: 'Tronçonneuse élagage Thiers' },
-  { src: '/img/tree.webp', alt: 'Arbre élagué Thiers Forez' },
+const galleryImages = [
+  { src: '/img/elagage-arbre-vichy.jpg', alt: 'Élagage d’un grand arbre près de Thiers' },
+  { src: '/img/elagage-difficile.jpg', alt: 'Intervention d’élagage difficile en hauteur' },
+  { src: '/img/elagage-haie-avant-apres.webp', alt: 'Haie avant et après une taille professionnelle' },
+  { src: '/img/elagage-demontage-nacelle.jpg', alt: 'Démontage sécurisé d’un arbre avec une nacelle' },
 ];
 
-// TODO: remplacer par les contenus réels depuis la BDD (champs ACF imgCard, titreCard1, txtcard1, etc.)
-const infoCards = [
+const services = [
   {
-    image: '/img/chainsaw.webp',
-    imageAlt: 'Élagage Thiers',
-    title: 'ÉLAGAGE',
-    text: 'Taille et entretien de vos arbres pour préserver leur santé et garantir la sécurité de votre propriété.',
+    image: '/img/elagage-difficile-card.webp',
+    alt: 'Élagueur en intervention difficile',
+    title: 'Élagage raisonné',
+    text: 'Une taille précise, adaptée à l’essence, à l’âge et à l’environnement de l’arbre pour préserver sa santé, sa structure et son développement naturel.',
   },
   {
-    image: '/img/arbreRelou.webp',
-    imageAlt: 'Abattage Thiers',
-    title: 'ABATTAGE',
-    text: 'Abattage sécurisé dans les zones délicates, proches de lignes électriques et téléphoniques.',
+    image: '/img/elagage-haie-avant-apres.webp',
+    alt: 'Taille d’entretien d’une haie',
+    title: 'Taille et entretien',
+    text: 'Taille d’entretien, réduction du volume et suppression des branches mortes ou gênantes pour maintenir des arbres et des haies propres et équilibrés.',
   },
   {
-    image: '/img/foret.png',
-    imageAlt: 'Débroussaillage Thiers',
-    title: 'DÉBROUSSAILLAGE',
-    text: 'Débroussaillage et nettoyage de votre terrain pour un espace propre et sécurisé.',
+    image: '/img/elagage-abattage-securise.webp',
+    alt: 'Abattage sécurisé d’un arbre',
+    title: 'Abattage sécurisé',
+    text: 'Lorsqu’un arbre devient dangereux, malade ou mal placé, son abattage est préparé avec rigueur afin de protéger les bâtiments, les accès et les plantations voisines.',
   },
   {
-    image: '/img/tree.webp',
-    imageAlt: 'Entretien arbres Thiers',
-    title: 'ENTRETIEN',
-    text: 'Entretien régulier de vos espaces verts pour un environnement sain et agréable.',
+    image: '/img/elagage-demontage-nacelle.jpg',
+    alt: 'Démontage d’arbre avec une nacelle',
+    title: 'Démontage délicat',
+    text: 'En espace contraint, l’arbre est démonté progressivement, branche après branche, avec une nacelle et des techniques adaptées aux zones difficiles d’accès.',
   },
+  {
+    image: '/img/elagage-ligne-electrique.webp',
+    alt: 'Élagage à proximité d’une ligne électrique',
+    title: 'Proximité des réseaux',
+    text: 'Une expérience spécifique pour intervenir près des lignes électriques et téléphoniques, en tenant compte des distances de sécurité et des infrastructures environnantes.',
+  },
+  {
+    image: '/img/elagage-equipements.webp',
+    alt: 'Matériel professionnel de Pradel Élagage',
+    title: 'Matériel et évacuation',
+    text: 'Nacelle, camion-benne, tracteur et remorque forestière permettent d’accéder aux chantiers complexes et d’évacuer proprement les branches et déchets de coupe.',
+  },
+];
+
+const assurances = [
+  { value: '15+', label: 'années d’expérience' },
+  { value: '50 km', label: 'autour de Thiers' },
+  { value: '100%', label: 'devis gratuit' },
+  { value: 'Pro', label: 'matériel spécialisé' },
 ];
 ---
 
 <MainLayout title={title} description={description} footerVariant="page">
-  <PageHero
-    image="/img/foret.png"
-    imageAlt="Élagage Thiers 63300 — Pradel Elagage"
-    title="ÉLAGAGE"
-  />
-
-  <article class="post">
-    <div class="containerSinglePage">
-      <Carousel images={carouselImages} />
-
-      <div class="paragrapheSingle animated-element">
-        <p>
-          Mes compétences en <strong>élagage</strong> 🌳 me permettent de travailler
-          dans les meilleures conditions afin de <strong>maintenir la sécurité</strong> 🦺
-          des bâtiments tout en préservant la <strong>santé</strong> de vos arbres.
-        </p>
-        <p>
-          Votre <strong>partenaire de confiance</strong> pour tous vos besoins en
-          <strong>abattage</strong> dans des <strong>zones délicates</strong> ⚠️
-          et/ou proches de <strong>lignes électriques</strong> ⚡ et
-          <strong>téléphoniques</strong> ☎️.
-        </p>
+  <section class="tree-hero">
+    <img src="/img/elagage-hero.jpg" alt="Élagage et abattage professionnel à Thiers" fetchpriority="high" />
+    <div class="tree-hero-overlay"></div>
+    <div class="tree-hero-content">
+      <p class="eyebrow">Élagueur professionnel à Thiers</p>
+      <h1>Élagage<br />& abattage</h1>
+      <p class="hero-lead">Depuis plus de 15 ans, Pradel Élagage prend soin de vos arbres et sécurise vos extérieurs dans la montagne Thiernoise et le Forez.</p>
+      <div class="hero-actions">
+        <a class="primary-action" href="/contact/">Demander un devis</a>
+        <a class="secondary-action" href={phoneHref}>Appeler le {site.phone}</a>
       </div>
     </div>
-  </article>
+    <svg class="hero-curve" viewBox="0 0 1200 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 55c220 65 370-45 600-20s390 75 600 5v60H0Z" />
+    </svg>
+  </section>
 
-  <InfoCards cards={infoCards} />
+  <section class="assurance-strip" aria-label="Les engagements Pradel Élagage">
+    {assurances.map((item) => (
+      <div class="assurance-item">
+        <strong>{item.value}</strong>
+        <span>{item.label}</span>
+      </div>
+    ))}
+  </section>
+
+  <section class="expertise-section">
+    <div class="expertise-copy">
+      <p class="section-kicker">Un savoir-faire local</p>
+      <h2>Des arbres entretenus, un environnement sécurisé</h2>
+      <p>Chaque arbre et chaque chantier demandent une approche différente. Avant d’intervenir, j’observe son état, son implantation et les contraintes présentes autour de lui afin de choisir une méthode adaptée.</p>
+      <p>Mon objectif est de préserver la santé de vos arbres lorsque cela est possible, tout en maintenant la sécurité des personnes, des bâtiments et des réseaux. Mon expérience et mon matériel professionnel me permettent d’intervenir avec précision, y compris dans les zones délicates ou difficiles d’accès.</p>
+      <div class="expertise-points">
+        <span>Diagnostic avant intervention</span>
+        <span>Respect de la structure de l’arbre</span>
+        <span>Chantier propre et sécurisé</span>
+      </div>
+    </div>
+    <div class="gallery-wrap">
+      <Carousel images={galleryImages} />
+    </div>
+  </section>
+
+  <section class="services-section">
+    <div class="section-heading">
+      <p class="section-kicker">Tous travaux d’arbres</p>
+      <h2>Des prestations adaptées à votre terrain</h2>
+      <p>De l’entretien courant aux opérations les plus techniques, chaque intervention est préparée pour limiter les risques et respecter votre environnement.</p>
+    </div>
+    <div class="tree-services-grid">
+      {services.map((service, index) => (
+        <article class="tree-service-card">
+          <div class="service-image-wrap">
+            <img src={service.image} alt={service.alt} loading="lazy" />
+            <span>{String(index + 1).padStart(2, '0')}</span>
+          </div>
+          <div class="service-card-copy">
+            <h3>{service.title}</h3>
+            <p>{service.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="area-section">
+    <div class="area-decoration" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="area-content">
+      <p class="section-kicker">Un artisan proche de chez vous</p>
+      <h2>Élagage dans la montagne Thiernoise et le Forez</h2>
+      <p>Basé à Thiers, j’interviens dans un rayon d’environ 50 km : Saint-Rémy-sur-Durolle, Courpière, Puy-Guillaume, Noirétable, Vollore-Ville, Celles-sur-Durolle, Chabreloche, Viscomtat, La Monnerie-le-Montel et les communes voisines du Puy-de-Dôme et du Forez.</p>
+      <p>Vous avez un doute sur la sécurité d’un arbre, des branches proches d’une toiture ou un chantier difficile d’accès ? Une visite permet d’évaluer la solution la plus sûre.</p>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div>
+      <p class="section-kicker">Parlons de vos arbres</p>
+      <h2>Besoin d’un élagueur à Thiers ?</h2>
+      <p>Décrivez votre projet et obtenez une première réponse adaptée à votre terrain. Le devis est gratuit.</p>
+    </div>
+    <div class="final-actions">
+      <a class="primary-action" href="/contact/">Demander mon devis</a>
+      <a class="secondary-action" href={phoneHref}>{site.phone}</a>
+    </div>
+  </section>
 </MainLayout>
 
 <style>
-  .containerSinglePage {
+  .tree-hero {
+    position: relative;
+    isolation: isolate;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    flex-direction: row;
-    transform: translateY(-44vh);
+    min-height: clamp(680px, 82vh, 900px);
+    overflow: hidden;
+    color: #fff;
   }
 
-  .paragrapheSingle {
+  .tree-hero > img,
+  .tree-hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+  }
+
+  .tree-hero > img {
+    object-fit: cover;
+    object-position: center 47%;
+  }
+
+  .tree-hero-overlay {
+    z-index: -1;
+    background: linear-gradient(90deg, rgba(20, 43, 45, 0.82) 0%, rgba(20, 43, 45, 0.48) 47%, rgba(20, 43, 45, 0.08) 78%);
+  }
+
+  .tree-hero-content {
+    width: min(1280px, 88vw);
+    margin: 0 auto;
+    padding-top: 120px;
+  }
+
+  .eyebrow,
+  .section-kicker {
+    margin-bottom: 0.65rem;
+    color: var(--colorVar2);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .tree-hero .eyebrow {
+    color: #c7dfcf;
+  }
+
+  .tree-hero h1 {
+    max-width: 9ch;
+    color: #fff;
+    font-size: clamp(4.5rem, 8vw, 8.5rem);
+    line-height: 0.82;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .hero-lead {
+    max-width: 600px;
+    margin-top: 1.6rem;
+    font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+    line-height: 1.7;
+  }
+
+  .hero-actions,
+  .final-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 2rem;
+  }
+
+  .primary-action,
+  .secondary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0.8rem 1.3rem;
+    border: 2px solid var(--colorVar2);
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    transition: color 200ms ease, background 200ms ease, border-color 200ms ease, transform 200ms ease;
+  }
+
+  .primary-action {
+    color: #fff;
+    background: var(--colorVar2);
+    box-shadow: 0 12px 28px rgba(57, 136, 123, 0.3);
+  }
+
+  .secondary-action {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+  }
+
+  .primary-action:hover,
+  .primary-action:focus-visible,
+  .secondary-action:hover,
+  .secondary-action:focus-visible {
+    color: #fff;
+    border-color: var(--colorVar3);
+    background: var(--colorVar3);
+    transform: translateY(-2px);
+  }
+
+  .hero-curve {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+  }
+
+  .hero-curve path {
+    fill: #fff;
+  }
+
+  .assurance-strip {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: min(1080px, 88vw);
+    margin: -72px auto 0;
+    padding: 1.5rem 2rem;
+    border: 1px solid rgba(57, 136, 123, 0.13);
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 10px 18px rgba(29, 52, 58, 0.12), 0 24px 48px rgba(29, 52, 58, 0.18);
+  }
+
+  .assurance-item {
     display: flex;
     flex-direction: column;
-    width: 50%;
-    height: auto;
     align-items: center;
-    margin-right: 4vw;
+    padding: 0.35rem 1rem;
+    border-right: 1px solid rgba(57, 136, 123, 0.16);
+    text-align: center;
   }
 
-  .paragrapheSingle :global(p) {
-    margin-bottom: 3vh;
-    font-size: 1.2vw;
+  .assurance-item:last-child {
+    border-right: 0;
+  }
+
+  .assurance-item strong {
+    color: var(--colorVar2);
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .assurance-item span {
+    margin-top: 0.4rem;
+    color: var(--colorVar3);
+    font-size: 0.76rem;
+    font-weight: 750;
+    text-transform: uppercase;
+  }
+
+  .expertise-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(380px, 0.9fr);
+    align-items: center;
+    gap: clamp(3rem, 7vw, 7rem);
+    width: min(1240px, 88vw);
+    margin: 0 auto;
+    padding: 8rem 0;
+  }
+
+  .expertise-copy h2,
+  .section-heading h2,
+  .area-content h2,
+  .final-cta h2 {
+    color: var(--colorVar3);
+    font-size: clamp(2.8rem, 4.5vw, 4.8rem);
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+
+  .expertise-copy > p:not(.section-kicker),
+  .section-heading > p:not(.section-kicker),
+  .area-content > p:not(.section-kicker),
+  .final-cta > div > p:not(.section-kicker) {
+    margin-top: 1.35rem;
+    color: #465658;
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  .expertise-points {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 1.8rem;
+  }
+
+  .expertise-points span {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--colorVar3);
+    font-weight: 750;
+  }
+
+  .expertise-points span::before {
+    display: grid;
+    width: 24px;
+    height: 24px;
+    flex: none;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--colorVar2);
+    content: "✓";
+    font-size: 0.75rem;
+  }
+
+  .gallery-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 32px;
+    background: linear-gradient(145deg, rgba(184, 204, 176, 0.48), rgba(57, 136, 123, 0.1));
+  }
+
+  .services-section {
+    padding: 7rem max(4vw, 1.5rem) 8rem;
+    background: linear-gradient(180deg, #f7f9f6 0%, #e8eee6 100%);
+  }
+
+  .section-heading {
+    max-width: 780px;
+    margin: 0 auto 3.5rem;
     text-align: center;
+  }
+
+  .tree-services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    width: min(1240px, 92vw);
+    margin: 0 auto;
+  }
+
+  .tree-service-card {
+    overflow: hidden;
+    border: 1px solid rgba(57, 136, 123, 0.12);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 14px 36px rgba(29, 52, 58, 0.1);
+    transition: transform 240ms ease, box-shadow 240ms ease;
+  }
+
+  .tree-service-card:hover {
+    box-shadow: 0 24px 50px rgba(29, 52, 58, 0.16);
+    transform: translateY(-7px);
+  }
+
+  .service-image-wrap {
+    position: relative;
+    height: 220px;
     overflow: hidden;
   }
 
+  .service-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 450ms ease;
+  }
+
+  .tree-service-card:hover img {
+    transform: scale(1.04);
+  }
+
+  .service-image-wrap span {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--colorVar2);
+    font-weight: 800;
+  }
+
+  .service-card-copy {
+    padding: 1.6rem 1.7rem 2rem;
+  }
+
+  .service-card-copy h3 {
+    color: var(--colorVar3);
+    font-size: 2rem;
+  }
+
+  .service-card-copy p {
+    margin-top: 0.8rem;
+    color: #526164;
+    line-height: 1.75;
+  }
+
+  .area-section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 8rem max(6vw, 1.5rem);
+    color: #fff;
+    background: linear-gradient(135deg, #1d343a, #315f52);
+  }
+
+  .area-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .area-content .section-kicker {
+    color: #b8ccb0;
+  }
+
+  .area-content h2,
+  .area-content > p:not(.section-kicker) {
+    color: #fff;
+  }
+
+  .area-decoration span {
+    position: absolute;
+    z-index: -1;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+  }
+
+  .area-decoration span:nth-child(1) { top: -180px; left: -100px; width: 480px; height: 480px; }
+  .area-decoration span:nth-child(2) { right: -150px; bottom: -250px; width: 650px; height: 650px; }
+  .area-decoration span:nth-child(3) { top: 20%; right: 18%; width: 180px; height: 180px; }
+
+  .final-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    width: min(1160px, 88vw);
+    margin: 0 auto;
+    padding: 7rem 0 9rem;
+  }
+
+  .final-cta > div:first-child {
+    max-width: 680px;
+  }
+
+  .final-cta .secondary-action {
+    color: var(--colorVar3);
+    border-color: var(--colorVar3);
+    background: transparent;
+  }
+
+  @media (max-width: 980px) {
+    .expertise-section {
+      grid-template-columns: 1fr;
+    }
+
+    .tree-services-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .final-cta {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
   @media (max-width: 768px) {
-    .containerSinglePage {
-      flex-direction: column;
-      transform: translateY(0);
+    .tree-hero {
+      min-height: 780px;
+      align-items: flex-end;
     }
 
-    .paragrapheSingle {
-      width: 100%;
-      height: auto;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+    .tree-hero-content {
+      padding: 150px 0 130px;
     }
 
-    .paragrapheSingle :global(p) {
+    .tree-hero h1 {
+      font-size: clamp(4rem, 20vw, 6.4rem);
+    }
+
+    .hero-actions,
+    .final-actions {
+      flex-direction: column;
+    }
+
+    .primary-action,
+    .secondary-action {
       width: 100%;
-      height: auto;
-      font-size: 5vw;
-      padding: 2vh;
+    }
+
+    .assurance-strip {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem 0;
+    }
+
+    .assurance-item:nth-child(2) {
+      border-right: 0;
+    }
+
+    .expertise-section {
+      width: 90vw;
+      padding: 6rem 0;
+    }
+
+    .tree-services-grid {
+      grid-template-columns: 1fr;
+      width: min(92vw, 520px);
+    }
+
+    .services-section,
+    .area-section {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
     }
   }
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll('.animated-element');
-    animatedElements.forEach((el) => el.classList.add('animate'));
-  });
-
-  document.addEventListener('scroll', () => {
-    const animatedElements2 = document.querySelectorAll('.animated-element-2');
-    const windowHeight = window.innerHeight;
-
-    animatedElements2.forEach((el) => {
-      const elementOffset = el.getBoundingClientRect().top;
-      if (elementOffset < windowHeight * 1) {
-        el.classList.add('animate');
-      }
-    });
-  });
-</script>

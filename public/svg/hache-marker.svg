@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Hache</title>
+  <path fill="#9b6a3c" stroke="#1d343a" stroke-width="3" stroke-linejoin="round" d="m38 25 6 4-23 32-7-5Z"/>
+  <path fill="#39887b" stroke="#1d343a" stroke-width="3" stroke-linejoin="round" d="M25 7c7 5 15 7 25 5l7 11c-9 1-16 5-21 12l-13-9c4-6 5-12 2-19Z"/>
+  <path fill="#b8ccb0" d="M31 12c5 3 11 4 18 3l3 5c-8 1-14 4-19 9l-5-4c3-5 4-9 3-13Z"/>
+</svg>

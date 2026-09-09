@@ -184,7 +184,146 @@ const cardClass = `service-card service-card-${title.toLowerCase().replaceAll(' 
 
   @media (max-width: 768px) {
     .service-card {
-      max-width: 370px;
+      display: grid;
+      grid-template-areas:
+        "icon content"
+        "icon link";
+      grid-template-columns: 112px minmax(0, 1fr);
+      grid-template-rows: 1fr auto;
+      gap: 0.75rem 1rem;
+      max-width: 520px;
+      min-height: 235px;
+      aspect-ratio: auto;
+      padding: 1.35rem 1.25rem;
+      overflow: hidden;
+      border: 1px solid rgba(57, 136, 123, 0.14);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 18px 42px rgba(29, 52, 58, 0.16);
+      filter: none;
+      text-align: left;
+    }
+
+    .service-card:nth-child(even) {
+      grid-template-areas:
+        "content icon"
+        "link icon";
+      grid-template-columns: minmax(0, 1fr) 112px;
+    }
+
+    .service-card:hover,
+    .service-card:focus-visible {
+      box-shadow: 0 22px 48px rgba(29, 52, 58, 0.22);
+      filter: none;
+      transform: translateY(-4px);
+    }
+
+    .historical-card-shape {
+      inset: auto auto -75px -65px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: rgba(57, 136, 123, 0.1);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      filter: none;
+      mask: none;
+      -webkit-mask: none;
+    }
+
+    .service-card:nth-child(even) .historical-card-shape {
+      right: -65px;
+      left: auto;
+    }
+
+    .service-icon-wrap {
+      grid-area: icon;
+      width: 112px;
+      height: 112px;
+      margin: 0;
+      align-self: center;
+      border-radius: 50%;
+      background: linear-gradient(145deg, rgba(232, 238, 230, 0.85), rgba(184, 204, 176, 0.42));
+    }
+
+    .service-card-elagage .service-icon {
+      width: 125%;
+      height: 125%;
+    }
+
+    .service-card-bois-de-chauffage .service-icon {
+      width: 70px;
+    }
+
+    .service-card-travaux-tp .service-icon {
+      width: 105px;
+    }
+
+    .service-content {
+      grid-area: content;
+      display: block;
+      align-self: end;
+    }
+
+    .service-content h2 {
+      max-width: none;
+      margin-bottom: 0.55rem;
+      font-size: clamp(1.55rem, 7vw, 2rem);
+      line-height: 1;
+    }
+
+    .service-description {
+      display: -webkit-box;
+      max-width: none;
+      overflow: hidden;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+
+    .service-link {
+      position: static;
+      grid-area: link;
+      justify-self: start;
+      min-height: 40px;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.74rem;
+      transform: none;
+    }
+
+    .service-link svg {
+      width: 17px;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .service-card,
+    .service-card:nth-child(even) {
+      grid-template-areas:
+        "icon content"
+        "link link";
+      grid-template-columns: 88px minmax(0, 1fr);
+      min-height: 220px;
+      padding: 1.1rem;
+    }
+
+    .service-icon-wrap {
+      width: 88px;
+      height: 88px;
+    }
+
+    .service-card-bois-de-chauffage .service-icon {
+      width: 56px;
+    }
+
+    .service-card-travaux-tp .service-icon {
+      width: 84px;
+    }
+
+    .service-link {
+      width: 100%;
+      justify-self: stretch;
     }
   }
 </style>

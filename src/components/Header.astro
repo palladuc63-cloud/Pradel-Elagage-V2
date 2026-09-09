@@ -25,7 +25,17 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
     <nav id="menu" aria-label="Navigation mobile">
       <ul>
         {navLinks.map((link) => (
-          <li><a href={link.href} aria-current={currentPath === link.href ? 'page' : undefined}>{link.label}</a></li>
+          <li>
+            <a class={link.class === 'page-elagage' ? 'mobile-menu-elagage' : undefined} href={link.href} aria-current={currentPath === link.href ? 'page' : undefined}>
+              <img class={`mobile-menu-icon ${link.class === 'page-tp' ? 'mobile-menu-icon-truck' : ''} ${link.class === 'page-accueil' ? 'mobile-menu-icon-home' : ''} ${link.class === 'page-contact' ? 'mobile-menu-icon-contact' : ''}`} src={link.class === 'page-elagage' ? '/img/arbre.png' : `/img/${link.icon}`} alt="" />
+              <span>{link.class === 'page-elagage' ? 'Élagage / Abattage' : link.label}</span>
+              {link.class === 'page-elagage' && (
+                <svg class="mobile-menu-icon mobile-menu-icon-end" viewBox="0 0 40 62" aria-hidden="true">
+                  <path d="M20 0 8 19h7L4 38h10L0 56h16v6h8v-6h16L26 38h10L25 19h7Z" />
+                </svg>
+              )}
+            </a>
+          </li>
         ))}
       </ul>
     </nav>
@@ -370,34 +380,43 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
     }
 
     .containerMenuHeaderResponsive {
+      position: relative;
       display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
       align-items: center;
+      width: 100%;
+      min-height: 126px;
+    }
+
+    .containerMenuHeaderResponsive > a {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 150px;
+      transform: translate(-50%, -50%);
+    }
+
+    .containerMenuHeaderResponsive > a img {
+      display: block;
       width: 100%;
       height: auto;
     }
 
-    .containerMenuHeaderResponsive > a {
-      display: flex;
-      align-items: center;
-    }
-
-    .containerMenuHeaderResponsive img {
-      width: 50%;
-      height: auto;
-    }
-
     #burger-menu {
-      position: relative;
+      position: absolute;
       z-index: 2;
+      top: 50%;
+      right: clamp(1.25rem, 5vw, 2rem);
       width: 27px;
       height: 27px;
-      margin: 50px;
+      margin: 0;
       padding: 0;
       overflow: visible;
       border: none;
       background: none;
+      transform: translateY(-50%);
     }
 
     #burger-menu span,
@@ -481,11 +500,65 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
     }
 
     #menu a {
-      display: block;
-      margin-bottom: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1rem;
+      min-width: min(290px, 82vw);
+      margin-bottom: 24px;
+      padding: 0.65rem 1rem;
       color: #fff;
       font-family: var(--font-heading);
       font-size: 32px;
+      text-align: left;
+    }
+
+    #menu a[aria-current="page"] {
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    #menu .mobile-menu-icon {
+      width: 54px;
+      height: 54px;
+      flex: 0 0 54px;
+      margin-right: 27px;
+      object-fit: contain;
+      filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.2));
+      transform: scale(2);
+    }
+
+    #menu .mobile-menu-elagage {
+      justify-content: center;
+      gap: 0.2rem;
+      width: min(360px, 96vw);
+      font-size: clamp(1.35rem, 6.5vw, 1.8rem);
+      white-space: nowrap;
+    }
+
+    #menu .mobile-menu-elagage .mobile-menu-icon {
+      width: 48px;
+      height: 48px;
+      flex-basis: 48px;
+      margin-right: 0;
+      transform: scale(1.5);
+    }
+
+    #menu .mobile-menu-elagage .mobile-menu-icon-end {
+      fill: var(--colorVar1);
+      filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.2));
+      transform: scale(1.25);
+    }
+
+    #menu .mobile-menu-icon-home,
+    #menu .mobile-menu-icon-contact {
+      margin-right: 0;
+      transform: scale(2) translateX(30px);
+    }
+
+    #menu .mobile-menu-icon-truck {
+      margin-right: 0;
+      transform: none;
     }
   }
 </style>

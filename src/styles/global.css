@@ -6,6 +6,7 @@
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+@import './tokens.css';
 
 @font-face {
   font-family: "Adventure";
@@ -16,23 +17,24 @@
 }
 
 :root {
-  /* Couleurs de marque (identiques au thème WP teddy-elagage) */
-  --txtColor: #000000;
-  --btnColor: #1D343A;
-  --btnColorHover: #e6e6e6;
+  /* Aliases historiques → tokens canoniques (voir tokens.css).
+     Palette reprise du thème WP teddy-elagage. */
+  --txtColor: var(--ink);
+  --btnColor: var(--basalt);
+  --btnColorHover: var(--line);
 
-  --colorVar1: hsl(103, 22%, 75%);   /* vert sauge clair */
-  --colorVar2: hsl(170, 41%, 38%);   /* vert teal — boutons, footer */
-  --colorVar3: hsl(192, 33%, 17%);   /* bleu foncé — titres */
+  --colorVar1: hsl(103, 22%, 75%);   /* local : vert sauge clair */
+  --colorVar2: var(--signal);        /* vert teal — boutons, footer */
+  --colorVar3: var(--basalt);        /* bleu foncé — titres */
 
   --color1: #ffffff;
-  --color2: #ece9e6;                 /* gradient cards */
+  --color2: var(--paper);            /* gradient cards */
 
-  --theme-color: #39887B;
+  --theme-color: var(--signal);
 
   /* Typographie */
-  --font-heading: "Adventure", sans-serif;
-  --font-body: "Open Sans", sans-serif;
+  --font-heading: var(--font-display);
+  --font-body: var(--font-body);
 
   /* Transitions */
   --transition-fast: 200ms ease;

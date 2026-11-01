@@ -34,7 +34,6 @@
 
   /* Typographie */
   --font-heading: var(--font-display);
-  --font-body: var(--font-body);
 
   /* Transitions */
   --transition-fast: 200ms ease;

@@ -72,6 +72,16 @@ h1 {
   font-weight: bolder;
 }
 
+/* La fonte Adventure déborde au-dessus de l'em (diacritiques hautes) :
+   réserver de l'air quand un titre suit directement un libellé. */
+.eyebrow + h1,
+.eyebrow + h2,
+.section-kicker + h1,
+.section-kicker + h2,
+.hero-eyebrow + h2 {
+  margin-top: 0.2em;
+}
+
 a {
   text-decoration: none;
   color: inherit;

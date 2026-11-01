@@ -7,7 +7,7 @@ const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 
 export default defineConfig({
   output: 'static',
-  site: isGitHubPages ? 'https://palladuc63-cloud.github.io' : 'https://pradel-elagage.fr',
+  site: isGitHubPages ? 'https://palladuc63-cloud.github.io' : 'https://www.pradel-elagage.fr',
   base: isGitHubPages ? '/Pradel-Elagage-V2' : '/',
 
   integrations: [

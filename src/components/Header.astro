@@ -20,14 +20,14 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
       <span></span>
     </button>
     <a href="/" aria-label="Accueil — Pradel Elagage">
-      <img src="/img/LogoTeddyV2.webp" alt="" />
+      <img src="/img/LogoTeddyV2.webp" alt="Pradel Élagage" />
     </a>
     <nav id="menu" aria-label="Navigation mobile">
       <ul>
         {navLinks.map((link) => (
           <li>
             <a class={link.class === 'page-elagage' ? 'mobile-menu-elagage' : undefined} href={link.href} aria-current={currentPath === link.href ? 'page' : undefined}>
-              <img class={`mobile-menu-icon ${link.class === 'page-tp' ? 'mobile-menu-icon-truck' : ''} ${link.class === 'page-accueil' ? 'mobile-menu-icon-home' : ''} ${link.class === 'page-contact' ? 'mobile-menu-icon-contact' : ''}`} src={link.class === 'page-elagage' ? '/img/arbre.png' : `/img/${link.icon}`} alt="" />
+              <img class={`mobile-menu-icon ${link.class === 'page-tp' ? 'mobile-menu-icon-truck' : ''} ${link.class === 'page-accueil' ? 'mobile-menu-icon-home' : ''} ${link.class === 'page-contact' ? 'mobile-menu-icon-contact' : ''}`} src={link.class === 'page-elagage' ? '/img/arbre.png' : `/img/${link.icon}`} alt={link.label} />
               <span>{link.class === 'page-elagage' ? 'Élagage / Abattage' : link.label}</span>
               {link.class === 'page-elagage' && (
                 <svg class="mobile-menu-icon mobile-menu-icon-end" viewBox="0 0 40 62" aria-hidden="true">
@@ -46,14 +46,14 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
     <div class="nav-side nav-side-left">
       {homeLink && (
         <a class="nav-link" href={homeLink.href} aria-current={currentPath === homeLink.href ? 'page' : undefined}>
-          <img class="nav-icon" src={`/img/${homeLink.icon}`} alt="" />
+          <img class="nav-icon" src={`/img/${homeLink.icon}`} alt="Accueil" />
           <span>Accueil</span>
         </a>
       )}
 
       {elagageLink && (
         <a class="nav-link" href={elagageLink.href} aria-current={currentPath === elagageLink.href ? 'page' : undefined}>
-          <img class="nav-icon" src={`/img/${elagageLink.icon}`} alt="" />
+          <img class="nav-icon" src={`/img/${elagageLink.icon}`} alt="Élagage" />
           <span>Élagage</span>
         </a>
       )}
@@ -73,8 +73,8 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
           aria-current={servicesActive ? 'page' : undefined}
         >
           <span class="services-icons" aria-hidden="true">
-            <img class="services-icon-wood" src="/img/IconeBois.png" alt="" />
-            <img class="services-icon-digger" src="/svg/mini-pelle.svg" alt="" />
+            <img class="services-icon-wood" src="/img/IconeBois.png" alt="Bois de chauffage" />
+            <img class="services-icon-digger" src="/svg/mini-pelle.svg" alt="Travaux TP" />
           </span>
           <span>Services</span>
           <svg class="menu-chevron" viewBox="0 0 12 8" aria-hidden="true">
@@ -90,7 +90,7 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
           )}
           {tpLink && (
             <a href={tpLink.href} aria-current={currentPath === tpLink.href ? 'page' : undefined}>
-              <img src={`/img/${tpLink.icon}`} alt="" />
+              <img src={`/img/${tpLink.icon}`} alt="Travaux TP" />
               <span>Travaux TP</span>
             </a>
           )}
@@ -98,7 +98,7 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
       </div>
       {contactLink && (
         <a class="nav-link" href={contactLink.href} aria-current={currentPath === contactLink.href ? 'page' : undefined}>
-          <img class="nav-icon" src={`/img/${contactLink.icon}`} alt="" />
+          <img class="nav-icon" src={`/img/${contactLink.icon}`} alt="Contact" />
           <span>Contact</span>
         </a>
       )}

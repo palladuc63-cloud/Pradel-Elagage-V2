@@ -10,7 +10,7 @@
     "dev": "astro dev --host",
     "dev:open": "astro dev --host --open",
     "start": "astro dev --host",
-    "build": "astro build",
+    "build": "astro build && cp dist/sitemap-0.xml dist/sitemap.xml",
     "build:pages": "GITHUB_PAGES=true astro build && node scripts/prepare-github-pages.mjs",
     "check": "astro check",
     "validate": "npm run check && npm run build && npm audit --omit=dev",

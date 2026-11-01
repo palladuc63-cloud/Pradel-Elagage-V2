@@ -3,6 +3,7 @@ import { homeSlides } from '../data/site.js';
 ---
 
 <section class="hero-slider" aria-label="Activités de Pradel Élagage">
+  <h1 class="sr-only">Pradel Élagage — élagage, abattage, bois de chauffage et travaux TP à Thiers</h1>
   <div class="hero-swiper swiper">
     <div class="swiper-wrapper">
       {homeSlides.map((slide, index) => (
@@ -18,7 +19,7 @@ import { homeSlides } from '../data/site.js';
           <div class={`hero-layout hero-layout-${index % 2 === 0 ? 'left' : 'right'}`}>
             <div class="hero-card">
               <p class="hero-eyebrow">{slide.eyebrow}</p>
-              <h1>{slide.title}</h1>
+              <h2>{slide.title}</h2>
               <p class="hero-description">{slide.description}</p>
               <div class="hero-actions">
                 <a class="hero-button hero-button-primary" href={slide.link}>{slide.linkLabel}</a>
@@ -148,7 +149,7 @@ import { homeSlides } from '../data/site.js';
     text-transform: uppercase;
   }
 
-  .hero-card h1 {
+  .hero-card h2 {
     max-width: 12ch;
     color: var(--colorVar3);
     font-size: clamp(3rem, 5vw, 5.2rem);
@@ -277,7 +278,7 @@ import { homeSlides } from '../data/site.js';
       border-radius: 22px;
     }
 
-    .hero-card h1 {
+    .hero-card h2 {
       font-size: clamp(2.6rem, 13vw, 4.2rem);
     }
 

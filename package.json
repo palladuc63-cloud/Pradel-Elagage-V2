@@ -4,7 +4,7 @@
   "description": "Site Pradel Elagage — élagage, abattage, bois de chauffage et travaux TP à Thiers. Refonte WordPress → Astro.",
   "type": "module",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.23.4"
   },
   "scripts": {
     "dev": "astro dev --host",

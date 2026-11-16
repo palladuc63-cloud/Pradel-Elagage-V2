@@ -3,14 +3,14 @@ import MainLayout from '../layouts/MainLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import { site } from '../data/site.js';
 
-const title = 'Mentions légales — Pradel Elagage à Thiers (63300)';
-const description = 'Mentions légales du site Pradel Elagage. Éditeur, hébergeur, propriété intellectuelle et responsabilité.';
+const title = 'Mentions légales — Pradel Élagage à Thiers (63300)';
+const description = 'Mentions légales du site Pradel Élagage. Éditeur, hébergeur, propriété intellectuelle et responsabilité.';
 ---
 
 <MainLayout title={title} description={description} footerVariant="page" noindex={true}>
   <PageHero
     image="/img/foret.png"
-    imageAlt="Mentions légales Pradel Elagage"
+    imageAlt="Mentions légales Pradel Élagage"
     title="MENTIONS LÉGALES"
   />
 
@@ -19,13 +19,19 @@ const description = 'Mentions légales du site Pradel Elagage. Éditeur, héberg
       <div class="paragrapheSingle animated-element">
         <h2>Éditeur du site</h2>
         <p>
-          <strong>Pradel Elagage</strong><br />
+          <strong>Pradel Élagage</strong><br />
           Entreprise individuelle dirigée par Teddy Pradel<br />
           {site.address.street}<br />
           {site.address.locality}<br />
           {site.address.postalCode} {site.address.city}<br />
           Téléphone : <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br />
           Email : <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+
+        <h2>Directeur de la publication</h2>
+        <p>
+          Teddy Pradel, en qualité d'exploitant de l'entreprise individuelle
+          Pradel Élagage.
         </p>
 
         <h2>Hébergement</h2>
@@ -40,40 +46,31 @@ const description = 'Mentions légales du site Pradel Elagage. Éditeur, héberg
         <h2>Propriété intellectuelle</h2>
         <p>
           L'ensemble des contenus présents sur ce site (textes, images, logos,
-          graphismes) est la propriété de Pradel Elagage, sauf mention contraire.
+          graphismes) est la propriété de Pradel Élagage, sauf mention contraire.
           Toute reproduction, représentation, modification, publication, adaptation,
           totale ou partielle, des éléments du site, quel que soit le moyen ou le
           procédé utilisé, est interdite sans l'autorisation écrite préalable de
-          Pradel Elagage.
+          Pradel Élagage.
         </p>
 
         <h2>Responsabilité</h2>
         <p>
-          Pradel Elagage ne pourra être tenu responsable des dommages directs ou
+          Pradel Élagage ne pourra être tenu responsable des dommages directs ou
           indirects résultant de l'utilisation du site, notamment d'une perte de
           données, d'un virus, d'une interruption de service ou d'une erreur
           technique.
         </p>
 
-        <h2>Données personnelles</h2>
+        <h2 id="confidentialite">Données personnelles &amp; confidentialité</h2>
         <p>
-          Les informations recueillies via le formulaire de contact sont utilisées
-          uniquement pour répondre à vos demandes. Elles ne sont jamais cédées à
-          des tiers. Conformément à la loi "Informatique et Libertés" du 6 janvier
-          1978 modifiée et au RGPD, vous disposez d'un droit d'accès, de
-          rectification et de suppression des données vous concernant.
-        </p>
-
-        <h2 id="confidentialite">Confidentialité</h2>
-        <p>
-          Ce site ne dépose aucun cookie de suivi et la mesure d’audience est
-          anonyme. Seule la carte de localisation transmet des données
-          techniques (adresse IP) au fournisseur de tuiles cartographiques.
-          Le détail des traitements et de vos droits figure dans la
+          Les informations éventuellement recueillies via le formulaire de
+          contact sont utilisées uniquement pour répondre à vos demandes et ne
+          sont jamais cédées à des tiers. Le site ne dépose aucun cookie de
+          suivi et sa mesure d'audience est anonyme. Le détail des traitements,
+          des durées de conservation et de vos droits (accès, rectification,
+          suppression, opposition — loi « Informatique et Libertés » et RGPD)
+          figure dans la
           <a href="/politique-confidentialite/">politique de confidentialité</a>.
-          Votre choix concernant les services facultatifs reste modifiable à
-          tout moment depuis le lien « Préférences de confidentialité » du
-          pied de page.
         </p>
       </div>
     </div>

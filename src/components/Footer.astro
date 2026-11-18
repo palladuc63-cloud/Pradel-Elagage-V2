@@ -98,6 +98,7 @@ import { site } from '../data/site.js';
   @media (max-width: 768px) {
     .page-footer-content {
       grid-template-columns: repeat(2, 1fr);
+      align-items: start;
       justify-items: center;
       gap: 2rem 1rem;
       text-align: center;
@@ -106,6 +107,15 @@ import { site } from '../data/site.js';
     .page-footer-content > img,
     .page-footer-links {
       grid-column: 1 / -1;
+    }
+
+    .page-footer-links {
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .page-legal-link {
+      font-size: 0.8rem;
     }
   }
 </style>

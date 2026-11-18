@@ -15,7 +15,7 @@ const cardClass = `service-card service-card-${title.toLowerCase().replaceAll(' 
 <a class={cardClass} href={link} aria-label={`Découvrir le service ${title}`}>
   <span class="historical-card-shape" aria-hidden="true"></span>
   <span class="service-icon-wrap">
-    <img class="service-icon" src={icon} alt={iconAlt} loading="lazy" />
+    <slot name="icon"><img class="service-icon" src={icon} alt={iconAlt} loading="lazy" /></slot>
   </span>
   <span class="service-content">
     <h2>{title}</h2>

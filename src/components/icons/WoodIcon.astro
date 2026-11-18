@@ -1,0 +1,43 @@
+---
+const { label = 'Rondins de bois de chauffage' } = Astro.props;
+---
+
+<span class="service-icon anim-icon anim-wood" role="img" aria-label={label}>
+  <img class="wd-top" src="/img/anim/wood-top.png" alt="" aria-hidden="true" />
+  <img class="wd-bl" src="/img/anim/wood-bl.png" alt="" aria-hidden="true" />
+  <img class="wd-br" src="/img/anim/wood-br.png" alt="" aria-hidden="true" />
+</span>
+
+<style>
+  .anim-icon { position: relative; display: block; }
+  .anim-wood { aspect-ratio: 1 / 1; }
+  .anim-icon img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.55s cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+
+  .wd-top { transform-origin: 70% 90%; }
+  .wd-bl { transform-origin: 30% 95%; }
+  .wd-br { transform-origin: 60% 95%; }
+
+  :global(.service-card:hover) .wd-top,
+  :global(.service-card:focus-visible) .wd-top {
+    transform: translate(9px, 5px) rotate(9deg);
+  }
+
+  :global(.service-card:hover) .wd-bl,
+  :global(.service-card:focus-visible) .wd-bl {
+    transform: translate(-4px, 3px) rotate(-5deg);
+    transition-delay: 0.07s;
+  }
+
+  :global(.service-card:hover) .wd-br,
+  :global(.service-card:focus-visible) .wd-br {
+    transform: translate(4px, 4px) rotate(5deg);
+    transition-delay: 0.14s;
+  }
+</style>

@@ -4,6 +4,9 @@ import MapSection from '../components/MapSection.astro';
 import Slider from '../components/Slider.astro';
 import PuySeparator from '../components/PuySeparator.astro';
 import ServiceCard from '../components/ServiceCard.astro';
+import ChainsawIcon from '../components/icons/ChainsawIcon.astro';
+import WoodIcon from '../components/icons/WoodIcon.astro';
+import MiniPelleIcon from '../components/icons/MiniPelleIcon.astro';
 import { homeServices } from '../data/site.js';
 
 const featuredServices = homeServices.filter((service) => service.title !== 'ABATTAGE');
@@ -27,7 +30,11 @@ const description = "Élagage, abattage, bois de chauffage et travaux TP à Thie
           iconAlt={service.iconAlt}
           description={service.description}
           link={service.link}
-        />
+        >
+          {service.icon.includes('chainsaw') && <ChainsawIcon slot="icon" label={service.iconAlt} />}
+          {service.icon.includes('wood') && <WoodIcon slot="icon" label={service.iconAlt} />}
+          {service.icon.includes('mini-pelle') && <MiniPelleIcon slot="icon" label={service.iconAlt} />}
+        </ServiceCard>
       ))}
     </div>
   </section>

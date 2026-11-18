@@ -37,8 +37,11 @@ import { site } from '../data/site.js';
   }
 
   .page-footer-wave {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% - 1px);
+    left: 0;
     aspect-ratio: 847.3 / 91.7;
-    transform: translateY(calc(-100% + 1px));
   }
 
   .page-footer-wave svg {
@@ -52,22 +55,22 @@ import { site } from '../data/site.js';
 
   .page-footer-content {
     display: grid;
-    grid-template-columns: 220px repeat(2, minmax(160px, 1fr)) auto;
+    grid-template-columns: 170px repeat(2, minmax(160px, 1fr)) auto;
     align-items: center;
-    gap: 2.5rem;
+    gap: 2rem;
     width: min(1100px, 90vw);
-    margin: -70px auto 0;
-    padding: 2rem 0 3rem;
+    margin: 0 auto;
+    padding: 1.4rem 0 1.9rem;
   }
 
   .page-footer-content > img {
-    width: 200px;
+    width: 140px;
   }
 
   .page-footer h2 {
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.5rem;
     color: #fff;
-    font-size: 1.55rem;
+    font-size: 1.3rem;
     text-transform: uppercase;
   }
 

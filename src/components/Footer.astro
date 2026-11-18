@@ -22,7 +22,6 @@ import { site } from '../data/site.js';
     <div class="page-footer-links">
       <a class="page-legal-link" href="/mentions-legales/">Mentions légales</a>
       <a class="page-legal-link" href="/politique-confidentialite/">Politique de confidentialité</a>
-      <button class="privacy-link page-privacy-link" type="button" data-open-privacy>Préférences de confidentialité</button>
     </div>
   </div>
 </footer>
@@ -87,26 +86,6 @@ import { site } from '../data/site.js';
   .page-legal-link {
     font-weight: 800;
     text-transform: uppercase;
-  }
-
-  .privacy-link {
-    margin-top: 0.55rem;
-    padding: 0;
-    border: 0;
-    color: #fff;
-    background: transparent;
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-align: left;
-    text-transform: uppercase;
-    transition: color 180ms ease;
-  }
-
-  .privacy-link:hover,
-  .privacy-link:focus-visible {
-    color: var(--colorVar3);
   }
 
   @media (max-width: 900px) {

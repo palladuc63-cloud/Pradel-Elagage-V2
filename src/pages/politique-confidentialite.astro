@@ -1,164 +1,219 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import { site } from '../data/site.js';
 
 const title = 'Politique de confidentialité — Pradel Élagage à Thiers (63300)';
-const description = 'Politique de confidentialité du site Pradel Élagage : aucun cookie de suivi, mesure d’audience anonyme, traitement des demandes de contact et vos droits.';
+const description = 'Politique de confidentialité de pradel-elagage.fr : formulaire de contact, mesure d’audience anonyme, carte et vos droits RGPD.';
 const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
 ---
 
 <MainLayout title={title} description={description} noindex={true}>
-  <PageHero
-    image="/img/foret.png"
-    imageAlt="Politique de confidentialité Pradel Élagage"
-    title="CONFIDENTIALITÉ"
-  />
+  <header class="legal-hero">
+    <p class="legal-kicker">Vos données, vos droits</p>
+    <h1>Politique de confidentialité</h1>
+    <p class="legal-lead">Ce site ne dépose aucun cookie de suivi. Voici exactement quelles données sont traitées, pourquoi, et comment exercer vos droits.</p>
+  </header>
 
-  <article class="post">
-    <div class="containerSinglePage">
-      <div class="paragrapheSingle animated-element">
-        <h2>En bref</h2>
-        <p>
-          Ce site ne dépose <strong>aucun cookie de suivi</strong> et ne collecte
-          aucune donnée personnelle sans action de votre part. Votre visite ne
-          vous identifie pas : la mesure d’audience est anonyme et rien de ce que
-          vous consultez n’est associé à votre identité.
-        </p>
+  <article class="legal-content">
+    <section>
+      <h2>En bref</h2>
+      <p>
+        Ce site ne dépose <strong>aucun cookie de suivi</strong> et ne collecte aucune donnée personnelle
+        sans action de votre part. Votre visite ne vous identifie pas : la mesure d'audience est anonyme
+        et rien de ce que vous consultez n'est associé à votre identité.
+      </p>
+    </section>
 
-        <h2>Formulaire de contact</h2>
-        <p>
-          Le formulaire de contact n’est pas encore connecté : les informations
-          saisies restent dans votre navigateur et disparaissent à la fermeture
-          de la page. Lorsque l’envoi en ligne sera activé, les données saisies
-          (nom, commune, email, téléphone et description de votre projet) seront
-          transmises par email à Pradel Élagage <strong>uniquement pour répondre
-          à votre demande</strong>. Elles ne seront jamais cédées ni revendues à
-          des tiers, et seront conservées le temps du traitement de votre demande
-          puis supprimées (au plus tard 12 mois sans suite).
-        </p>
+    <section>
+      <h2>Responsable du traitement</h2>
+      <p>
+        <strong>Pradel Élagage</strong> — entreprise individuelle de Teddy Pradel<br />
+        {site.address.street} — {site.address.locality}, {site.address.postalCode} {site.address.city}<br />
+        Téléphone : <a href={phoneHref}>{site.phone}</a> — Email : <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+    </section>
 
-        <h2>Mesure d’audience</h2>
-        <p>
-          Le site mesure sa fréquentation avec <strong>Umami</strong>, un outil
-          auto-hébergé et <strong>anonyme</strong> : aucun cookie, aucun
-          identifiant visiteur, aucun profilage, aucune donnée recoupable avec
-          votre identité. Les statistiques sont agrégées (pages consultées,
-          volume de visites) et servent uniquement à améliorer le site. La
-          fonction « Ne pas me pister » de votre navigateur est respectée.
-        </p>
+    <section>
+      <h2>Formulaire de contact et demande de devis</h2>
+      <p>
+        Lorsque vous utilisez le formulaire de contact, les informations saisies
+        (service concerné, nom, commune, adresse email, téléphone et description de votre demande)
+        sont transmises au back-office du site, hébergé sur le même domaine et sur un serveur situé en France (OVH).
+        Une notification est adressée par email à Teddy Pradel.
+      </p>
+      <p>
+        <strong>Finalité</strong> : répondre à votre demande, établir un devis et assurer le suivi de notre relation
+        (mesures précontractuelles et consentement, exprimé par la case à cocher du formulaire).
+      </p>
+      <p>
+        <strong>Destinataires</strong> : Teddy Pradel uniquement. Vos données ne sont jamais cédées,
+        louées ni revendues à des tiers, et ne font l'objet d'aucune prospection commerciale.
+      </p>
+      <p>
+        <strong>Durée de conservation</strong> : le temps nécessaire au traitement de votre demande,
+        puis au maximum 24 mois en l'absence de relation commerciale.
+      </p>
+      <p>
+        <strong>Anti-spam</strong> : un champ invisible (honeypot) filtre les envois automatisés ;
+        il ne collecte aucune donnée personnelle.
+      </p>
+    </section>
 
-        <h2>Carte de localisation</h2>
-        <p>
-          La carte repose sur Leaflet et des données OpenStreetMap. Ses tuiles
-          sont fournies par MapTiler lorsqu'une clé est configurée, ou
-          directement par OpenStreetMap dans le cas contraire. Leur chargement
-          implique la transmission de données techniques, notamment votre
-          adresse IP, au fournisseur cartographique. La carte est chargée
-          directement car nécessaire à l’affichage de notre localisation.
-        </p>
+    <section>
+      <h2>Mesure d'audience</h2>
+      <p>
+        Le site mesure sa fréquentation avec <strong>Umami</strong>, un outil auto-hébergé et
+        <strong>anonyme</strong> : aucun cookie, aucun identifiant visiteur, aucun profilage,
+        aucune donnée recoupable avec votre identité. Les statistiques sont agrégées
+        (pages consultées, volume de visites) et servent uniquement à améliorer le site.
+        La fonction « Ne pas me pister » de votre navigateur est respectée.
+      </p>
+    </section>
 
-        <h2>Stockage dans votre navigateur</h2>
-        <p>
-          Seul votre choix concernant les services facultatifs est mémorisé, dans
-          le stockage local de votre navigateur — rien d’autre n’y est déposé.
-          Vous pouvez modifier ce choix à tout moment depuis le lien
-          « Préférences de confidentialité » présent dans le pied de page.
-        </p>
+    <section>
+      <h2>Carte de localisation</h2>
+      <p>
+        La carte affichée en bas de la page d'accueil repose sur Leaflet et des données OpenStreetMap.
+        Ses tuiles (les images de la carte) sont chargées depuis les serveurs d'OpenStreetMap —
+        ou de MapTiler si une clé est configurée. Ce chargement implique la transmission de données
+        techniques, notamment votre adresse IP, au fournisseur cartographique.
+        La carte est chargée directement car nécessaire à l'affichage de notre localisation.
+      </p>
+    </section>
 
-        <h2>Journaux techniques</h2>
-        <p>
-          Comme tout site web, le serveur d’hébergement conserve des journaux
-          techniques (adresse IP, date et page demandée) nécessaires à la
-          sécurité et au bon fonctionnement. Ils sont conservés quelques semaines
-          et ne font l’objet d’aucune exploitation commerciale.
-        </p>
+    <section>
+      <h2>Stockage dans votre navigateur</h2>
+      <p>
+        Aucun cookie n'est déposé sur votre appareil. Seul un choix concernant les services
+        facultatifs peut être mémorisé dans le stockage local de votre navigateur (localStorage) —
+        il ne quitte jamais votre appareil et ne permet pas de vous identifier.
+      </p>
+    </section>
 
-        <h2>Vos droits</h2>
-        <p>
-          Conformément à la loi « Informatique et Libertés » du 6 janvier 1978
-          modifiée et au RGPD, vous disposez d’un droit d’accès, de
-          rectification, de suppression et d’opposition concernant les données
-          vous concernant. Pour les exercer, contactez-nous à
-          <a href={`mailto:${site.email}`}>{site.email}</a> ou au
-          <a href={phoneHref}>{site.phone}</a>. Vous pouvez également saisir la
-          CNIL (cnil.fr) en cas de litige.
-        </p>
+    <section>
+      <h2>Journaux techniques</h2>
+      <p>
+        Comme tout site web, le serveur d'hébergement conserve des journaux techniques
+        (adresse IP, date, page demandée, navigateur) nécessaires à la sécurité et au bon
+        fonctionnement du service. Ils sont conservés quelques semaines et ne font l'objet
+        d'aucune exploitation commerciale.
+      </p>
+    </section>
 
-        <h2>Contact</h2>
-        <p>
-          <strong>Pradel Élagage</strong><br />
-          {site.address.street}<br />
-          {site.address.postalCode} {site.address.city}<br />
-          Téléphone : <a href={phoneHref}>{site.phone}</a><br />
-          Email : <a href={`mailto:${site.email}`}>{site.email}</a>
-        </p>
-      </div>
-    </div>
+    <section>
+      <h2>Vos droits</h2>
+      <p>
+        Conformément au règlement général sur la protection des données (RGPD) et à la loi
+        « Informatique et Libertés » du 6 janvier 1978 modifiée, vous disposez sur les données
+        vous concernant d'un droit d'accès, de rectification, d'effacement, d'opposition,
+        de limitation du traitement et de portabilité.
+      </p>
+      <p>
+        Pour exercer ces droits ou pour toute question relative à vos données, contactez-nous à
+        <a href={`mailto:${site.email}`}>{site.email}</a> ou au <a href={phoneHref}>{site.phone}</a>.
+        Nous répondons dans un délai maximum d'un mois.
+      </p>
+      <p>
+        Si vous estimez que vos droits ne sont pas respectés, vous pouvez saisir la CNIL
+        (Commission nationale de l'informatique et des libertés) — <a href="https://www.cnil.fr" rel="noopener noreferrer">cnil.fr</a>.
+      </p>
+    </section>
+
+    <p class="legal-updated">Dernière mise à jour : novembre 2025.</p>
   </article>
 </MainLayout>
 
 <style>
-  .containerSinglePage {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: row;
-    transform: translateY(-44vh);
-  }
-
-  .paragrapheSingle {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: auto;
-    align-items: center;
-    margin-right: 4vw;
-  }
-
-  .paragrapheSingle :global(h2) {
-    font-family: var(--font-heading);
-    font-size: 3vw;
-    margin-bottom: 3vh;
-    margin-top: 5vh;
+  .legal-hero {
+    padding: clamp(9rem, 16vw, 13rem) max(6vw, 1.5rem) clamp(3rem, 6vw, 4.5rem);
+    color: #fff;
+    background: linear-gradient(135deg, #1d343a 0%, #315f52 55%, var(--colorVar2) 100%);
     text-align: center;
   }
 
-  .paragrapheSingle :global(p) {
-    margin-bottom: 3vh;
-    font-size: 1.2vw;
-    text-align: center;
-    overflow: hidden;
+  .legal-kicker {
+    margin-bottom: 0.65rem;
+    color: #b8ccb0;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
   }
 
-  .paragrapheSingle :global(a) {
+  .legal-hero h1 {
+    color: #fff;
+    font-size: clamp(2.8rem, 7vw, 4.8rem);
+    line-height: 0.98;
+  }
+
+  .legal-lead {
+    max-width: 620px;
+    margin: 1.2rem auto 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 1.02rem;
+    line-height: 1.7;
+  }
+
+  .legal-content {
+    width: min(860px, 90vw);
+    margin: 0 auto;
+    padding: 4.5rem 0 7rem;
+  }
+
+  .legal-content section {
+    padding: 1.9rem 0;
+    border-bottom: 1px solid rgba(57, 136, 123, 0.14);
+  }
+
+  .legal-content section:last-of-type {
+    border-bottom: 0;
+  }
+
+  .legal-content h2 {
+    margin-bottom: 1rem;
+    color: var(--colorVar3);
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    line-height: 1.1;
+  }
+
+  .legal-content p {
+    margin-top: 0.85rem;
+    color: #46585a;
+    font-size: 0.98rem;
+    line-height: 1.8;
+  }
+
+  .legal-content p:first-of-type {
+    margin-top: 0;
+  }
+
+  .legal-content a {
     color: var(--colorVar2);
     font-weight: 800;
+    text-decoration: none;
+  }
+
+  .legal-content a:hover,
+  .legal-content a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .legal-updated {
+    margin-top: 2.5rem;
+    color: #8a9697;
+    font-size: 0.82rem;
+    font-style: italic;
+    text-align: center;
   }
 
   @media (max-width: 768px) {
-    .containerSinglePage {
-      flex-direction: column;
-      transform: translateY(0);
+    .legal-hero {
+      padding-top: 8rem;
     }
 
-    .paragrapheSingle {
-      width: 100%;
-      height: auto;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .paragrapheSingle :global(h2) {
-      font-size: 7vw;
-    }
-
-    .paragrapheSingle :global(p) {
-      width: 100%;
-      height: auto;
-      font-size: 5vw;
-      padding: 2vh;
+    .legal-content {
+      padding: 3rem 0 5rem;
     }
   }
 </style>

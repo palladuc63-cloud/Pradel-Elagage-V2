@@ -87,23 +87,23 @@ const cardClass = `service-card service-card-${title.toLowerCase().replaceAll(' 
     margin-bottom: 0.9rem;
   }
 
-  .service-icon {
+  .service-icon-wrap > :global(.service-icon) {
     width: 100%;
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 9px 12px rgba(29, 52, 58, 0.14));
   }
 
-  .service-card-elagage .service-icon {
+  .service-card-elagage :global(.service-icon) {
     width: 150%;
     height: 150%;
   }
 
-  .service-card-bois-de-chauffage .service-icon {
+  .service-card-bois-de-chauffage :global(.service-icon) {
     width: 94px;
   }
 
-  .service-card-travaux-tp .service-icon {
+  .service-card-travaux-tp :global(.service-icon) {
     width: 145px;
   }
 
@@ -246,16 +246,16 @@ const cardClass = `service-card service-card-${title.toLowerCase().replaceAll(' 
       background: linear-gradient(145deg, rgba(232, 238, 230, 0.85), rgba(184, 204, 176, 0.42));
     }
 
-    .service-card-elagage .service-icon {
+    .service-card-elagage :global(.service-icon) {
       width: 125%;
       height: 125%;
     }
 
-    .service-card-bois-de-chauffage .service-icon {
+    .service-card-bois-de-chauffage :global(.service-icon) {
       width: 70px;
     }
 
-    .service-card-travaux-tp .service-icon {
+    .service-card-travaux-tp :global(.service-icon) {
       width: 105px;
     }
 
@@ -313,11 +313,11 @@ const cardClass = `service-card service-card-${title.toLowerCase().replaceAll(' 
       height: 88px;
     }
 
-    .service-card-bois-de-chauffage .service-icon {
+    .service-card-bois-de-chauffage :global(.service-icon) {
       width: 56px;
     }
 
-    .service-card-travaux-tp .service-icon {
+    .service-card-travaux-tp :global(.service-icon) {
       width: 84px;
     }
 

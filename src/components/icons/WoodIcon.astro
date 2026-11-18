@@ -20,24 +20,24 @@ const { label = 'Rondins de bois de chauffage' } = Astro.props;
     transition: transform 0.55s cubic-bezier(0.3, 1.5, 0.5, 1);
   }
 
-  .wd-top { transform-origin: 70% 90%; }
-  .wd-bl { transform-origin: 30% 95%; }
-  .wd-br { transform-origin: 60% 95%; }
+  .wd-top { transform-origin: 88% 52%; }
+  .wd-bl { transform-origin: 15% 90%; }
+  .wd-br { transform-origin: 85% 90%; }
 
   :global(.service-card:hover) .wd-top,
   :global(.service-card:focus-visible) .wd-top {
-    transform: translate(9px, 5px) rotate(9deg);
+    transform: translate(10px, 8px) rotate(12deg);
   }
 
   :global(.service-card:hover) .wd-bl,
   :global(.service-card:focus-visible) .wd-bl {
-    transform: translate(-4px, 3px) rotate(-5deg);
+    transform: translate(-5px, 4px) rotate(-7deg);
     transition-delay: 0.07s;
   }
 
   :global(.service-card:hover) .wd-br,
   :global(.service-card:focus-visible) .wd-br {
-    transform: translate(4px, 4px) rotate(5deg);
+    transform: translate(5px, 5px) rotate(7deg);
     transition-delay: 0.14s;
   }
 </style>

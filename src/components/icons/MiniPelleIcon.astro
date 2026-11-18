@@ -18,12 +18,12 @@ const { label = 'Mini-pelle pour travaux TP' } = Astro.props;
       <g class="mp-boom">
         <path fill="#eeb536" d="m116 166 29-79 73-53 16 21-62 54-21 70Z"/>
         <path fill="#ffd15b" d="m144 87 15-31 57-39 10 17Z"/>
-      </g>
-      <g class="mp-stick">
-        <path fill="#eeb536" d="m216 18 17-10c8-5 18 0 20 9l21 94-20 5-30-76Z"/>
-        <circle fill="#819093" cx="264" cy="114" r="10"/>
-        <path fill="#26383b" d="m260 123 25 18 25-9c7 27-6 50-34 58-22-3-36-15-44-34l23-8Z"/>
-        <path fill="#819093" d="m283 142 16-14 11 4c4 18-1 35-14 46-16 14-42 14-58-1 26 2 42-10 45-35Z"/>
+        <g class="mp-stick">
+          <path fill="#eeb536" d="m216 18 17-10c8-5 18 0 20 9l21 94-20 5-30-76Z"/>
+          <circle fill="#819093" cx="264" cy="114" r="10"/>
+          <path fill="#26383b" d="m260 123 25 18 25-9c7 27-6 50-34 58-22-3-36-15-44-34l23-8Z"/>
+          <path fill="#819093" d="m283 142 16-14 11 4c4 18-1 35-14 46-16 14-42 14-58-1 26 2 42-10 45-35Z"/>
+        </g>
       </g>
       <path fill="#26383b" d="m188 190 20 29h33l-13-39-18 12Z"/>
       <circle fill="#819093" cx="143" cy="174" r="12"/>
@@ -60,7 +60,7 @@ const { label = 'Mini-pelle pour travaux TP' } = Astro.props;
 
   @keyframes mp-stick {
     0%, 100% { transform: rotate(0deg); }
-    40% { transform: rotate(16deg); }
-    70% { transform: rotate(-5deg); }
+    40% { transform: rotate(-16deg); }
+    70% { transform: rotate(6deg); }
   }
 </style>

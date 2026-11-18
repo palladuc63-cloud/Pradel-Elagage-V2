@@ -54,7 +54,7 @@ const { label = 'Tronçonneuse' } = Astro.props;
 
   :global(.service-card:hover) .anim-chainsaw,
   :global(.service-card:focus-visible) .anim-chainsaw {
-    transform: rotate(-45deg) translate(2%, -4%);
+    transform: rotate(45deg) translate(-1%, -5%);
   }
 
   :global(.service-card:hover) .ac-chain,
@@ -96,6 +96,6 @@ const { label = 'Tronçonneuse' } = Astro.props;
 
   @keyframes ac-dust {
     0% { transform: translate(0, 0) scale(1); opacity: 0.9; }
-    100% { transform: translate(-26px, 16px) scale(0.3); opacity: 0; }
+    100% { transform: translate(-24px, -18px) scale(0.3); opacity: 0; }
   }
 </style>

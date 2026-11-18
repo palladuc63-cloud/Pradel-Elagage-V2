@@ -126,5 +126,14 @@ const jsonLd = {
     </main>
     <Footer />
     <CookieBanner />
+    <script is:inline>
+      document.addEventListener('mousedown', (e) => {
+        if (e.button === 0) document.documentElement.dataset.cursor = 'strike';
+      });
+      document.addEventListener('mouseup', () => {
+        document.documentElement.dataset.cursor = 'rebound';
+        setTimeout(() => { delete document.documentElement.dataset.cursor; }, 140);
+      });
+    </script>
   </body>
 </html>

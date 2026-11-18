@@ -104,6 +104,25 @@ button {
   cursor: pointer;
 }
 
+/* Curseur hache — arme au survol des liens, frappe + rebond au clic */
+html {
+  cursor: url('/img/cursor/axe.png') 6 28, auto;
+}
+
+a, button, summary, select, label, [role='button'] {
+  cursor: url('/img/cursor/axe-armed.png') 4 24, pointer;
+}
+
+html[data-cursor='strike'],
+html[data-cursor='strike'] * {
+  cursor: url('/img/cursor/axe-strike.png') 3 26, auto !important;
+}
+
+html[data-cursor='rebound'],
+html[data-cursor='rebound'] * {
+  cursor: url('/img/cursor/axe-rebound.png') 7 28, auto !important;
+}
+
 /* Lien d'évitement (accessibilité) */
 .skip-link {
   position: absolute;

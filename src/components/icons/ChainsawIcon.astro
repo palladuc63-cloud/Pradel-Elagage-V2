@@ -7,7 +7,10 @@ const { label = 'Tronçonneuse' } = Astro.props;
   <span class="ac-bar-wrap" aria-hidden="true">
     <img class="ac-bar" src="/img/anim/chainsaw-bar.png" alt="" />
     <svg class="ac-chain" viewBox="0 0 190 189">
-      <path d="M96 76 L46 76 Q31 76 31 90 Q31 104 46 104 L96 104" />
+      <path class="ac-chain-dashes" d="M96 76 L46 76 Q31 76 31 90 Q31 104 46 104 L96 104" />
+      {Array.from({ length: 15 }, (_, i) => (
+        <polygon class="ac-tooth" points="0,-4 9,0 0,4" style={`--i:${i}`} />
+      ))}
     </svg>
   </span>
   <span class="ac-dust" aria-hidden="true"></span>
@@ -29,12 +32,24 @@ const { label = 'Tronçonneuse' } = Astro.props;
     transition: opacity 0.15s ease;
   }
 
-  .ac-chain path {
+  .ac-chain-dashes {
     fill: none;
     stroke: #454c4d;
     stroke-width: 6;
     stroke-linecap: round;
     stroke-dasharray: 9 7;
+  }
+
+  .ac-tooth {
+    fill: #454c4d;
+    offset-path: path("M96 76 L46 76 Q31 76 31 90 Q31 104 46 104 L96 104");
+    offset-rotate: auto 90deg;
+    display: none;
+  }
+
+  @supports (offset-path: path("M0 0")) {
+    .ac-tooth { display: block; }
+    .ac-chain-dashes { display: none; }
   }
 
   .anim-chainsaw {
@@ -63,9 +78,15 @@ const { label = 'Tronçonneuse' } = Astro.props;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    :global(.service-card:hover) .ac-chain path,
-    :global(.service-card:focus-visible) .ac-chain path {
+    :global(.service-card:hover) .ac-chain-dashes,
+    :global(.service-card:focus-visible) .ac-chain-dashes {
       animation: ac-chain-run 0.4s linear infinite;
+    }
+
+    :global(.service-card:hover) .ac-tooth,
+    :global(.service-card:focus-visible) .ac-tooth {
+      animation: ac-tooth-run 1s linear infinite;
+      animation-delay: calc(var(--i) * -0.0667s);
     }
 
     :global(.service-card:hover) .ac-bar-wrap,
@@ -84,6 +105,11 @@ const { label = 'Tronçonneuse' } = Astro.props;
 
   @keyframes ac-chain-run {
     to { stroke-dashoffset: -16; }
+  }
+
+  @keyframes ac-tooth-run {
+    from { offset-distance: 0%; }
+    to { offset-distance: 100%; }
   }
 
   @keyframes ac-vibe {

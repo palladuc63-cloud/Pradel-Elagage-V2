@@ -1,0 +1,164 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site.js';
+
+const title = 'Politique de confidentialité — Pradel Élagage à Thiers (63300)';
+const description = 'Politique de confidentialité du site Pradel Élagage : aucun cookie de suivi, mesure d’audience anonyme, traitement des demandes de contact et vos droits.';
+const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
+---
+
+<MainLayout title={title} description={description} footerVariant="page" noindex={true}>
+  <PageHero
+    image="/img/foret.png"
+    imageAlt="Politique de confidentialité Pradel Élagage"
+    title="CONFIDENTIALITÉ"
+  />
+
+  <article class="post">
+    <div class="containerSinglePage">
+      <div class="paragrapheSingle animated-element">
+        <h2>En bref</h2>
+        <p>
+          Ce site ne dépose <strong>aucun cookie de suivi</strong> et ne collecte
+          aucune donnée personnelle sans action de votre part. Votre visite ne
+          vous identifie pas : la mesure d’audience est anonyme et rien de ce que
+          vous consultez n’est associé à votre identité.
+        </p>
+
+        <h2>Formulaire de contact</h2>
+        <p>
+          Le formulaire de contact n’est pas encore connecté : les informations
+          saisies restent dans votre navigateur et disparaissent à la fermeture
+          de la page. Lorsque l’envoi en ligne sera activé, les données saisies
+          (nom, commune, email, téléphone et description de votre projet) seront
+          transmises par email à Pradel Élagage <strong>uniquement pour répondre
+          à votre demande</strong>. Elles ne seront jamais cédées ni revendues à
+          des tiers, et seront conservées le temps du traitement de votre demande
+          puis supprimées (au plus tard 12 mois sans suite).
+        </p>
+
+        <h2>Mesure d’audience</h2>
+        <p>
+          Le site mesure sa fréquentation avec <strong>Umami</strong>, un outil
+          auto-hébergé et <strong>anonyme</strong> : aucun cookie, aucun
+          identifiant visiteur, aucun profilage, aucune donnée recoupable avec
+          votre identité. Les statistiques sont agrégées (pages consultées,
+          volume de visites) et servent uniquement à améliorer le site. La
+          fonction « Ne pas me pister » de votre navigateur est respectée.
+        </p>
+
+        <h2>Carte de localisation</h2>
+        <p>
+          La carte repose sur Leaflet et des données OpenStreetMap. Ses tuiles
+          sont fournies par MapTiler lorsqu'une clé est configurée, ou
+          directement par OpenStreetMap dans le cas contraire. Leur chargement
+          implique la transmission de données techniques, notamment votre
+          adresse IP, au fournisseur cartographique. La carte est chargée
+          directement car nécessaire à l’affichage de notre localisation.
+        </p>
+
+        <h2>Stockage dans votre navigateur</h2>
+        <p>
+          Seul votre choix concernant les services facultatifs est mémorisé, dans
+          le stockage local de votre navigateur — rien d’autre n’y est déposé.
+          Vous pouvez modifier ce choix à tout moment depuis le lien
+          « Préférences de confidentialité » présent dans le pied de page.
+        </p>
+
+        <h2>Journaux techniques</h2>
+        <p>
+          Comme tout site web, le serveur d’hébergement conserve des journaux
+          techniques (adresse IP, date et page demandée) nécessaires à la
+          sécurité et au bon fonctionnement. Ils sont conservés quelques semaines
+          et ne font l’objet d’aucune exploitation commerciale.
+        </p>
+
+        <h2>Vos droits</h2>
+        <p>
+          Conformément à la loi « Informatique et Libertés » du 6 janvier 1978
+          modifiée et au RGPD, vous disposez d’un droit d’accès, de
+          rectification, de suppression et d’opposition concernant les données
+          vous concernant. Pour les exercer, contactez-nous à
+          <a href={`mailto:${site.email}`}>{site.email}</a> ou au
+          <a href={phoneHref}>{site.phone}</a>. Vous pouvez également saisir la
+          CNIL (cnil.fr) en cas de litige.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          <strong>Pradel Élagage</strong><br />
+          {site.address.street}<br />
+          {site.address.postalCode} {site.address.city}<br />
+          Téléphone : <a href={phoneHref}>{site.phone}</a><br />
+          Email : <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+    </div>
+  </article>
+</MainLayout>
+
+<style>
+  .containerSinglePage {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    transform: translateY(-44vh);
+  }
+
+  .paragrapheSingle {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: auto;
+    align-items: center;
+    margin-right: 4vw;
+  }
+
+  .paragrapheSingle :global(h2) {
+    font-family: var(--font-heading);
+    font-size: 3vw;
+    margin-bottom: 3vh;
+    margin-top: 5vh;
+    text-align: center;
+  }
+
+  .paragrapheSingle :global(p) {
+    margin-bottom: 3vh;
+    font-size: 1.2vw;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .paragrapheSingle :global(a) {
+    color: var(--colorVar2);
+    font-weight: 800;
+  }
+
+  @media (max-width: 768px) {
+    .containerSinglePage {
+      flex-direction: column;
+      transform: translateY(0);
+    }
+
+    .paragrapheSingle {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .paragrapheSingle :global(h2) {
+      font-size: 7vw;
+    }
+
+    .paragrapheSingle :global(p) {
+      width: 100%;
+      height: auto;
+      font-size: 5vw;
+      padding: 2vh;
+    }
+  }
+</style>

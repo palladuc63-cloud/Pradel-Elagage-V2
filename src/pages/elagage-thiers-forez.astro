@@ -285,7 +285,9 @@ const assurances = [
     padding: 1.5rem 2rem;
     border: 1px solid rgba(57, 136, 123, 0.13);
     border-radius: 24px;
-    background: #fff;
+    background-color: #fff;
+    background-image: var(--grain);
+    background-size: 160px;
     box-shadow: 0 10px 18px rgba(29, 52, 58, 0.12), 0 24px 48px rgba(29, 52, 58, 0.18);
   }
 
@@ -384,7 +386,7 @@ const assurances = [
 
   .services-section {
     padding: 7rem max(4vw, 1.5rem) 8rem;
-    background: linear-gradient(180deg, #f7f9f6 0%, #e8eee6 100%);
+    background-image: var(--grain), linear-gradient(180deg, #f7f9f6 0%, #e8eee6 100%); background-size: 160px, auto;
   }
 
   .section-heading {
@@ -405,7 +407,7 @@ const assurances = [
     overflow: hidden;
     border: 1px solid rgba(57, 136, 123, 0.12);
     border-radius: 28px;
-    background: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.95); background-image: var(--grain); background-size: 160px;
     box-shadow: 0 14px 36px rgba(29, 52, 58, 0.1);
     transition: transform 240ms ease, box-shadow 240ms ease;
   }

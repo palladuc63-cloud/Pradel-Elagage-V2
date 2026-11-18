@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import MapSection from '../components/MapSection.astro';
 import Slider from '../components/Slider.astro';
 import PuySeparator from '../components/PuySeparator.astro';
 import ServiceCard from '../components/ServiceCard.astro';
@@ -11,7 +12,7 @@ const title = 'Élagage, abattage & bois de chauffage à Thiers (63) | Pradel É
 const description = "Élagage, abattage, bois de chauffage et travaux TP à Thiers et en montagne Thiernoise. 15 ans d'expérience. Devis gratuit.";
 ---
 
-<MainLayout title={title} description={description} footerVariant="page">
+<MainLayout title={title} description={description}>
   <Slider />
 
   {/* Séparateur chaîne des Puys */}
@@ -30,6 +31,8 @@ const description = "Élagage, abattage, bois de chauffage et travaux TP à Thie
       ))}
     </div>
   </section>
+
+  <MapSection />
 </MainLayout>
 
 <style>

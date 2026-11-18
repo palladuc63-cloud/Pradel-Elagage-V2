@@ -11,8 +11,6 @@ export interface Props {
   description?: string;
   image?: string;
   noindex?: boolean;
-  /** 'default' = footer avec OpenStreetMap (accueil), 'page' = footer simple */
-  footerVariant?: 'default' | 'page';
 }
 
 const {
@@ -20,7 +18,6 @@ const {
   description = site.description,
   image = '/img/LogoTeddyV2.webp',
   noindex = false,
-  footerVariant = 'page',
 } = Astro.props;
 
 const publicSiteUrl = Astro.site ?? new URL(site.url);
@@ -111,7 +108,7 @@ const jsonLd = {
     <main id="main-content">
       <slot />
     </main>
-    <Footer variant={footerVariant} />
+    <Footer />
     <CookieBanner />
   </body>
 </html>

@@ -9,7 +9,7 @@ const addressText = `${site.address.street}, ${site.address.locality}, ${site.ad
 const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${site.geo.lat},${site.geo.lng}`;
 ---
 
-<MainLayout title={title} description={description} footerVariant="page">
+<MainLayout title={title} description={description}>
   <section class="contact-hero">
     <img src="/img/slider-elagage.webp" alt="Intervention d’élagage dans un grand arbre à Thiers" fetchpriority="high" />
     <div class="hero-overlay"></div>

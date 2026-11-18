@@ -110,17 +110,17 @@ html {
 }
 
 a, button, summary, select, label, [role='button'] {
-  cursor: url('/img/cursor/axe-armed.png') 1 23, pointer;
+  cursor: url('/img/cursor/axe-armed.png') 5 11, pointer;
 }
 
 html[data-cursor='strike'],
 html[data-cursor='strike'] * {
-  cursor: url('/img/cursor/axe-strike.png') 5 11, auto !important;
+  cursor: url('/img/cursor/axe-strike.png') 1 23, auto !important;
 }
 
 html[data-cursor='rebound'],
 html[data-cursor='rebound'] * {
-  cursor: url('/img/cursor/axe-rebound.png') 3 15, auto !important;
+  cursor: url('/img/cursor/axe-rebound.png') 2 19, auto !important;
 }
 
 /* Lien d'évitement (accessibilité) */

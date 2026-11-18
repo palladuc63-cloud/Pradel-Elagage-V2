@@ -60,7 +60,11 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
     </div>
 
     <a class="brand-link" href="/" aria-label="Accueil — Pradel Elagage">
-      <img class="logoHeader" src="/img/LogoTeddy.png" alt="" />
+      <span class="logoHeader logo-anim">
+        <img class="logo-axe logo-axe-l" src="/img/anim/logo-axe-l.png" alt="" aria-hidden="true" />
+        <img class="logo-axe logo-axe-r" src="/img/anim/logo-axe-r.png" alt="" aria-hidden="true" />
+        <img class="logo-base" src="/img/LogoTeddy.png" alt="Pradel Élagage" />
+      </span>
     </a>
 
     <div class="nav-side nav-side-right">
@@ -243,6 +247,43 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
     filter: drop-shadow(0 5px 8px rgba(29, 52, 58, 0.08));
     transform-origin: top center;
     transition: width 320ms ease, transform 320ms ease;
+  }
+
+  .logo-anim {
+    position: relative;
+    display: block;
+  }
+
+  .logo-anim > img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .logo-anim .logo-axe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .logo-axe-l {
+      transform-origin: 46.7% 68.7%;
+      animation: logo-axe-sway 5.6s ease-in-out infinite;
+    }
+
+    .logo-axe-r {
+      transform-origin: 53.3% 68.7%;
+      animation: logo-axe-sway 5.6s ease-in-out -2.8s infinite reverse;
+    }
+  }
+
+  @keyframes logo-axe-sway {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(-2.2deg); }
+    65% { transform: rotate(1.6deg); }
   }
 
 

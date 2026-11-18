@@ -20,6 +20,14 @@ import { site } from '../data/site.js';
       <p><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a><br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
     </div>
     <div class="page-footer-links">
+      <div class="page-footer-sign-row">
+        <a class="page-footer-sign" href="https://agencepoint.fr" target="_blank" rel="noopener">
+          <img src="/img/logo-point.png" alt="" width="18" height="18" />
+          POINT
+        </a>
+        <span class="sign-dash" aria-hidden="true">—</span>
+        <span class="footer-rotate" aria-live="polite">Communication</span>
+      </div>
       <a class="page-legal-link" href="/mentions-legales/">Mentions légales</a>
       <a class="page-legal-link" href="/politique-confidentialite/">Politique de confidentialité</a>
     </div>
@@ -89,6 +97,49 @@ import { site } from '../data/site.js';
     text-transform: uppercase;
   }
 
+  .page-footer-sign-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.55rem;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.78rem;
+  }
+
+  .page-footer-sign {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .page-footer-sign:hover {
+    color: #fff;
+  }
+
+  .page-footer-sign img {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+  }
+
+  .footer-rotate {
+    display: inline-block;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .footer-rotate.out {
+    opacity: 0;
+    transform: translateY(-0.6em);
+  }
+
+  .footer-rotate.below {
+    transition: none;
+    transform: translateY(0.6em);
+  }
+
   @media (max-width: 900px) {
     .page-footer-content {
       grid-template-columns: repeat(2, 1fr);
@@ -119,3 +170,29 @@ import { site } from '../data/site.js';
     }
   }
 </style>
+
+<script is:inline>
+(function () {
+  var el = document.querySelector('.footer-rotate');
+  if (!el) return;
+
+  var WORDS = ['Communication', 'Site Web', 'Assistants IA', 'Impression',
+               'Packaging', 'Textile', 'Goodies', 'Vidéo', 'Conseil', 'Automatisation'];
+  var i = 0;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  setInterval(function () {
+    i = (i + 1) % WORDS.length;
+    var next = WORDS[i];
+    if (reduced) { el.textContent = next; return; }
+
+    el.classList.add('out');
+    setTimeout(function () {
+      el.textContent = next;
+      el.classList.add('below');
+      el.getBoundingClientRect();
+      el.classList.remove('out', 'below');
+    }, 400);
+  }, 2600);
+})();
+</script>

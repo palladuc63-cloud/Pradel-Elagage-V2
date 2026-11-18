@@ -97,9 +97,15 @@ import { site } from '../data/site.js';
 
   @media (max-width: 768px) {
     .page-footer-content {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
       justify-items: center;
+      gap: 2rem 1rem;
       text-align: center;
+    }
+
+    .page-footer-content > img,
+    .page-footer-links {
+      grid-column: 1 / -1;
     }
   }
 </style>

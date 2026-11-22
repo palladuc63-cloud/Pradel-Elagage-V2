@@ -1,15 +1,15 @@
 # Audit SEO hebdomadaire — Pradel Élagage
 
-**Date :** 15/11/2026 · **Slug :** pradel · **Périmètre :** 7 pages (accueil, élagage, bois, travaux TP, contact, mentions légales, 404)
+**Date :** 22/11/2026 · **Slug :** pradel · **Périmètre :** 8 pages (accueil, élagage, bois, travaux TP, contact, mentions légales, politique de confidentialité, 404)
 
-## a) Score global : 81/100
+## a) Score global : 82/100
 
-Socle technique solide et stable : métas complètes sur toutes les pages, canonical cohérent (`www`), JSON-LD LocalBusiness, sitemap + robots conformes, un seul H1 par page, attributs `alt` systématiquement renseignés (ou vidés quand décoratifs). Points de perte inchangés : contenu d'accueil mince, maillage interne faible, URLs sociales placeholder, chemins d'assets absolus, données structurées perfectibles.
+Socle technique stable et sain : métas complètes sur les 8 pages, canonical cohérent (`www`), JSON-LD LocalBusiness, sitemap + robots conformes, un seul H1 par page, `alt` renseignés (ou vidés à juste titre quand décoratifs). Progression cette semaine : le `<title>` de l'accueil reprend désormais la marque comme les autres pages. Points de perte inchangés : contenu d'accueil mince, maillage interne faible, URLs sociales placeholder, chemins d'assets absolus, pages `noindex` présentes dans le sitemap.
 
 ## b) Constats par page
 
 ### Accueil `/`
-- **Title :** « Élagage, abattage & bois de chauffage à Thiers (63) » — riche en mots-clés locaux ; la marque n'y figure pas (contrairement aux autres pages qui utilisent « | Pradel Élagage »).
+- **Title :** « Élagage, abattage & bois de chauffage à Thiers (63) **| Pradel Élagage** » — **corrigé** : la marque manquait alors que les autres pages utilisent toutes le schéma « mot-clé | Pradel Élagage ».
 - **Meta description :** présente, ~130 car., efficace (services + zone + ancienneté + devis).
 - **Hn :** 1 seul H1 (masqué visuellement, descriptif) ; H2 sur les slides et cartes services. Correct.
 - **Alt images :** tous renseignés et descriptifs (slider + icônes services).
@@ -42,40 +42,43 @@ Socle technique solide et stable : métas complètes sur toutes les pages, canon
 - **Title / meta :** corrects.
 - **Hn :** 1 H1 ; plusieurs H2 (dont « Votre projet » dans le formulaire) — acceptable.
 - **Alt :** toutes renseignées.
-- **Liens internes :** lien vers mentions légales (ancre confidentialité) ; aucun renvoi vers les pages services.
+- **Liens internes :** lien vers politique de confidentialité ; aucun renvoi vers les pages services.
 - **Remarque :** formulaire désactivé assumé — pas un problème SEO, mais friction conversion.
 
 ### Mentions légales `/mentions-legales/`
 - **noindex :** oui (correct). Title/meta présents. Rien à signaler.
+
+### Politique de confidentialité `/politique-confidentialite/`
+- **noindex :** oui (correct). Title/meta présents, contenu structuré en H2. Rien à signaler.
 
 ### 404 `/404.html`
 - **noindex :** oui, exclue du sitemap, texte clair + lien retour accueil. Correct.
 
 ### Éléments transverses
 - **robots.txt :** conforme (URL sitemap avec `www`, cohérent avec les canonicals).
-- **Sitemap :** généré (`sitemap-index.xml` + `sitemap-0.xml`, recopié en `sitemap.xml`), 404 exclue. Conforme.
+- **Sitemap :** généré (`sitemap-index.xml` + `sitemap-0.xml`, recopié en `sitemap.xml`), 404 exclue — **mais les 2 pages `noindex` (mentions légales, politique) y figurent** : incohérence mineure, à filtrer dans `astro.config.mjs`.
 - **Canonical :** présent sur toutes les pages, domaine `www` cohérent.
 - **JSON-LD :** LocalBusiness avec adresse, geo, téléphone, `priceRange` — à enrichir (horaires, `sameAs`, `areaServed` détaillé).
-- **Alt décoratifs :** 2 icônes du menu « Services » portaient un `alt` non vide à l'intérieur d'un `span aria-hidden="true"` → **corrigé** (`alt=""`).
-- **Liens sans texte :** aucun (icônes dans des liens `aria-label`).
-- **Réseaux sociaux :** liens footer vers `facebook.com` / `linkedin.com` génériques (placeholders) — à remplacer ou retirer.
+- **Alt décoratifs :** conformes partout (icônes de navigation, logos dans liens `aria-label`, images `aria-hidden`).
+- **Liens sans texte :** aucun (icônes dans des liens `aria-label` ou accompagnés d'un libellé).
+- **Réseaux sociaux :** liens footer vers `facebook.com` / `linkedin.com` génériques (placeholders) — à remplacer ou retirer, inchangé.
 - **Assets :** plusieurs `url('/img/…')` / `url('/svg/…')` et `src="/…"` absolus — risque si déploiement sous sous-chemin (non corrigé, hors périmètre « sûr »).
 - **Composant `InfoCards` :** inutilisé, emploie des `<h1>` par carte — à corriger ou supprimer si réutilisation prévue.
 
 ## c) Top 5 actions prioritaires
 
 1. **Épaissir la page d'accueil** : ajouter un bloc éditorial (~300-400 mots) — présentation de l'entreprise, zone d'intervention, garanties. Page la plus importante et la plus pauvre en texte.
-2. **Renforcer le maillage interne** : liens contextuels entre les 3 pages services (ex. bois ↔ élagage) et navigation principale dans le footer.
-3. **Enrichir le JSON-LD LocalBusiness** : `openingHours`, `sameAs` (vraies URLs sociales), `areaServed` avec les communes citées, éventuellement `Service` par activité.
-4. **Corriger les URLs sociales placeholder** ou masquer les liens — signal de confiance et cohérence `sameAs`.
+2. **Renforcer le maillage interne** : liens contextuels entre les 3 pages services (ex. bois ↔ élagage) et depuis le corps des pages vers les prestations connexes.
+3. **Corriger les URLs sociales placeholder** ou masquer les liens — signal de confiance et cohérence `sameAs` dans le JSON-LD.
+4. **Exclure les pages `noindex` du sitemap** (filter `astro.config.mjs`) pour aligner sitemap et directives robots.
 5. **Harmoniser les chemins d'assets** (CSS `url('/…')`, `src="/…"` en dur, favicon du marqueur carte) avec `import.meta.env.BASE_URL` pour sécuriser le déploiement sous sous-chemin.
 
 ## d) 3 propositions de contenus
 
-1. **« Quand tailler ses arbres dans le Puy-de-Dôme ? Calendrier et conseils par essence »** — cible les requêtes saisonnières locales (« taille arbre Thiers », « quand élaguer ») et renforce la page élagage en lien interne.
-2. **« Élagage près des lignes électriques : ce qu'il faut savoir avant d'intervenir »** — met en avant une expertise différenciante déjà mentionnée sur le site, faible concurrence sur cette requête locale.
-3. **« Chêne, hêtre ou frêne : quel bois de chauffage choisir pour votre poêle ou insert ? »** — capte les recherches pré-hivernales (« acheter bois de chauffage Thiers ») et alimente la page bois.
+1. **« Défricher un terrain avant de construire : mini-pelle ou débroussaillage ? »** — nourrit la page Travaux TP, cible les recherches de particuliers avant projet de construction dans la montagne Thiernoise.
+2. **« Arbre dangereux après une tempête : les bons réflexes et qui appeler »** — capte les requêtes d'urgence locale (« arbre tombé Thiers », « élagueur urgence 63 ») et met en avant l'abattage sécurisé.
+3. **« Faut-il une autorisation pour abattre un arbre sur son terrain en Auvergne ? »** — requête informationnelle fréquente à faible concurrence, renforce l'expertise et renvoie vers la page élagage/abattage.
 
 ---
 
-*Correctifs appliqués dans ce lot : attributs `alt` vidés sur les 2 icônes décoratives du menu « Services » (Header.astro) — `alt` non vide dans un conteneur `aria-hidden`. Aucun changement de structure, design ou fonctionnalité.*
+*Correctifs appliqués dans ce lot : ajout de « | Pradel Élagage » au `<title>` de l'accueil (cohérence de marque avec les autres pages). Aucun changement de structure, design ou fonctionnalité.*

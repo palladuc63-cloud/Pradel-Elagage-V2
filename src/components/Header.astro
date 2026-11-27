@@ -1,5 +1,6 @@
 ---
 import { navLinks } from '../data/site.js';
+import MenuIcon from './MenuIcon.astro';
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const currentPath = basePath && Astro.url.pathname.startsWith(basePath)
@@ -27,12 +28,10 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
         {navLinks.map((link) => (
           <li>
             <a class={link.class === 'page-elagage' ? 'mobile-menu-elagage' : undefined} href={link.href} aria-current={currentPath === link.href ? 'page' : undefined}>
-              <img class={`mobile-menu-icon ${link.class === 'page-tp' ? 'mobile-menu-icon-truck' : ''} ${link.class === 'page-accueil' ? 'mobile-menu-icon-home' : ''} ${link.class === 'page-contact' ? 'mobile-menu-icon-contact' : ''}`} src={link.class === 'page-elagage' ? '/img/arbre.png' : `/img/${link.icon}`} alt="" />
+              <MenuIcon name={link.class} class="mobile-menu-icon" />
               <span>{link.class === 'page-elagage' ? 'Élagage / Abattage' : link.label}</span>
               {link.class === 'page-elagage' && (
-                <svg class="mobile-menu-icon mobile-menu-icon-end" viewBox="0 0 40 62" aria-hidden="true">
-                  <path d="M20 0 8 19h7L4 38h10L0 56h16v6h8v-6h16L26 38h10L25 19h7Z" />
-                </svg>
+                <MenuIcon name="arbre" class="mobile-menu-icon-end" />
               )}
             </a>
           </li>
@@ -46,21 +45,21 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
     <div class="nav-side nav-side-left">
       {homeLink && (
         <a class="nav-link" href={homeLink.href} aria-current={currentPath === homeLink.href ? 'page' : undefined}>
-          <img class="nav-icon" src={`/img/${homeLink.icon}`} alt="" />
+          <img class="nav-icon" src="/img/IconeAccueil.webp" alt="" />
           <span>Accueil</span>
         </a>
       )}
 
       {elagageLink && (
         <a class="nav-link" href={elagageLink.href} aria-current={currentPath === elagageLink.href ? 'page' : undefined}>
-          <img class="nav-icon" src={`/img/${elagageLink.icon}`} alt="" />
+          <img class="nav-icon" src="/img/IconeElagage.webp" alt="" />
           <span>Élagage</span>
         </a>
       )}
     </div>
 
     <a class="brand-link" href="/" aria-label="Accueil — Pradel Elagage">
-      <img class="logoHeader" src="/img/LogoTeddy.png" alt="" />
+      <img class="logoHeader" src="/img/LogoTeddyV2.webp" alt="" />
     </a>
 
     <div class="nav-side nav-side-right">
@@ -73,7 +72,7 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
           aria-current={servicesActive ? 'page' : undefined}
         >
           <span class="services-icons" aria-hidden="true">
-            <img class="services-icon-wood" src="/img/IconeBois.png" alt="" />
+            <img class="services-icon-wood" src="/img/IconeBois.webp" alt="" />
             <img class="services-icon-digger" src="/svg/mini-pelle.svg" alt="" />
           </span>
           <span>Services</span>
@@ -84,13 +83,13 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
         <div id="services-submenu" class="services-submenu">
           {boisLink && (
             <a href={boisLink.href} aria-current={currentPath === boisLink.href ? 'page' : undefined}>
-              <span class="submenu-wood" aria-hidden="true"></span>
+              <img class="submenu-icon" src="/img/IconeBois.webp" alt="" />
               <span>Bois de chauffage</span>
             </a>
           )}
           {tpLink && (
             <a href={tpLink.href} aria-current={currentPath === tpLink.href ? 'page' : undefined}>
-              <img src={`/img/${tpLink.icon}`} alt="" />
+              <img class="submenu-icon" src="/img/un-camion.webp" alt="" />
               <span>Travaux TP</span>
             </a>
           )}
@@ -98,7 +97,7 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
       </div>
       {contactLink && (
         <a class="nav-link" href={contactLink.href} aria-current={currentPath === contactLink.href ? 'page' : undefined}>
-          <img class="nav-icon" src={`/img/${contactLink.icon}`} alt="" />
+          <img class="nav-icon" src="/img/IconeContact.webp" alt="" />
           <span>Contact</span>
         </a>
       )}
@@ -171,7 +170,7 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
     color: var(--colorVar2);
   }
 
-  .nav-icon {
+  :global(.nav-icon) {
     position: absolute;
     z-index: -1;
     width: 222px;
@@ -182,9 +181,9 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
     transition: opacity 240ms ease, transform 280ms ease;
   }
 
-  .nav-link:hover .nav-icon,
-  .nav-link:focus-visible .nav-icon,
-  .nav-link[aria-current="page"] .nav-icon {
+  .nav-link:hover :global(.nav-icon),
+  .nav-link:focus-visible :global(.nav-icon),
+  .nav-link[aria-current="page"] :global(.nav-icon) {
     opacity: 0.14;
     transform: translateY(0) scale(1) rotate(0);
   }
@@ -202,18 +201,18 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
     transition: opacity 240ms ease, transform 280ms ease;
   }
 
-  .services-icons img {
+  .services-icons :global(img) {
     flex: none;
     object-fit: contain;
   }
 
-  .services-icon-wood {
+  :global(.services-icon-wood) {
     width: 227px;
     height: 189px;
     margin-left: -30px;
   }
 
-  .services-icon-digger {
+  :global(.services-icon-digger) {
     position: relative;
     left: -50px;
     width: 85px;
@@ -316,21 +315,10 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
     background: rgba(57, 136, 123, 0.09);
   }
 
-  .services-submenu img {
+  .services-submenu :global(.submenu-icon) {
     justify-self: center;
-    width: 38px;
-    height: 34px;
-    object-fit: contain;
-  }
-
-  .services-submenu .submenu-wood {
-    justify-self: center;
-    width: 57px;
-    height: 26px;
-    background-image: url('/img/IconeBois.png');
-    background-repeat: no-repeat;
-    background-position: 110% 50%;
-    background-size: 102px auto;
+    width: 44px;
+    height: 44px;
   }
 
   .header.is-compact {
@@ -522,14 +510,12 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
       background: rgba(255, 255, 255, 0.12);
     }
 
-    #menu .mobile-menu-icon {
-      width: 54px;
-      height: 54px;
-      flex: 0 0 54px;
-      margin-right: 27px;
-      object-fit: contain;
-      filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.2));
-      transform: scale(2);
+    #menu :global(.mobile-menu-icon) {
+      width: 46px;
+      height: 46px;
+      flex: 0 0 46px;
+      margin-right: 22px;
+      filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.25));
     }
 
     #menu .mobile-menu-elagage {
@@ -540,29 +526,18 @@ const servicesActive = [boisLink?.href, tpLink?.href].includes(currentPath);
       white-space: nowrap;
     }
 
-    #menu .mobile-menu-elagage .mobile-menu-icon {
-      width: 48px;
-      height: 48px;
-      flex-basis: 48px;
+    #menu .mobile-menu-elagage :global(.mobile-menu-icon) {
+      width: 44px;
+      height: 44px;
+      flex-basis: 44px;
       margin-right: 0;
-      transform: scale(1.5);
     }
 
-    #menu .mobile-menu-elagage .mobile-menu-icon-end {
-      fill: var(--colorVar1);
+    #menu .mobile-menu-elagage :global(.mobile-menu-icon-end) {
+      width: 56px;
+      height: 56px;
+      flex: none;
       filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.2));
-      transform: scale(1.25);
-    }
-
-    #menu .mobile-menu-icon-home,
-    #menu .mobile-menu-icon-contact {
-      margin-right: 0;
-      transform: scale(2) translateX(30px);
-    }
-
-    #menu .mobile-menu-icon-truck {
-      margin-right: 0;
-      transform: none;
     }
   }
 </style>
